@@ -16,7 +16,7 @@
     - custom css link
   -->
   <link rel="stylesheet" href="../css/Dashboard.css">
-  <link rel="stylesheet" href="../css/DCatalogo.css">
+  <link rel="stylesheet" href="../css/Dashboard_Catalogo.css">
 
 
   <!-- 
@@ -182,16 +182,18 @@
       </div>
 
       <ul class="has-scrollbar">
-
+        <?php foreach ($productos as $p): ?>
         <li class="product-grid">
           <div class="shop-card">
 
             <div class="card-banner img-holder" style="--width: 540; --height: 720;">
               <img src="../assets/product-01.jpg" width="540" height="720" loading="lazy"
-                alt="Facial cleanser" class="img-cover">
+                alt="<?=htmlspecialchars($p[product_name])?>" class="img-cover">
+                <?php if ($p['discount']>0)?>
+                <span class="badge" aria-label="20% off">-<?=$p['discount']?>%</span>
+                <?php endif; ?>
 
-              <span class="badge" aria-label="20% off">-20%</span>
-
+            
               <div class="card-actions">
 
                 <button class="action-btn" aria-label="add to cart">
@@ -212,14 +214,15 @@
             <div class="card-content">
 
               <div class="price">
-                <del class="del">$39.00</del>
-
-                <span class="span">$29.00</span>
+                <?php if ($p['discount'] > 0): ?>
+                <del class="del">$<?= number_format($p['price'],2) ?></del>
+                <span class="span">$<?= number_format($p['price'] * (1 - $p['discount']/100),2) ?></span>
+                <?php else: ?>
+                  <span class="span">$<?= number_format($p['price'],2) ?></span>
+                <?php endif; ?>
               </div>
 
-              <h3>
-                <a href="#" class="card-title">Facial cleanser</a>
-              </h3>
+              <h3><a href="#" class="card-title"><?= htmlspecialchars($p['product_name']) ?></a></h3>
 
               </div>
 
@@ -228,6 +231,7 @@
           </div>
           
         </li>
+        <?php endforeach; ?
       </ul>
 
     </div>

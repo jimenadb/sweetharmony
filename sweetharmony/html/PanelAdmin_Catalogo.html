@@ -1,0 +1,95 @@
+<!-- catalogo.html -->
+<div class="catalogo-form">
+    <h2>Agregar Producto al Catálogo</h2>
+    <form id="catalogoForm" enctype="multipart/form-data">
+  
+      <!-- Imagen -->
+      <div class="form-group">
+        <label for="image_url">Imagen:</label>
+        <input type="file" id="image_url" name="image_url" accept="image/*" required>
+      </div>
+  
+      <!-- Nombre -->
+      <div class="form-group">
+        <label for="product_name">Nombre del producto:</label>
+        <input type="text" id="product_name" name="product_name" maxlength="150" required>
+      </div>
+  
+      <!-- Tipo de producto -->
+      <div class="form-group">
+        <label for="product_type">Tipo de producto:</label>
+        <select id="product_type" name="product_type" required>
+          <option value="">-- Selecciona --</option>
+          <option value="terrario">Terrario</option>
+          <option value="maceta">Maceta</option>
+          <option value="planta">Planta</option>
+        </select>
+      </div>
+  
+      <!-- Tipo de planta -->
+      <div class="form-group">
+        <label for="plant_type">Tipo de planta:</label>
+        <select id="plant_type" name="plant_type" required>
+          <option value="">-- Selecciona --</option>
+          <option value="interior">Interior</option>
+          <option value="sombra">Sombra</option>
+          <option value="exterior">Exterior</option>
+        </select>
+      </div>
+  
+      <!-- Precio -->
+      <div class="form-group">
+        <label for="price">Precio:</label>
+        <input type="number" id="price" name="price" step="0.01" required>
+      </div>
+  
+      <!-- Descuento -->
+      <div class="form-group">
+        <label for="discount">Descuento (%):</label>
+        <input type="number" id="discount" name="discount" step="0.01" value="0.00">
+      </div>
+  
+      <!-- Medidas planta -->
+      <fieldset>
+        <legend>Medidas de la planta (cm)</legend>
+        <div class="form-inline">
+          <label for="plant_height">Alto:</label>
+          <input type="number" id="plant_height" name="plant_height" step="0.01">
+          <label for="plant_width">Ancho:</label>
+          <input type="number" id="plant_width" name="plant_width" step="0.01">
+        </div>
+      </fieldset>
+  
+      <!-- Medidas maceta -->
+      <fieldset>
+        <legend>Medidas de la maceta (cm)</legend>
+        <div class="form-inline">
+          <label for="pot_height">Alto:</label>
+          <input type="number" id="pot_height" name="pot_height" step="0.01">
+          <label for="pot_width">Ancho:</label>
+          <input type="number" id="pot_width" name="pot_width" step="0.01">
+        </div>
+      </fieldset>
+  
+      <!-- Color maceta -->
+      <div class="form-group">
+        <label for="pot_color">Color de la maceta:</label>
+        <input type="text" id="pot_color" name="pot_color" maxlength="50">
+      </div>
+  
+      <!-- Peso -->
+      <div class="form-group">
+        <label for="weight">Peso (kg):</label>
+        <input type="number" id="weight" name="weight" step="0.01">
+      </div>
+  
+      <!-- Hashtags -->
+      <div class="form-group">
+        <label for="hashtags">Hashtags:</label>
+        <input type="text" id="hashtags" name="hashtags" placeholder="#planta #decoracion">
+      </div>
+  
+      <button type="submit">Guardar producto</button>
+    </form>
+  </div>
+  
