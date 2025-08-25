@@ -1,0 +1,36 @@
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 4 columnas ajustables */
+    gap: 20px; /* espacio entre productos */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+/* ------------------------------
+------------------------------
+BOTON FLOTANTE WHATSAPP
+------------------------------
+------------------------------ */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 100px; 
+    right: 30px;  
+    background-color: hsl(148, 20%, 38%);
+    color: white;
+    font-size: 28px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    z-index: 1000;
+    transition: transform 0.2s;
+  }
+  
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+  }
+  

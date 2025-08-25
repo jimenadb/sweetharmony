@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CATALOGO </title>
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="../css/Dashboard.css">
+  <link rel="stylesheet" href="../css/DCatalogo.css">
+
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- 
+    - preload images
+  -->
+  <link rel="preload" as="image" href="../assets/logo.png">
+  <link rel="preload" as="image" href="../assets/hero-banner-1.jpg">
+  <link rel="preload" as="image" href="../assets/hero-banner-2.jpg">
+  <link rel="preload" as="image" href="../assets/hero-banner-3.jpg">
+
+</head>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header">
+
+
+    <div class="header-top" data-header>
+      <div class="container">
+
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </button>
+
+        <div class="input-wrapper">
+          <input type="search" name="search" placeholder="Search product" class="search-field">
+
+          <button class="search-submit" aria-label="search">
+            <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+
+        <a href="#" class="logo">
+          SWEET HARMONY - CATÁLOGO
+        </a>
+
+        <div class="header-actions">
+
+          <a href="LoginForm.html" class="header-action-btn" aria-label="user">
+            <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+            <span>Ingresar</span>
+          </a>
+
+          <button class="header-action-btn" aria-label="favourite item">
+            <ion-icon name="star-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge">0</span>
+          </button>
+
+          <button class="header-action-btn" aria-label="cart item">
+            <data class="btn-text" value="0"></data>
+
+            <ion-icon name="bag-handle-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge">0</span>
+          </button>
+
+        </div>
+
+        <nav class="navbar">
+          <ul class="navbar-list">
+
+            <li>
+              <a href="#home" class="navbar-link has-after">INICIO</a>
+            </li>
+
+            <li>
+              <a href="#collection" class="navbar-link has-after">CATÁLOGO</a>
+            </li>
+
+            <li>
+              <a href="#shop" class="navbar-link has-after">TIENDA</a>
+            </li>
+
+            <li>
+              <a href="#offer" class="navbar-link has-after">OFERTAS</a>
+            </li>
+
+            <li>
+              <a href="#blog" class="navbar-link has-after">BLOG</a>
+            </li>
+
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+
+  </header>
+
+
+
+  <!-- 
+    - #MOBILE NAVBAR
+  -->
+
+  <div class="sidebar">
+    <div class="mobile-navbar" data-navbar>
+
+      <div class="wrapper">
+        <a href="#" class="logo">
+          <img src="../assets/logo.png" width="179" height="26" alt="Glowing">
+        </a>
+
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+
+      <ul class="navbar-list">
+
+        <li>
+          <a href="#home" class="navbar-link" data-nav-link>Home</a>
+        </li>
+
+        <li>
+          <a href="#collection" class="navbar-link" data-nav-link>Collection</a>
+        </li>
+
+        <li>
+          <a href="#shop" class="navbar-link" data-nav-link>Shop</a>
+        </li>
+
+        <li>
+          <a href="#offer" class="navbar-link" data-nav-link>Offer</a>
+        </li>
+
+        <li>
+          <a href="#blog" class="navbar-link" data-nav-link>Blog</a>
+        </li>
+
+        <li>
+          <a href="#contacts" class="navbar-link" data-nav-link>Contactanos</a>
+        </li>
+
+      </ul>
+
+    </div>
+
+    <div class="overlay" data-nav-toggler data-overlay></div>
+  </div>
+
+
+
+  <section class="section shop" id="shop" aria-label="shop" data-section>
+    <div class="container">
+
+      <div class="title-wrapper">
+        <h2 class="h2 section-title">Nuestros Productos</h2>
+      </div>
+
+      <ul class="has-scrollbar">
+
+        <li class="product-grid">
+          <div class="shop-card">
+
+            <div class="card-banner img-holder" style="--width: 540; --height: 720;">
+              <img src="../assets/product-01.jpg" width="540" height="720" loading="lazy"
+                alt="Facial cleanser" class="img-cover">
+
+              <span class="badge" aria-label="20% off">-20%</span>
+
+              <div class="card-actions">
+
+                <button class="action-btn" aria-label="add to cart">
+                  <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                </button>
+
+                <button class="action-btn" aria-label="add to whishlist">
+                  <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+                </button>
+
+                <button class="action-btn" aria-label="compare">
+                  <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
+                </button>
+
+              </div>
+            </div>
+
+            <div class="card-content">
+
+              <div class="price">
+                <del class="del">$39.00</del>
+
+                <span class="span">$29.00</span>
+              </div>
+
+              <h3>
+                <a href="#" class="card-title">Facial cleanser</a>
+              </h3>
+
+              </div>
+
+            </div>
+
+          </div>
+          
+        </li>
+      </ul>
+
+    </div>
+  </section>
+
+
+  <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/51910405014" class="whatsapp-float" target="_blank" aria-label="Chat en WhatsApp">
+        <ion-icon name="logo-whatsapp"></ion-icon>
+    </a>
+
+  <!-- 
+    - #BACK TO TOP
+  -->
+
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
+  </a>
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="../js/Dashboard.js" defer></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

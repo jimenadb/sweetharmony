@@ -1,0 +1,136 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@200;300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 0 10px;
+  background-size: cover;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.wrapper {
+  width: 400px;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.4);
+  margin-top: 50px; 
+  margin-bottom: 50px; 
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.input-field {
+  position: relative;
+  margin: 15px 0;
+}
+
+.input-field input {
+  width: 100%;
+  height: 40px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+  font-size: 16px;
+  color: #fff;
+  padding: 8px 0;
+}
+
+.input-field label {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 16px;
+  pointer-events: none;
+  transition: 0.2s ease;
+}
+
+.input-field input:focus ~ label,
+.input-field input:valid ~ label {
+  font-size: 0.8rem;
+  top: 0;
+  transform: translateY(-150%);
+  color: #fff;
+}
+
+button {
+  background: #fff;
+  color: #000;
+  font-weight: 600;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 16px;
+  border: 2px solid transparent;
+  transition: 0.3s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+  color: #fff;
+}
+
+.login-link a {
+  color: #efefef;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* TOGGLE CONTRASEÑA */
+
+.toggle-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #ffff;
+  font-size: 1.2rem;
+}
+
+
