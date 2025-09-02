@@ -172,28 +172,21 @@
     <div class="overlay" data-nav-toggler data-overlay></div>
   </div>
 
-
-
   <section class="section shop" id="shop" aria-label="shop" data-section>
     <div class="container">
-
       <div class="title-wrapper">
         <h2 class="h2 section-title">Nuestros Productos</h2>
       </div>
 
-      <ul class="has-scrollbar">
-        <?php foreach ($productos as $p): ?>
+      <ul class="has-scrollbar" id="catalogo">
         <li class="product-grid">
           <div class="shop-card">
-
             <div class="card-banner img-holder" style="--width: 540; --height: 720;">
               <img src="../assets/product-01.jpg" width="540" height="720" loading="lazy"
-                alt="<?=htmlspecialchars($p[product_name])?>" class="img-cover">
-                <?php if ($p['discount']>0)?>
-                <span class="badge" aria-label="20% off">-<?=$p['discount']?>%</span>
-                <?php endif; ?>
+                alt="Facial cleanser" class="img-cover">
 
-            
+              <span class="badge" aria-label="20% off">-20%</span>
+
               <div class="card-actions">
 
                 <button class="action-btn" aria-label="add to cart">
@@ -210,30 +203,19 @@
 
               </div>
             </div>
-
             <div class="card-content">
-
               <div class="price">
-                <?php if ($p['discount'] > 0): ?>
-                <del class="del">$<?= number_format($p['price'],2) ?></del>
-                <span class="span">$<?= number_format($p['price'] * (1 - $p['discount']/100),2) ?></span>
-                <?php else: ?>
-                  <span class="span">$<?= number_format($p['price'],2) ?></span>
-                <?php endif; ?>
+                <del class="del">$39.00</del>
+                <span class="span">$29.00</span>
               </div>
-
-              <h3><a href="#" class="card-title"><?= htmlspecialchars($p['product_name']) ?></a></h3>
-
-              </div>
-
+              <h3>
+                <a href="#" class="product-title"></a>
+              </h3>
             </div>
-
           </div>
-          
         </li>
-        <?php endforeach; ?
       </ul>
-
+      
     </div>
   </section>
 
@@ -256,6 +238,7 @@
     - custom js link
   -->
   <script src="../js/Dashboard.js" defer></script>
+  <script src="../js/Dashboard_Catalogo.js" defer></script>
 
   <!-- 
     - ionicon link
