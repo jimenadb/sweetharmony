@@ -1,0 +1,119 @@
+:root {
+    --hoockers-green_20: hsl(148, 20%, 38%, 0.2);
+    --pale-spring-bud: hsl(60, 68%, 85%);
+    --hoockers-green: hsl(148, 20%, 38%);
+    --spanish-gray: hsl(0, 0%, 61%);
+    --light-gray: hsl(0, 0%, 80%);
+    --cultured-1: hsl(0, 0%, 97%);
+    --cultured-2: hsl(60, 6%, 93%);
+    --gray-web: hsl(0, 0%, 49%);
+    --white_30: hsla(0, 0%, 100%, 0.3);
+    --black_70: hsla(0, 0%, 0%, 0.7);
+    --black_10: hsla(0, 0%, 0%, 0.1);
+    --white: hsl(0, 0%, 100%);
+    --black: hsl(0, 0%, 0%);
+  }
+  
+  /* -------- HERO -------- */
+  .about-hero-banner {
+    position: relative;
+    text-align: center;
+    min-height: 100vh;
+    background-color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .about-hero-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.25; /* imagen suave sobre blanco */
+  }
+  
+  .about-hero-content {
+    position: relative;
+    z-index: 2;
+    color: var(--black);
+    padding: 20px;
+    max-width: 800px;
+    text-align: center;
+    animation: fadeUp 1s ease-out forwards;
+  }
+  
+  .hero-title {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    color: var(--black);
+    margin-bottom: 15px;
+  }
+  
+  .hero-text {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    line-height: 1.8;
+    color: var(--gray-web);
+  }
+  
+  @keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(25px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* -------- ACCORDION -------- */
+  .about-info {
+    background: var(--white_30);
+    padding: 60px 20px;
+  }
+  
+  .accordion {
+    background-color: var(--white);
+    color: var(--black);
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px var(--black_10);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .accordion::after {
+    content: '▸';
+    font-size: 1.3rem;
+    color: var(--black);
+    transition: transform 0.3s ease;
+  }
+  
+  .accordion.active::after {
+    transform: rotate(90deg);
+  }
+  
+  .accordion:hover {
+    background-color: var(--hoockers-green_20);
+  }
+  
+  .panel {
+    padding: 0 18px;
+    background-color: var(--cultured-1);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color: var(--gray-web);
+  }
+  
+  .panel p {
+    padding: 10px 0;
+  }
+  

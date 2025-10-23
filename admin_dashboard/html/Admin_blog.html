@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mantenimiento del Blog — Sweet Harmony</title>
+
+  <!-- Fuente y estilos base -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Iconos -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="../css/Admin_blog.css">
+  
+</head>
+<body>
+
+  <header>
+    <h1>Mantenimiento del Blog</h1>
+    <button class="logout-btn" title="Cerrar sesión">
+      <ion-icon name="log-out-outline"></ion-icon>
+    </button>
+  </header>
+
+  <main>
+
+        <!-- Botón para mostrar/ocultar formulario -->
+    <button class="add-entry-btn" id="toggleFormBtn">
+        <ion-icon name="add-circle-outline"></ion-icon> Agregar entrada
+    </button>
+
+    <!-- Agregar nueva entrada -->
+    <section class="blog-form" id="newPostSection">
+        <h2>Agregar nueva entrada</h2>
+        <form id="newPostForm" enctype="multipart/form-data" method="POST">
+        <div class="form-group">
+            <label for="postTitle">Título</label>
+            <input type="text" id="postTitle" name="title" required>
+        </div>
+
+        <div class="form-group">
+            <label for="postContent">Contenido</label>
+            <textarea id="postContent" name="content" rows="5" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="postImages">Imágenes (opcional)</label>
+            <input type="file" id="postImages" name="images" accept="image/*" multiple>
+        </div>
+
+        <button type="submit">
+            <ion-icon name="create-outline"></ion-icon> Publicar entrada
+        </button>
+        </form>
+    </section>
+
+    <!-- Entradas existentes -->
+    <section>
+        <h2>Entradas publicadas</h2>
+        <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>Título</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody id="blogPostsTable">
+            </tbody>
+        </table>
+        </div>
+    </section>
+
+  </main>
+
+  <!-- Modal de edición -->
+  <div class="modal" id="editModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Editar entrada</h3>
+        <button class="close-btn" id="closeModal">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+      <form id="editPostForm">
+        <div class="form-group">
+          <label for="editTitle">Título</label>
+          <input type="text" id="editTitle" name="title" required>
+        </div>
+        <div class="form-group">
+          <label for="editContent">Contenido</label>
+          <textarea id="editContent" name="content" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="editStatus">Estado</label>
+          <select id="editStatus" name="status">
+            <option value="draft">Borrador</option>
+            <option value="published">Publicado</option>
+            <option value="archived">Archivado</option>
+          </select>
+        </div>
+        <button type="submit">
+          <ion-icon name="save-outline"></ion-icon> Guardar cambios
+        </button>
+      </form>
+    </div>
+  </div>
+
+    <!-- 
+    - custom js link
+  -->
+  <script src="../js/Admin_blog.js" defer></script>
+  <script src="../js/save_blog.js" defer></script>
+  <script src="../js/show_blog.js" defer></script>
+
+</body>
+</html>

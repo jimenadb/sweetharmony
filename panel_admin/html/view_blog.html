@@ -1,0 +1,21 @@
+<section class="blog-form">
+  <h2>Agregar nueva entrada</h2>
+  <form id="newPostForm" enctype="multipart/form-data" method="POST">
+    <div class="form-group">
+      <label for="postTitle">Título</label>
+      <input type="text" id="postTitle" name="title" required>
+    </div>
+
+    <div class="form-group">
+      <label for="postContent">Contenido</label>
+      <textarea id="postContent" name="content" rows="5" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="postImages">Imágenes (opcional)</label>
+      <input type="file" id="postImages" name="images" accept="image/*" multiple>
+    </div>
+
+    <button type="submit">Publicar entrada</button>
+  </form>
+</section>

@@ -1,0 +1,47 @@
+<h2>Historial de Ventas</h2>
+<p>Consulta tus ventas y filtra por producto, fecha o ID.</p>
+
+<!-- 🔍 Barra de búsqueda y filtros -->
+<div class="filtros-ventas">
+  <input type="text" id="buscarVenta" placeholder="Buscar por producto o ID..." />
+
+  <div class="filtros-fecha">
+    <label for="fechaDesde">Desde:</label>
+    <input type="date" id="fechaDesde" name="fechaDesde">
+    
+    <label for="fechaHasta">Hasta:</label>
+    <input type="date" id="fechaHasta" name="fechaHasta">
+  </div>
+
+  <button type="button" id="btnFiltrar">Filtrar</button>
+  <button type="button" id="btnLimpiar">Limpiar</button>
+</div>
+
+<!-- 📊 Tabla de historial -->
+<table class="tabla-ventas">
+  <thead>
+    <tr>
+      <th>ID Venta</th>
+      <th>Producto</th>
+      <th>Cantidad</th>
+      <th>Total</th>
+      <th>Fecha</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>#001</td>
+      <td>Maceta decorada</td>
+      <td>2</td>
+      <td>$40</td>
+      <td>2025-09-15</td>
+    </tr>
+    <tr>
+      <td>#002</td>
+      <td>Planta interior</td>
+      <td>1</td>
+      <td>$15</td>
+      <td>2025-09-15</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,220 @@
+:root {
+  --hoockers-green: hsl(148, 20%, 38%);
+  --pale-spring-bud: hsl(60, 68%, 85%);
+  --light-gray: hsl(0, 0%, 80%);
+  --white: hsl(0, 0%, 100%);
+  --black: hsl(0, 0%, 0%);
+}
+
+body {
+  font-family: 'Urbanist', sans-serif;
+  margin: 0;
+  background-color: var(--white);
+  color: var(--black);
+}
+
+header {
+  background-color: var(--hoockers-green);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+}
+
+header h1 {
+  font-size: 1.6rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+header .logout-btn {
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+header .logout-btn:hover {
+  opacity: 0.8;
+}
+
+main {
+  padding: 2rem;
+}
+
+h2 {
+  color: var(--hoockers-green);
+  text-align: center;
+}
+
+#btnAgregar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--hoockers-green);
+  color: var(--white);
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: background 0.2s;
+}
+
+#btnAgregar:hover {
+  background-color: var(--light-gray);
+}
+
+.table-responsive {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid var(--light-gray);
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+thead {
+  background-color: var(--hoockers-green);
+  color: var(--white);
+}
+
+th, td {
+  padding: 0.6rem;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+tr:hover {
+  background-color: var(--white);
+  color: var(--black);
+}
+
+form {
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+form h3 {
+  text-align: center;
+  color: var(--hoockers-green);
+}
+
+.form-group, fieldset {
+  margin-bottom: 1rem;
+}
+
+label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.4rem;
+  border: 1px solid var(--light-gray);
+  border-radius: 5px;
+  font-family: inherit;
+}
+
+.form-inline {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+button[type="submit"] {
+  background-color: var(--hoockers-green);
+  color: var(--white);
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  display: block;
+  margin: 1rem auto 0;
+  transition: background 0.2s;
+}
+
+button[type="submit"]:hover {
+  background-color: var(--light-gray);
+}
+/* --------------------------- */
+/* --------------------------- */
+/* BOTONES DE EDICION Y BORRAR */
+/* --------------------------- */
+/* --------------------------- */
+#accionesProducto {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 2rem;
+  background-color: var(--white); /* Fondo blanco */
+  border: 2px solid var(--hoockers-green); /* borde verde */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-family: 'Urbanist', sans-serif;
+  font-size: 1.1rem;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+#accionesProducto.seleccionado {
+  background-color: var(--hoockers-green); /* cambia fondo al seleccionar */
+  color: var(--white);
+  transform: translateY(-3px);
+}
+
+#accionesProducto button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.1s;
+}
+
+#btnEditar {
+  background-color: var(--hoockers-green);
+  color: var(--white);
+}
+
+#btnEditar:hover {
+  background-color: hsl(148, 25%, 45%);
+  transform: translateY(-2px);
+}
+
+#btnEliminar {
+  background-color: hsl(0, 0%, 80%);
+  color: var(--black);
+}
+
+#btnEliminar:hover {
+  background-color: hsl(0, 0%, 70%);
+  transform: translateY(-2px);
+}
+
+#productoSeleccionado {
+  font-weight: 700;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+#accionesProducto.seleccionado #productoSeleccionado {
+  color: var(--white);
+}

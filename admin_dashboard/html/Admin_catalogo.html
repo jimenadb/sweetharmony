@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalogo — Sweet Harmony</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="../css/Admin_catalogo.css">
+
+</head>
+<body>
+
+  <header>
+    <h1>Mantenimiento de Productos</h1>
+    <button class="logout-btn" title="Cerrar sesión">
+      <ion-icon name="log-out-outline"></ion-icon>
+    </button>
+  </header>
+
+  <main>
+    <button id="btnAgregar">
+      <ion-icon name="add-circle-outline"></ion-icon>
+      Agregar nuevo producto
+    </button>
+
+      <div id="formularioAgregar" style="display:none;">
+        <form id="catalogoForm" method="POST" enctype="multipart/form-data" action="../php/view_catalog.php">
+          <h3>Agregar Producto al Catálogo</h3>
+          <div class="form-group">
+            <label for="image_url">Imagen</label>
+            <input type="file" id="image_url" name="image_url" accept="image/*">
+          </div>
+          <div class="form-group">
+            <label for="product_name">Nombre del producto</label>
+            <input type="text" id="product_name" name="product_name" required>
+          </div>
+          <div class="form-group">
+            <label for="product_type">Tipo de producto</label>
+            <select id="product_type" name="product_type">
+              <option value="">-- Selecciona --</option>
+              <option value="terrario">Terrario</option>
+              <option value="maceta">Maceta</option>
+              <option value="planta">Planta</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="plant_type">Tipo de planta</label>
+            <select id="plant_type" name="plant_type">
+              <option value="">-- Selecciona --</option>
+              <option value="interior">Interior</option>
+              <option value="sombra">Sombra</option>
+              <option value="exterior">Exterior</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="price">Precio</label>
+            <input type="number" id="price" name="price" step="0.01">
+          </div>
+          <div class="form-group">
+            <label for="discount">Descuento (%)</label>
+            <input type="number" id="discount" name="discount" step="0.01" value="0.00">
+          </div>
+          <fieldset>
+            <legend>Medidas de la planta (cm)</legend>
+            <div class="form-inline">
+              <label for="plant_height">Alto:</label>
+              <input type="number" id="plant_height" name="plant_height" step="0.01">
+              <label for="plant_width">Ancho:</label>
+              <input type="number" id="plant_width" name="plant_width" step="0.01">
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Medidas de la maceta (cm)</legend>
+            <div class="form-inline">
+              <label for="pot_height">Alto:</label>
+              <input type="number" id="pot_height" name="pot_height" step="0.01">
+              <label for="pot_width">Ancho:</label>
+              <input type="number" id="pot_width" name="pot_width" step="0.01">
+            </div>
+          </fieldset>
+          <div class="form-group">
+            <label for="pot_color">Color de la maceta</label>
+            <input type="text" id="pot_color" name="pot_color">
+          </div>
+          <div class="form-group">
+            <label for="weight">Peso (kg)</label>
+            <input type="number" id="weight" name="weight" step="0.01">
+          </div>
+          <div class="form-group">
+            <label for="units">Unidades</label>
+            <input type="number" id="units" name="units" value="0" min="0">
+          </div>
+          <button type="submit">Guardar producto</button>
+        </form>
+      </div>
+    </main>
+
+
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Tipo Producto</th>
+            <th>Tipo Planta</th>
+            <th>Precio</th>
+            <th>Descuento (%)</th>
+            <th>Medidas Planta (Alto)</th>
+            <th>Medidas Planta (Ancho)</th>
+            <th>Medidas Maceta (Alto)</th>
+            <th>Medidas Maceta (Ancho)</th>
+            <th>Color Maceta</th>
+            <th>Peso (kg)</th>
+            <th>Unidades</th>
+          </tr>
+        </thead>
+        <tbody id="tablaProductos"></tbody>
+      </table>
+    </div>
+    
+    <!-- Panel externo para acciones -->
+    <div id="accionesProducto">
+      <span id="productoSeleccionado">Selecciona un producto para editar</span>
+      <button id="btnEditar">Editar</button>
+      <button id="btnEliminar">Eliminar</button>
+    </div>
+
+    <div id="formularioAgregar" style="display:none;">
+      <form id="catalogoForm" method="POST" enctype="multipart/form-data" action="../php/view_catalog.php">
+        <h3>Agregar Producto al Catálogo</h3>
+        <div class="form-group">
+          <label for="image_url">Imagen</label>
+          <input type="file" id="image_url" name="image_url" accept="image/*">
+        </div>
+        <div class="form-group">
+          <label for="product_name">Nombre del producto</label>
+          <input type="text" id="product_name" name="product_name" required>
+        </div>
+        <div class="form-group">
+          <label for="product_type">Tipo de producto</label>
+          <select id="product_type" name="product_type">
+            <option value="">-- Selecciona --</option>
+            <option value="terrario">Terrario</option>
+            <option value="maceta">Maceta</option>
+            <option value="planta">Planta</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="plant_type">Tipo de planta</label>
+          <select id="plant_type" name="plant_type">
+            <option value="">-- Selecciona --</option>
+            <option value="interior">Interior</option>
+            <option value="sombra">Sombra</option>
+            <option value="exterior">Exterior</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="price">Precio</label>
+          <input type="number" id="price" name="price" step="0.01">
+        </div>
+        <div class="form-group">
+          <label for="discount">Descuento (%)</label>
+          <input type="number" id="discount" name="discount" step="0.01" value="0.00">
+        </div>
+        <fieldset>
+          <legend>Medidas de la planta (cm)</legend>
+          <div class="form-inline">
+            <label for="plant_height">Alto:</label>
+            <input type="number" id="plant_height" name="plant_height" step="0.01">
+            <label for="plant_width">Ancho:</label>
+            <input type="number" id="plant_width" name="plant_width" step="0.01">
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Medidas de la maceta (cm)</legend>
+          <div class="form-inline">
+            <label for="pot_height">Alto:</label>
+            <input type="number" id="pot_height" name="pot_height" step="0.01">
+            <label for="pot_width">Ancho:</label>
+            <input type="number" id="pot_width" name="pot_width" step="0.01">
+          </div>
+        </fieldset>
+        <div class="form-group">
+          <label for="pot_color">Color de la maceta</label>
+          <input type="text" id="pot_color" name="pot_color">
+        </div>
+        <div class="form-group">
+          <label for="weight">Peso (kg)</label>
+          <input type="number" id="weight" name="weight" step="0.01">
+        </div>
+        <button type="submit">Guardar producto</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="../js/Admin_catalogo.js" defer></script>
+  <script src="../js/save_products.js" defer></script>
+  <script src="../js/show_products.js" defer></script>
+
+</body>
+</html>
