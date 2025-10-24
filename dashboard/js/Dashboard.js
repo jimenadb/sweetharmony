@@ -1,12 +1,9 @@
 'use strict';
 
-
-
-/**
- * add event on element
- */
-
-const addEventOnElem = function (elem, type, callback) {
+/*-----------------------------------
+  UTILS
+-----------------------------------*/
+const addEventOnElem = function(elem, type, callback) {
   if (elem.length > 1) {
     for (let i = 0; i < elem.length; i++) {
       elem[i].addEventListener(type, callback);
@@ -14,43 +11,35 @@ const addEventOnElem = function (elem, type, callback) {
   } else {
     elem.addEventListener(type, callback);
   }
-}
+};
 
-
-
-/**
- * navbar toggle
- */
-
+/*-----------------------------------
+  NAVBAR TOGGLE
+-----------------------------------*/
 const navTogglers = document.querySelectorAll("[data-nav-toggler]");
 const navbar = document.querySelector("[data-navbar]");
 const navbarLinks = document.querySelectorAll("[data-nav-link]");
 const overlay = document.querySelector("[data-overlay]");
 
-const toggleNavbar = function () {
+const toggleNavbar = function() {
   navbar.classList.toggle("active");
   overlay.classList.toggle("active");
-}
-
+};
 addEventOnElem(navTogglers, "click", toggleNavbar);
 
-const closeNavbar = function () {
+const closeNavbar = function() {
   navbar.classList.remove("active");
   overlay.classList.remove("active");
-}
-
+};
 addEventOnElem(navbarLinks, "click", closeNavbar);
 
-
-
-/**
- * header sticky & back top btn active
- */
-
+/*-----------------------------------
+  HEADER STICKY & BACK TOP BTN
+-----------------------------------*/
 const header = document.querySelector("[data-header]");
 const backTopBtn = document.querySelector("[data-back-top-btn]");
 
-const headerActive = function () {
+const headerActive = function() {
   if (window.scrollY > 150) {
     header.classList.add("active");
     backTopBtn.classList.add("active");
@@ -58,58 +47,97 @@ const headerActive = function () {
     header.classList.remove("active");
     backTopBtn.classList.remove("active");
   }
-}
-
+};
 addEventOnElem(window, "scroll", headerActive);
 
 let lastScrolledPos = 0;
-
-const headerSticky = function () {
+const headerSticky = function() {
   if (lastScrolledPos >= window.scrollY) {
     header.classList.remove("header-hide");
   } else {
     header.classList.add("header-hide");
   }
-
   lastScrolledPos = window.scrollY;
-}
-
+};
 addEventOnElem(window, "scroll", headerSticky);
 
-
-
-/**
- * scroll reveal effect
- */
-
+/*-----------------------------------
+  SCROLL REVEAL EFFECT
+-----------------------------------*/
 const sections = document.querySelectorAll("[data-section]");
-
-const scrollReveal = function () {
+const scrollReveal = function() {
   for (let i = 0; i < sections.length; i++) {
     if (sections[i].getBoundingClientRect().top < window.innerHeight / 2) {
       sections[i].classList.add("active");
     }
   }
-}
-
+};
 scrollReveal();
 addEventOnElem(window, "scroll", scrollReveal);
 
-/**
- * button login register show
- */
-
+/*-----------------------------------
+  USER DROPDOWN
+-----------------------------------*/
 const userBtn = document.getElementById('userBtn');
 const dropdownMenu = document.getElementById('dropdownMenu');
 
 userBtn.addEventListener('click', () => {
-  dropdownMenu.classList.toggle('active'); // se despliega/oculta
+  dropdownMenu.classList.toggle('active');
 });
 
-// Cerrar menú al hacer clic fuera
 document.addEventListener('click', (e) => {
   if (!userBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
     dropdownMenu.classList.remove('active');
   }
 });
 
+/*-----------------------------------
+  HEADER LOGO Y BOTONES DINÁMICOS
+-----------------------------------*/
+document.addEventListener('DOMContentLoaded', () => {
+  const logo = document.querySelector('.logo');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const ordersBtn = document.getElementById('ordersBtn');
+  const username = sessionStorage.getItem('username');
+
+  if(username) {
+    // Mostrar nombre y botones
+    logo.textContent = `Bienvenido, ${username}`;
+    logoutBtn.style.display = 'inline-block';
+    ordersBtn.style.display = 'inline-block';
+
+    logoutBtn.addEventListener('click', () => {
+      sessionStorage.removeItem('username');
+      window.location.href = "../../login_register_users/html/LoginForm.html";
+    });
+  } else {
+    // Usuario no logeado: mostrar valores por defecto
+    logo.textContent = 'SWEET-HARMONY';
+    logoutBtn.style.display = 'none';
+    ordersBtn.style.display = 'none';
+  }
+});
+/*-----------------------------------
+  LOG OUT BUTTON
+-----------------------------------*/
+document.addEventListener('DOMContentLoaded', () => {
+  
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  // Solo si el usuario está logueado mostramos el botón
+  const username = sessionStorage.getItem('username');
+  if(username){
+    logoutBtn.style.display = 'inline-block';
+  }
+
+  // Función de logout
+  logoutBtn.addEventListener('click', () => {
+    sessionStorage.clear();
+    sessionStorage.removeItem('username'); // limpia la sesión
+    window.location.href = "../../index.html"; // redirige al login
+  });
+});
+
+/*-----------------------------------
+  CARRITO
+-----------------------------------*/

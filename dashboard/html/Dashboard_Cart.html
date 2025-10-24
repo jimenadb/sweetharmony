@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Carrito - SWEET HARMONY</title>
+  <link rel="stylesheet" href="../css/Dashboard_Cart.css">
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+</head>
+<body>
+
+
+
+  <!-- MAIN CARRO -->
+  <main class="cart-page section">
+    <div class="container">
+      <h1 class="h1">Mi Carrito</h1>
+
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="select-all"></th>
+            <th>Producto</th>
+            <th>Precio Unitario</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="cart-items">
+          <!-- Ejemplo de producto -->
+          <tr>
+            <td><input type="checkbox" class="select-item"></td>
+            <td class="product-info">
+              <img src="https://via.placeholder.com/80" alt="Producto A">
+              <span>Producto A</span>
+            </td>
+            <td class="price-unit">$25.00</td>
+            <td><input type="number" class="quantity" value="1" min="1"></td>
+            <td class="total-price">$25.00</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" class="select-item"></td>
+            <td class="product-info">
+              <img src="https://via.placeholder.com/80" alt="Producto B">
+              <span>Producto B</span>
+            </td>
+            <td class="price-unit">$15.00</td>
+            <td><input type="number" class="quantity" value="2" min="1"></td>
+            <td class="total-price">$30.00</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" class="select-item"></td>
+            <td class="product-info">
+              <img src="https://via.placeholder.com/80" alt="Producto C">
+              <span>Producto C</span>
+            </td>
+            <td class="price-unit">$10.00</td>
+            <td><input type="number" class="quantity" value="3" min="1"></td>
+            <td class="total-price">$30.00</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="cart-actions">
+        <button class="btn btn-secondary" id="delete-selected">Eliminar seleccionados</button>
+        <button class="btn btn-secondary" id="empty-cart">Vaciar carrito</button>
+        <input type="text" id="coupon" placeholder="Código de cupón">
+        <button class="btn btn-primary" id="apply-coupon">Aplicar cupón</button>
+      </div>
+
+      <div class="cart-summary">
+        <p>Total General: <span id="grand-total">$85.00</span></p>
+        <button class="btn btn-primary" id="checkout-btn">Realizar Compra</button>
+      </div>
+
+    </div>
+  </main>
+  
+  <script defer src="../js/Dashboard_Cart.js"></script>
+</body>
+</html>

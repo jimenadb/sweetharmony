@@ -144,25 +144,30 @@ button:hover {
 }
 
 .google-btn {
-  width: 50px;
-  height: 50px;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  color: var(--white);
-  background: linear-gradient(
-    145deg,
-    var(--hoockers-green_20),
-    var(--hoockers-green)
-  );
-  box-shadow: 0 4px 10px var(--black_15);
+  gap: 10px;           /* espacio entre ícono y texto */
+  padding: 10px 20px;  /* tamaño del botón */
+  border: none;
+  border-radius: 8px;  /* rectángulo con bordes redondeados */
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;          /* texto negro */
+  background-color: #fff;  /* fondo blanco */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+}
+
+.google-btn i {
+  font-size: 22px;
+  color: hsl(148, 20%, 38%)      /* color Google rojo */
+}
+
+.google-btn span {
+  z-index: 1;
 }
 
 .google-btn::before {
@@ -170,7 +175,7 @@ button:hover {
   position: absolute;
   width: 120%;
   height: 120%;
-  background: linear-gradient(120deg, var(--pale-spring-bud), var(--white));
+  background: linear-gradient(120deg, #f4f4f4, #ffffff);
   top: -50%;
   left: -50%;
   transform: rotate(45deg);
@@ -183,12 +188,6 @@ button:hover {
 }
 
 .google-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 15px var(--black_15);
-}
-
-.google-btn i {
-  z-index: 1;
-  font-size: 22px;
-  color: var(--white);
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }

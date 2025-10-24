@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
 
@@ -16,7 +18,7 @@ $email = $conexion->real_escape_string($input['email']);
 $password = $input['password'];
 
 // $sql = "SELECT password FROM users WHERE email='$email' LIMIT 1";
-$sql = "SELECT password, role FROM users WHERE email='$email' LIMIT 1";
+$sql = "SELECT id, password, role, first_name FROM users WHERE email='$email' LIMIT 1";
 $result = $conexion->query($sql);
 
 if ($result->num_rows === 0) {
@@ -28,6 +30,9 @@ if ($result->num_rows === 0) {
 $user = $result->fetch_assoc();
 
 if (password_verify($password, $user['password'])) {
+    $_SESSION['user_id'] = $user['id'];           // id del usuario
+    $_SESSION['username'] = $user['first_name'];  // nombre del usuario
+    $_SESSION['role'] = $user['role'];           // rol del usuario
 	//CAMBIO EN LA REDIRECCION 
     $redirect = ($user['role'] === 'admin')
         ? "../../admin_dahsboard/html/Admin_view.html"
@@ -35,7 +40,8 @@ if (password_verify($password, $user['password'])) {
 
 	echo json_encode([
         "message" => "Login exitoso",
-        "redirect" => $redirect
+        "redirect" => $redirect,
+        "username" => $user['first_name']
     ]);
 } else {
     http_response_code(401);

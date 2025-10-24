@@ -41,32 +41,69 @@ fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/dashboard_c
     cardActions.classList.add('card-actions');
 
 
-    const btnCart = document.createElement("a");
-    btnCart.href = `https://wa.me/51910405014?text=${encodeURIComponent(
+    const btnWhatsapp = document.createElement("a");
+    btnWhatsapp.href = `https://wa.me/51910405014?text=${encodeURIComponent(
       `Hola, estoy interesado en el producto: ${producto.product_name}`
     )}`
-
-    btnCart.target = "_blank";
-    btnCart.classList.add("action_btn");
-    btnCart.setAttribute("aria-label","add to cart");
-    btnCart.innerHTML = `<ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>`;
-
- 
-    btnCart.classList.add('action-btn');
-    btnCart.setAttribute('aria-label','add to cart');
-    btnCart.innerHTML = `<ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>`;
+    btnWhatsapp.target = "_blank";
+    btnWhatsapp.classList.add("action_btn");
+    btnWhatsapp.setAttribute("aria-label","whatsapp");
+    btnWhatsapp.innerHTML = `<ion-icon name="logo-whatsapp" aria-hidden="true"></ion-icon>`;
+    btnWhatsapp.classList.add('action-btn');
+    btnWhatsapp.setAttribute('aria-label','whatsapp');
+    btnWhatsapp.innerHTML = `<ion-icon name="logo-whatsapp" aria-hidden="true"></ion-icon>`;
 
     const btnWishlist = document.createElement('button');
     btnWishlist.classList.add('action-btn');
     btnWishlist.setAttribute('aria-label', 'add to wishlist');
+    btnWishlist.setAttribute('data-product-id', producto.id); // <--- CORRECTO
     btnWishlist.innerHTML = `<ion-icon name="star-outline" aria-hidden="true"></ion-icon>`;
+    
 
-    const btnCompare = document.createElement('button');
-    btnCompare.classList.add('action-btn');
-    btnCompare.setAttribute('aria-label', 'compare');
-    btnCompare.innerHTML = `<ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>`;
+    // -----------------------------------
+    // Botón para guardar en wishlist
+    // -----------------------------------
+    btnWishlist.addEventListener('click', async (e) => {
+      const button = e.currentTarget;
+      const productId = button.getAttribute('data-product-id');
+      const isFavorito = button.classList.contains('favorito'); // clase para saber si ya está
 
-    cardActions.append(btnCart, btnWishlist, btnCompare);
+      try {
+        const response = await fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/add_wishlist.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ product_id: productId, action: isFavorito ? 'remove' : 'add' }),
+          credentials: 'include'
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          if (isFavorito) {
+            // quitar de favoritos
+            button.classList.remove('favorito');
+            button.innerHTML = `<ion-icon name="star-outline" aria-hidden="true"></ion-icon>`;
+          } else {
+            // agregar a favoritos
+            button.classList.add('favorito');
+            button.innerHTML = `<ion-icon name="star" aria-hidden="true"></ion-icon>`;
+          }
+        } else {
+          console.error(data.message);
+        }
+
+      } catch (err) {
+        console.error('Error al actualizar favoritos:', err);
+      }
+    });
+
+
+    const btnCart = document.createElement('button');
+    btnCart.classList.add('action-btn');
+    btnCart.setAttribute('aria-label', 'add to cart');
+    btnCart.innerHTML = `<ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>`;
+
+    cardActions.append(btnWhatsapp, btnWishlist, btnCart);
     cardBanner.appendChild(cardActions);
 
     // --- card-content ---
@@ -107,3 +144,68 @@ fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/dashboard_c
   console.error("Error al cargar", error);
 });
 
+// -----------------------------------
+// Trae los datos del wishlist
+// -----------------------------------
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const res = await fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/get_wishlist.php', {
+      credentials: 'include'
+    });
+    const favoritos = await res.json();
+
+    // Marcar las estrellitas de los productos que ya son favoritos
+    favoritos.forEach(id => {
+      const button = document.querySelector(`[data-product-id='${id}']`);
+      if (button) {
+        button.classList.add('favorito');
+        button.innerHTML = `<ion-icon name="star" aria-hidden="true"></ion-icon>`;
+      }
+    });
+  } catch (err) {
+    console.error('Error al obtener favoritos:', err);
+  }
+});    
+
+/*-----------------------------------
+  UTILS
+-----------------------------------*/
+const addEventOnElem = function(elem, type, callback) {
+  if (elem.length > 1) {
+    for (let i = 0; i < elem.length; i++) {
+      elem[i].addEventListener(type, callback);
+    }
+  } else {
+    elem.addEventListener(type, callback);
+  }
+};
+
+
+/*-----------------------------------
+  BACK TO TOP BUTTON
+-----------------------------------*/
+const backTopBtn = document.querySelector("[data-back-top-btn]");
+
+const backTopBtnActive = function() {
+  if (backTopBtn) {
+    if (window.scrollY > 150) {
+      backTopBtn.classList.add("active");
+    } else {
+      backTopBtn.classList.remove("active");
+    }
+  }
+};
+addEventOnElem(window, "scroll", backTopBtnActive);
+/*-----------------------------------
+  SCROLL REVEAL EFFECT
+-----------------------------------*/
+const sections = document.querySelectorAll("[data-section]");
+const scrollReveal = function() {
+  for (let i = 0; i < sections.length; i++) {
+    if (sections[i].getBoundingClientRect().top < window.innerHeight / 2) {
+      sections[i].classList.add("active");
+    }
+  }
+};
+scrollReveal();
+addEventOnElem(window, "scroll", scrollReveal);

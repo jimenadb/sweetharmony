@@ -5,6 +5,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>SWEET HARMONY</title>
 
   <!-- 
@@ -47,7 +50,7 @@
           </button>
         </div>
         <a href="#" class="logo">
-          SWEETHARMONY
+          SWEET-HARMONY
         </a>
         <div class="header-actions">
           <div class="user-dropdown">
@@ -72,7 +75,16 @@
               <span id="cartCount" class="btn-badge">0</span>
             </button>
           </a>
-        </div>
+          <a href="Orders.html">
+            <button id="ordersBtn" style="display:none;" class="header-action-btn" aria-label="view orders">
+              <ion-icon name="cube-outline" aria-hidden="true"></ion-icon>
+            </button>
+          </a>
+          <!-- Botón de logout, oculto por defecto -->
+          <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión">
+            <ion-icon name="log-out-outline" aria-hidden="true"></ion-icon>
+          </button>
+         </div>
         <nav class="navbar">
           <ul class="navbar-list">
             <li><a href="Dashboard.html" class="navbar-link has-after">INICIO</a></li>
@@ -169,7 +181,7 @@
       <section class="section shop" id="shop" aria-label="shop" data-section>
         <div class="container">
           <div class="title-wrapper">
-            <h2 class="h2 section-title">Our Bestsellers</h2>
+            <h2 class="h2 section-title">Mas Vendidos</h2>
             <a href="Dashboard_Catalogo.html"><span class="span">Shop All Products</span></a>
           </div>
           <ul class="has-scrollbar">
@@ -343,7 +355,7 @@
       <section class="section shop" id="shop" aria-label="shop" data-section>
         <div class="container">
           <div class="title-wrapper">
-            <h2 class="h2 section-title">Under $25</h2>
+            <h2 class="h2 section-title">Ofertas</h2>
             <a href="Dashboard_Catalogo.html"><span class="span">Shop All Products</span></a>
           </div>
           <ul class="has-scrollbar">

@@ -22,6 +22,9 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
     // ✅ Aquí va el if principal
     if (response.ok) {
       // Usa la URL que el backend envía
+      if (result.username) {
+        sessionStorage.setItem('username', result.username);
+      }
       if (result.redirect) {
         window.location.href = result.redirect;
       } else {

@@ -1,0 +1,29 @@
+-----------------------
+-----------------------
+Credenciales de prueba
+-----------------------
+-----------------------
+USUSARIO
+
+nombre:usuario
+email:usuario123@gmail.com
+password:usuario123
+
+USUSARIO 2
+
+nombre:usuario2
+email:usuario2@gmail.com
+password:usuario2
+
+
+ADMINISTRADOR
+
+nombre:admin
+email:admin@gmail.com
+password:admin123
+
+USUARIO-VISTA DE ADMINISTRADOR
+
+nombre:adminview
+email:adminview@gmail.com
+password:adminview123
