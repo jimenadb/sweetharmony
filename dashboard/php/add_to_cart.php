@@ -1,28 +1,62 @@
 <?php
-require_once "../../conexion.php"; 
+header("Content-Type: application/json; charset=UTF-8");
+require_once "../../conexion.php";
 
 session_start();
 $user_id = $_SESSION['user_id'] ?? null;
 
 if (!$user_id) {
-    echo json_encode(["success" => false, "message" => "Usuario no logueado"]);
+    http_response_code(401);
+    echo json_encode(["message" => "No has iniciado sesión"]);
     exit;
 }
 
-$data = json_decode(file_get_contents("php://input"), true);
-$product_id = intval($data['product_id']);
-$quantity = intval($data['quantity'] ?? 1);
+$input = json_decode(file_get_contents('php://input'), true);
+$product_id = intval($input['product_id'] ?? 0);
+$action = $input['action'] ?? 'add'; // <-- para saber si se elimina o agrega
+$quantity = intval($input['quantity'] ?? 1);
 
-$sql = "INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)
-        ON DUPLICATE KEY UPDATE quantity = quantity + ?";
-$stmt = $conexion->prepare($sql);
-$stmt->bind_param("iiii", $user_id, $product_id, $quantity, $quantity);
-
-if ($stmt->execute()) {
-    echo json_encode(["success" => true]);
-} else {
-    echo json_encode(["success" => false, "message" => $stmt->error]);
+if (!$product_id) {
+    http_response_code(400);
+    echo json_encode(["message" => "Producto no válido"]);
+    exit;
 }
 
-$stmt->close();
+// Verificar si ya existe en el carrito
+$sql_check = "SELECT id FROM cart WHERE user_id = $user_id AND product_id = $product_id";
+$result = $conexion->query($sql_check);
+
+if ($result->num_rows > 0) {
+    if ($action === 'remove') {
+        // ❌ Eliminar del carrito
+        $sql_delete = "DELETE FROM cart WHERE user_id = $user_id AND product_id = $product_id";
+        if ($conexion->query($sql_delete)) {
+            echo json_encode([
+                "message" => "Producto eliminado del carrito",
+                "action" => "removed"
+            ]);
+        } else {
+            http_response_code(500);
+            echo json_encode(["message" => "Error al eliminar: " . $conexion->error]);
+        }
+    } else {
+        // ✅ Si ya existe y acción es "add", simplemente no duplicamos
+        echo json_encode([
+            "message" => "El producto ya está en el carrito",
+            "action" => "exists"
+        ]);
+    }
+} else {
+    // 🆕 No existe → agregar
+    $sql_insert = "INSERT INTO cart (user_id, product_id, quantity) VALUES ($user_id, $product_id, $quantity)";
+    if ($conexion->query($sql_insert)) {
+        echo json_encode([
+            "message" => "Producto agregado al carrito",
+            "action" => "added"
+        ]);
+    } else {
+        http_response_code(500);
+        echo json_encode(["message" => "Error al agregar: " . $conexion->error]);
+    }
+}
 ?>

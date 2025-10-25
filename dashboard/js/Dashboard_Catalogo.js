@@ -101,7 +101,47 @@ fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/dashboard_c
     const btnCart = document.createElement('button');
     btnCart.classList.add('action-btn');
     btnCart.setAttribute('aria-label', 'add to cart');
+    btnCart.setAttribute('data-type', 'cart');
+    btnCart.setAttribute('data-product-id', producto.id);
     btnCart.innerHTML = `<ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>`;
+    // -----------------------------------
+    // Evento: agregar o quitar del carrito
+    // -----------------------------------
+    btnCart.addEventListener('click', async (e) => {
+      const button = e.currentTarget;
+      const productId = button.getAttribute('data-product-id');
+      const isInCart = button.classList.contains('in-cart'); // saber si ya está agregado
+
+      try {
+        const response = await fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/add_to_cart.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ product_id: productId, action: isInCart ? 'remove' : 'add' }),
+          credentials: 'include'
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          if (isInCart) {
+            // Eliminar del carrito
+            button.classList.remove('in-cart');
+            button.innerHTML = `<ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>`;
+          } else {
+            // Agregar al carrito
+            button.classList.add('in-cart');
+            button.innerHTML = `<ion-icon name="bag-handle" aria-hidden="true"></ion-icon>`;
+          }
+
+          console.log(data.message);
+        } else {
+          console.error(data.message);
+        }
+
+      } catch (err) {
+        console.error('Error al actualizar carrito:', err);
+      }
+    });
 
     cardActions.append(btnWhatsapp, btnWishlist, btnCart);
     cardBanner.appendChild(cardActions);
@@ -166,6 +206,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error al obtener favoritos:', err);
   }
 });    
+// -----------------------------------
+// Trae los datos del wishlist
+// -----------------------------------
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const res = await fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/get_cart_for_catalogo.php', {
+      credentials: 'include'
+    });
+    const carrito = await res.json();
+
+    carrito.forEach(id => {
+      const btn = document.querySelector(`[data-type='cart'][data-product-id='${id}']`);
+      if (btn) btn.innerHTML = `<ion-icon name="bag-handle" aria-hidden="true"></ion-icon>`;
+    });
+  } catch (err) {
+    console.error('Error al obtener carrito:', err);
+  }
+});
 
 /*-----------------------------------
   UTILS
