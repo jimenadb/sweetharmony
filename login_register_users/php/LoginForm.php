@@ -35,7 +35,7 @@ if (password_verify($password, $user['password'])) {
     $_SESSION['role'] = $user['role'];           // rol del usuario
 	//CAMBIO EN LA REDIRECCION 
     $redirect = ($user['role'] === 'admin')
-        ? "../../admin_dahsboard/html/Admin_view.html"
+        ? "../../admin_dashboard/html/Admin_view.html"
         : "../../dashboard/html/Dashboard.html";
 
 	echo json_encode([

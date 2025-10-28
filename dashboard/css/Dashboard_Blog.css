@@ -77,12 +77,18 @@
       background:transparent;color:var(--black);
     }
 
-    /* grid */
-    .blog-grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap:22px;
-      margin-top:18px;
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+      min-height: 400px; /* asegura espacio aunque pocos posts */
+    }
+
+    .pager {
+      margin-top: 32px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
     }
 
     /* post card */

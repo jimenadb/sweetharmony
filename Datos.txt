@@ -1,15 +1,15 @@
 -----------------------
 -----------------------
-Credenciales de prueba
+🎀  𝒞𝑅𝐸𝒟𝐸𝒩𝒞𝐼𝒜𝐿𝐸𝒮  🎀 
 -----------------------
 -----------------------
-USUSARIO
+USUARIO
 
 nombre:usuario
 email:usuario123@gmail.com
 password:usuario123
 
-USUSARIO 2
+USUARIO 2
 
 nombre:usuario2
 email:usuario2@gmail.com
@@ -22,8 +22,190 @@ nombre:admin
 email:admin@gmail.com
 password:admin123
 
-USUARIO-VISTA DE ADMINISTRADOR
+--------------------------------------------------------------
+--------------------------------------------------------------
+🍬 ⋆ 🍇  🎀  𝒟𝐵𝐸𝒜𝒱𝐸𝑅  🎀  🍇 ⋆ 🍬
+--------------------------------------------------------------
+--------------------------------------------------------------
+-----------------------------
+-- BASE DE DATOS
+-----------------------------
+USE dbximena_flores;
 
-nombre:adminview
-email:adminview@gmail.com
-password:adminview123
+
+-----------------------------
+-- TABLAS PRINCIPALES
+-----------------------------
+
+-- Tabla de usuarios
+CREATE TABLE users (
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  first_name      VARCHAR(100)      NOT NULL,
+  last_name       VARCHAR(150)      NOT NULL,
+  email           VARCHAR(190)      NOT NULL UNIQUE,
+  phone           VARCHAR(25)       NULL,
+  address         VARCHAR(200)      NULL,
+  city_id         INT UNSIGNED      NULL,
+  department      VARCHAR(100)      NULL,
+  province        VARCHAR(100)      NULL,
+  postal_code     VARCHAR(20)       NULL,
+  password        VARCHAR(255)      NOT NULL,
+  is_active       TINYINT(1)        NOT NULL DEFAULT 1,
+  created_at      DATETIME          NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at      DATETIME          NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tabla de productos
+CREATE TABLE products (
+  id                INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  image_url         VARCHAR(255) NOT NULL,
+  price             DECIMAL(10,2) NOT NULL,
+  discount          DECIMAL(5,2) DEFAULT 0.00,
+  product_name      VARCHAR(150) NOT NULL,
+  product_type      VARCHAR(100) NOT NULL,
+  plant_type        VARCHAR(100) NOT NULL,
+  plant_height      DECIMAL(6,2) DEFAULT NULL,
+  plant_width       DECIMAL(6,2) DEFAULT NULL,
+  pot_height        DECIMAL(6,2) DEFAULT NULL,
+  pot_width         DECIMAL(6,2) DEFAULT NULL,
+  pot_color         VARCHAR(50) DEFAULT NULL,
+  weight            DECIMAL(8,2) DEFAULT NULL,
+  created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tabla de items en carrito
+CREATE TABLE cart_items (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  user_id INT UNSIGNED NOT NULL,
+  product_id INT UNSIGNED NOT NULL,
+  quantity INT UNSIGNED DEFAULT 1,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+-- Tabla de publicaciones del blog
+CREATE TABLE blog_posts (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  user_id INT UNSIGNED NOT NULL,
+  title VARCHAR(200) NOT NULL,
+  content TEXT NOT NULL,
+  image_url VARCHAR(255) NULL,
+  status ENUM('draft','published','archived') DEFAULT 'draft',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Tabla de wishlist (favoritos)
+CREATE TABLE wishlist (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  user_id INT UNSIGNED NOT NULL,
+  product_id INT UNSIGNED NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+  UNIQUE KEY unique_wishlist (user_id, product_id)
+);
+
+-- Tabla de carrito de compras
+CREATE TABLE cart (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  user_id INT UNSIGNED NOT NULL,
+  product_id INT UNSIGNED NOT NULL,
+  quantity INT UNSIGNED NOT NULL DEFAULT 1,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+  UNIQUE KEY unique_cart (user_id, product_id)
+);
+
+-----------------------------
+-- TABLAS DE YOURLS (acortador de URLs)
+-----------------------------
+
+-- Configuración interna de YOURLS
+CREATE TABLE `yourls_options` (
+  `option_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `option_name` varchar(64) NOT NULL DEFAULT '',
+  `option_value` longtext NOT NULL,
+  PRIMARY KEY (`option_id`),
+  UNIQUE KEY `option_name` (`option_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- URLs acortadas de YOURLS
+CREATE TABLE `yourls_url` (
+  `keyword` varchar(200) NOT NULL,
+  `url` text NOT NULL,
+  `title` text,
+  `timestamp` datetime NOT NULL,
+  `ip` varchar(41) NOT NULL,
+  `clicks` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`keyword`),
+  KEY `url` (`url`(100)),
+  KEY `ip` (`ip`),
+  KEY `timestamp` (`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-----------------------------
+-- ALTERACIONES A TABLAS EXISTENTES
+-----------------------------
+
+-- Agregar campo 'role' a la tabla users
+ALTER TABLE users 
+ADD COLUMN role ENUM('user','admin') NOT NULL DEFAULT 'user' AFTER password;
+
+-- Ajustar campos opcionales en tabla products
+ALTER TABLE products
+  MODIFY image_url VARCHAR(255) NULL,
+  MODIFY price DECIMAL(10,2) NULL,
+  MODIFY discount DECIMAL(5,2) DEFAULT 0.00 NULL,
+  MODIFY product_type VARCHAR(100) NULL,
+  MODIFY plant_type VARCHAR(100) NULL,
+  MODIFY plant_height DECIMAL(6,2) NULL,
+  MODIFY plant_width DECIMAL(6,2) NULL,
+  MODIFY pot_height DECIMAL(6,2) NULL,
+  MODIFY pot_width DECIMAL(6,2) NULL,
+  MODIFY pot_color VARCHAR(50) NULL,
+  MODIFY weight DECIMAL(8,2) NULL;
+
+-- Permitir valores nulos en algunos campos de blog_posts
+ALTER TABLE blog_posts
+  MODIFY user_id INT UNSIGNED NULL,
+  MODIFY content TEXT NULL,
+  MODIFY image_url VARCHAR(255) NULL;
+
+-- Agregar columna 'units' en products
+ALTER TABLE products
+ADD COLUMN units INT UNSIGNED DEFAULT 0 AFTER weight;
+
+-- Eliminar columnas no necesarias de users
+ALTER TABLE users
+DROP COLUMN phone,
+DROP COLUMN address,
+DROP COLUMN city_id,
+DROP COLUMN department,
+DROP COLUMN province,
+DROP COLUMN postal_code,
+DROP COLUMN is_active;
+
+-- Ajuste de restricciones en wishlist
+ALTER TABLE wishlist DROP FOREIGN KEY wishlist_ibfk_2;
+ALTER TABLE wishlist ADD CONSTRAINT wishlist_ibfk_2
+FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE NO ACTION;
+
+ALTER TABLE wishlist DROP FOREIGN KEY wishlist_ibfk_1;
+ALTER TABLE wishlist ADD CONSTRAINT wishlist_ibfk_1 
+FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE NO ACTION;
+
+
+-----------------------------
+-- COMANDOS DE CONSULTA Y MANTENIMIENTO
+-----------------------------
+select * from cart;
+select * from wishlist;
+SHOW TABLES;
+-- drop table ...
+SHOW CREATE TABLE wishlist;

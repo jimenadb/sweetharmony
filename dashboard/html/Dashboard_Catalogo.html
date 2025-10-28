@@ -33,10 +33,6 @@
 <body id="top">
 
 
-
-
-
-
     <div class="overlay" data-nav-toggler data-overlay></div>
     </div>
     <div class="hero-card has-bg-image" style="background-image: url(../assets/catalogoheader.jpg);">
@@ -58,6 +54,44 @@
         
       </div>
     </section>
+
+     <!-- Popup para Detalles del Producto -->
+<div id="product-popup" class="popup" style="display:none;">
+  <div class="popup-content">
+    <span id="popup-close" class="close-btn">&times;</span>
+    <div class="popup-body">
+      
+      <!-- Imagen del producto -->
+      <div class="popup-image">
+        <img id="popup-product-img" src="" alt="Imagen del producto">
+      </div>
+
+      <!-- Información del producto -->
+      <div class="popup-info">
+        <h2 id="popup-product-name"></h2>
+        <p id="popup-product-type"></p>
+        <p id="popup-plant-type"></p>
+        <p id="popup-discount"></p>
+        <p id="popup-price"></p>
+        
+        <p><strong>Dimensiones de la planta:</strong> <span id="popup-plant-dimensions"></span></p>
+        <p><strong>Dimensiones de la maceta:</strong> <span id="popup-pot-dimensions"></span></p>
+        <p><strong>Peso:</strong> <span id="popup-weight"></span></p>
+        <p><strong>Unidades disponibles:</strong> <span id="popup-units"></span></p>
+
+        <!-- Cantidad a agregar -->
+        <div class="quantity">
+          <button id="quantity-decrease">-</button>
+          <input type="number" id="product-quantity" value="1" min="1">
+          <button id="quantity-increase">+</button>
+        </div>
+
+        <!-- Botón para agregar al carrito -->
+        <button id="add-to-cart">Añadir al carrito</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
     <!-- BOTÓN FLOTANTE WHATSAPP -->

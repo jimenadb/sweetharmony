@@ -10,8 +10,6 @@
 </head>
 <body>
 
-
-
   <!-- MAIN CARRO -->
   <main class="cart-page section">
     <div class="container">
@@ -28,37 +26,7 @@
           </tr>
         </thead>
         <tbody id="cart-items">
-          <!-- Ejemplo de producto -->
-          <tr>
-            <td><input type="checkbox" class="select-item"></td>
-            <td class="product-info">
-              <img src="https://via.placeholder.com/80" alt="Producto A">
-              <span>Producto A</span>
-            </td>
-            <td class="price-unit">$25.00</td>
-            <td><input type="number" class="quantity" value="1" min="1"></td>
-            <td class="total-price">$25.00</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox" class="select-item"></td>
-            <td class="product-info">
-              <img src="https://via.placeholder.com/80" alt="Producto B">
-              <span>Producto B</span>
-            </td>
-            <td class="price-unit">$15.00</td>
-            <td><input type="number" class="quantity" value="2" min="1"></td>
-            <td class="total-price">$30.00</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox" class="select-item"></td>
-            <td class="product-info">
-              <img src="https://via.placeholder.com/80" alt="Producto C">
-              <span>Producto C</span>
-            </td>
-            <td class="price-unit">$10.00</td>
-            <td><input type="number" class="quantity" value="3" min="1"></td>
-            <td class="total-price">$30.00</td>
-          </tr>
+          
         </tbody>
       </table>
 
@@ -73,8 +41,39 @@
         <p>Total General: <span id="grand-total">$85.00</span></p>
         <button class="btn btn-primary" id="checkout-btn">Realizar Compra</button>
       </div>
-
     </div>
+
+    <!-- ==========================
+     FACTURA PREVIA Y ENTREGA
+    ========================== -->
+    <section class="checkout-section">
+      <h2 class="h2">Resumen de Compra</h2>
+
+      <!-- Factura previa -->
+      <div class="invoice-preview">
+        <h3>Factura Previa</h3>
+        <p><strong>Subtotal:</strong> <span id="subtotal">$0.00</span></p>
+        <p><strong>Descuento:</strong> <span id="discount-amount">$0.00</span></p>
+        <p><strong>Envío:</strong> <span id="shipping">$5.00</span></p>
+        <p><strong>Total a Pagar:</strong> <span id="total-payable">$0.00</span></p>
+      </div>
+
+      <!-- Dirección de entrega -->
+      <div class="delivery-address">
+        <h3>Dirección de Entrega</h3>
+        <p id="address-info">No has seleccionado una dirección.</p>
+        <a href="User_Address.html">
+            <button class="btn btn-secondary" id="choose-address">
+                Confirmar / Cambiar Dirección
+            </button>
+        </a>
+      </div>
+
+      <!-- Acción final -->
+      <div class="final-action">
+        <button class="btn btn-primary" id="place-order">Realizar Pedido</button>
+      </div>
+    </section>
   </main>
   
   <script defer src="../js/Dashboard_Cart.js"></script>

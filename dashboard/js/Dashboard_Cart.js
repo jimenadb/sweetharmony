@@ -1,46 +1,62 @@
-const cartItems = document.querySelectorAll('#cart-items tr');
-const grandTotalEl = document.getElementById('grand-total');
-const selectAllCheckbox = document.getElementById('select-all');
+document.addEventListener("DOMContentLoaded", async () => {
+  const cartTableBody = document.getElementById("cart-items");
+  const grandTotalEl = document.getElementById("grand-total");
 
-function updateTotals() {
-  let total = 0;
-  cartItems.forEach(row => {
-    const price = parseFloat(row.querySelector('.price-unit').textContent.replace('$',''));
-    const qty = parseInt(row.querySelector('.quantity').value);
-    const rowTotal = price * qty;
-    row.querySelector('.total-price').textContent = `$${rowTotal.toFixed(2)}`;
-    total += rowTotal;
-  });
-  grandTotalEl.textContent = `$${total.toFixed(2)}`;
-}
+  try {
+    // 🔹 Llamar al backend
+    const res = await fetch("http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/get_cart_for_dashboard_cart.php", {
+      credentials: "include"
+    });
 
-// actualizar al cambiar cantidad
-cartItems.forEach(row => {
-  row.querySelector('.quantity').addEventListener('change', updateTotals);
-});
+    if (!res.ok) throw new Error("Error al obtener el carrito");
 
-// seleccionar todos
-selectAllCheckbox.addEventListener('change', e => {
-  cartItems.forEach(row => {
-    row.querySelector('.select-item').checked = e.target.checked;
-  });
-});
+    const cart = await res.json();
 
-// eliminar seleccionados
-document.getElementById('delete-selected').addEventListener('click', () => {
-  cartItems.forEach(row => {
-    if(row.querySelector('.select-item').checked){
-      row.remove();
+    // 🔹 Limpiar la tabla antes de renderizar
+    cartTableBody.innerHTML = "";
+
+    // 🔹 Si no hay productos
+    if (cart.length === 0) {
+      cartTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Tu carrito está vacío 🛒</td></tr>`;
+      grandTotalEl.textContent = "$0.00";
+      return;
     }
-  });
-  updateTotals();
+
+    // 🔹 Renderizar los productos
+    let grandTotal = 0;
+
+    cart.forEach(item => {
+      const total = item.price * item.quantity;
+      grandTotal += total;
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><input type="checkbox" class="select-item"></td>
+        <td class="product-info">
+          <img src="${item.image}" alt="${item.name}" width="80">
+          <span>${item.name}</span>
+        </td>
+        <td class="price-unit">$${item.price.toFixed(2)}</td>
+        <td><input type="number" class="quantity" value="${item.quantity}" min="1"></td>
+        <td class="total-price">$${total.toFixed(2)}</td>
+      `;
+      cartTableBody.appendChild(row);
+    });
+
+    // 🔹 Mostrar total general
+    grandTotalEl.textContent = `$${grandTotal.toFixed(2)}`;
+
+  } catch (err) {
+    console.error("Error cargando carrito:", err);
+    cartTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:red;">Error al cargar el carrito</td></tr>`;
+  }
 });
 
-// vaciar carrito
-document.getElementById('empty-cart').addEventListener('click', () => {
-  document.getElementById('cart-items').innerHTML = '';
-  updateTotals();
-});
 
-// inicializar totales
-updateTotals();
+document.getElementById('place-order').addEventListener('click', () => {
+  console.log("Botón de realizar pedido clickeado"); // para verificar
+  alert('✅ Pedido realizado correctamente.\nGracias por tu compra en SWEET HARMONY.');
+});
+document.getElementById('checkout-btn').onclick = () => {
+  document.querySelector('.checkout-section').style.display = 'block';
+};

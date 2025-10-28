@@ -1,3 +1,19 @@
+:root {
+  --hoockers-green_20: hsl(148, 20%, 38%, 0.2);
+  --pale-spring-bud: hsl(60, 68%, 85%);
+  --hoockers-green: hsl(148, 20%, 38%);
+  --spanish-gray: hsl(0, 0%, 61%);
+  --light-gray: hsl(0, 0%, 80%);
+  --cultured-1: hsl(0, 0%, 97%);
+  --cultured-2: hsl(60, 6%, 93%);
+  --gray-web: hsl(0, 0%, 49%);
+  --white_30: hsla(0, 0%, 100%, 0.3);
+  --black_70: hsla(0, 0%, 0%, 0.7);
+  --black_10: hsla(0, 0%, 0%, 0.1);
+  --white: hsl(0, 0%, 100%);
+  --black: hsl(0, 0%, 0%);
+}
+
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 4 columnas ajustables */
@@ -37,7 +53,167 @@ BOTON FLOTANTE WHATSAPP
 
 /* ------------------------------
 ------------------------------
-header catalogo
+Pop up
 ------------------------------
 ------------------------------ */
 
+/* -------- POPUP -------- */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--black_70); /* Fondo semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+/* Contenido del Popup */
+.popup-content {
+  background-color: var(--white);
+  border-radius: 10px;
+  width: 90%;
+  max-width: 1000px;
+  display: center;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Cerrar Popup */
+.close-btn {
+  position: absolute;
+  top: 15px; /* Ajusto la distancia desde la parte superior */
+  right: 15px; /* Ajusto la distancia desde la parte derecha */
+  font-size: 30px; /* Aumento el tamaño del icono */
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--black);
+  z-index: 1010; /* Aseguro que esté sobre el contenido del popup */
+}
+
+/* Asegurándome que el resto del contenido no se desplace */
+.popup-content {
+  position: relative; /* Para asegurar que el botón de cerrar esté sobre este contenedor */
+  background-color: var(--white);
+  border-radius: 10px;
+  width: 90%;
+  max-width: 1000px;
+  display: flex;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease-out;
+  z-index: 1000; /* Para que el popup esté por debajo del botón de cerrar */
+}
+
+/* Contenedor de la imagen y descripción */
+.popup-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.popup-image {
+  width: 40%; /* Imagen ocupa el 40% del ancho */
+  max-width: 300px;
+  margin-right: 20px;
+  text-align: center;
+}
+
+.popup-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain; /* Mantiene la proporción de la imagen */
+  border-radius: 8px;
+}
+
+/* Información del Producto */
+.popup-info {
+  width: 55%; /* Descripción ocupa el 55% del ancho */
+  color: var(--black);
+}
+
+.popup-info h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: var(--black);
+}
+
+.popup-info p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--gray-web);
+  margin: 5px 0;
+}
+
+.popup-info strong {
+  color: var(--black);
+}
+/* Quita las flechas del input number */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield; /* Para Firefox */
+  text-align: center;
+  width: 60px;
+  border: 1px solid var(--light-gray);
+  border-radius: 5px;
+  font-size: 1rem;
+  padding: 5px;
+  margin: 0 10px;
+}
+.quantity {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.quantity button {
+  background-color: var(--hoockers-green);
+  color: var(--white);
+  border: none;
+  border-radius: 5px;
+  width: 35px;
+  height: 35px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.quantity button:hover {
+  background-color: var(--hoockers-green_20);
+}
+
+#add-to-cart {
+  display: inline-block;
+  width: 100%;
+  padding: 12px;
+  background-color: var(--hoockers-green);
+  color: var(--white);
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+#add-to-cart:hover {
+  background-color: var(--hoockers-green_20);
+}

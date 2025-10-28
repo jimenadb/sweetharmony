@@ -139,5 +139,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /*-----------------------------------
-  CARRITO
+  MOSTRAR BOTON DE PEDIDOS
 -----------------------------------*/
+document.addEventListener("DOMContentLoaded", () => {
+  const isLoggedIn = true; // ← cambia esto según tu lógica real de login
+  if (isLoggedIn) {
+    document.getElementById("ordersBtn").style.display = "inline-block";
+    document.getElementById("addressesBtn").style.display = "inline-block";
+  }
+});

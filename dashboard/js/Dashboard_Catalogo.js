@@ -143,7 +143,39 @@ fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/dashboard_c
       }
     });
 
-    cardActions.append(btnWhatsapp, btnWishlist, btnCart);
+
+    // Crear botón de "Ver detalles"
+    const btnViewDetails = document.createElement('button');
+    btnViewDetails.classList.add('action-btn');  // Clase común para el estilo
+    btnViewDetails.classList.add('view-details-btn');  // Clase específica para el botón de detalles
+    btnViewDetails.setAttribute('aria-label', 'view product details');
+    btnViewDetails.setAttribute('data-product-id', producto.id);
+    btnViewDetails.innerHTML = `<ion-icon name="add-circle-outline" aria-hidden="true"></ion-icon>`;  // Ícono "+" con el estilo de Ionicons
+
+    // Añadir evento para abrir popup
+    btnViewDetails.addEventListener('click', async (e) => {
+      e.stopPropagation(); // Prevenir que el click también abra el popup en la tarjeta
+
+      const productId = producto.id;
+      
+      // Obtener detalles del producto desde el servidor
+      try {
+        const response = await fetch(`http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/get_product_cart.php?product_id=${productId}`);
+        const data = await response.json();
+
+        if (response.ok && data.status === 'success') {
+          // Aquí abrirías el popup con los detalles del producto
+          openProductPopup(data.product); // Supón que esta función llena los datos en el popup
+        } else {
+          console.error('Error al cargar detalles del producto');
+        }
+      } catch (err) {
+        console.error('Error al obtener los detalles del producto:', err);
+      }
+    });
+
+
+    cardActions.append(btnWhatsapp, btnWishlist, btnCart, btnViewDetails);
     cardBanner.appendChild(cardActions);
 
     // --- card-content ---
@@ -207,7 +239,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });    
 // -----------------------------------
-// Trae los datos del wishlist
+// Trae los datos del carrito
 // -----------------------------------
 document.addEventListener('DOMContentLoaded', async () => {
   try {
@@ -224,6 +256,83 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error al obtener carrito:', err);
   }
 });
+
+// -----------------------------------
+// ABRIR EL POPUP
+// -----------------------------------
+function openProductPopup(product) {
+  // Obtener referencias a los elementos
+  const nameEl = document.getElementById('popup-product-name');
+  const imgEl = document.getElementById('popup-product-img');
+  const typeEl = document.getElementById('popup-product-type');
+  const plantTypeEl = document.getElementById('popup-plant-type');
+  const discountEl = document.getElementById('popup-discount');
+  const priceEl = document.getElementById('popup-price');
+  const plantDimEl = document.getElementById('popup-plant-dimensions');
+  const potDimEl = document.getElementById('popup-pot-dimensions');
+  const weightEl = document.getElementById('popup-weight');
+  const unitsEl = document.getElementById('popup-units');
+
+  // Llenar los datos, aunque sean null
+  nameEl.textContent = product.product_name || 'Nombre no disponible';
+  imgEl.src = product.image_url && product.image_url !== '' ? product.image_url : '../assets/product-01.jpg';
+  typeEl.textContent = product.product_type || 'Tipo no disponible';
+  plantTypeEl.textContent = product.plant_type || 'Tipo de planta no disponible';
+  discountEl.textContent = product.discount > 0 ? `Descuento: ${product.discount}%` : '';
+  priceEl.textContent = product.price ? `$${product.price}` : 'Precio no disponible';
+  plantDimEl.textContent = `Dimensiones de la planta: ${product.plant_height || '-'} cm x ${product.plant_width || '-'} cm`;
+  potDimEl.textContent = `Dimensiones de la maceta: ${product.pot_height || '-'} cm x ${product.pot_width || '-'} cm`;
+  weightEl.textContent = `Peso: ${product.weight || '-'} kg`;
+  unitsEl.textContent = `Unidades disponibles: ${product.units != null ? product.units : '-'}`;
+
+  // Mostrar el popup
+  document.getElementById('product-popup').style.display = 'block';
+
+  // Cerrar popup al hacer clic en el botón
+  document.getElementById('popup-close').addEventListener('click', () => {
+    document.getElementById('product-popup').style.display = 'none';
+
+  });
+  document.getElementById('add-to-cart').onclick = async () => {
+    const quantity = parseInt(document.getElementById('product-quantity').value) || 1;
+  
+    try {
+      const res = await fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/add_item_popup.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product_id: product.id, quantity }),
+        credentials: 'include' // mantiene la sesión PHP
+      });
+  
+      const data = await res.json();
+      alert(data.message || 'Error al añadir al carrito');
+      if (data.status === 'success') document.getElementById('product-popup').style.display = 'none';
+    } catch {
+      alert('Error de conexión con el servidor.');
+    }
+  };
+
+  
+  // -----------------------------------
+  // BOTONES DE CANTIDAD (+ y -)
+  // -----------------------------------
+  const quantityInput = document.getElementById('product-quantity');
+  const btnIncrease = document.getElementById('quantity-increase');
+  const btnDecrease = document.getElementById('quantity-decrease');
+
+  // Evita agregar múltiples listeners cada vez que se abre el popup
+  btnIncrease.onclick = () => {
+    quantityInput.value = parseInt(quantityInput.value) + 1;
+  };
+
+  btnDecrease.onclick = () => {
+    const current = parseInt(quantityInput.value);
+    if (current > 1) quantityInput.value = current - 1;
+  };
+}
+
+
+
 
 /*-----------------------------------
   UTILS
