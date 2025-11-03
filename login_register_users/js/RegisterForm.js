@@ -17,7 +17,8 @@ document.getElementById("registerForm").addEventListener("submit", async functio
   };
 
   try {
-    const response = await fetch("http://158.69.214.32/ximena_flores/sweetharmony/login_register_users/php/RegisterForm.php", {
+    //const response = await fetch("http://158.69.214.32/ximena_flores/sweetharmony/login_register_users/php/RegisterForm.php", {
+    const response = await fetch("http://localhost/sweetharmony/sweetharmony/login_register_users/php/RegisterForm.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

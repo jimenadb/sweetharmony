@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedidos — Sweet Harmony</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <!-- Estilo general -->
+  <link rel="stylesheet" href="../css/Admin_order.css">
+</head>
+<body>
+
+  <header>
+    <h1>Gestión de Pedidos</h1>
+    <button class="logout-btn" title="Cerrar sesión">
+      <ion-icon name="log-out-outline"></ion-icon>
+    </button>
+  </header>
+
+  <main>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th></th> 
+            <th>ID Pedido</th>
+            <th>Cliente (user_id)</th>
+            <th>Total (S/)</th>
+            <th>Estado</th>
+            <th>Dirección</th>
+            <th>Creado</th>
+            <th>Actualizar Estado</th>
+          </tr>
+        </thead>
+        <tbody id="tablaPedidos"></tbody>
+      </table>
+    </div>
+
+    <div id="accionesPedido">
+      <span id="pedidoSeleccionado">Selecciona un pedido para ver detalles</span>
+      <button id="btnVerDetalles">Ver Detalles</button>
+      <!-- <button id="btnEliminarPedido">Eliminar</button> -->
+    </div>
+
+    <!-- Modal para actualizar estado -->
+    <div id="modalEstado" class="modal">
+      <div class="modal-content">
+        <span id="cerrarModalEstado" class="close">&times;</span>
+        <form id="formActualizarEstado">
+          <h3>Actualizar Estado del Pedido</h3>
+          <input type="hidden" id="order_id" name="order_id">
+
+          <label for="status">Nuevo estado:</label>
+          <select id="status" name="status" required>
+            <option value="processing">En proceso</option>
+            <option value="shipped">Enviado</option>
+            <option value="delivered">Entregado</option>
+            <option value="completed">Completado</option>
+            <option value="cancelled">Cancelado</option>
+          </select>
+
+          <button type="submit">Actualizar</button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="../js/Admin_order.js" defer></script>
+  
+
+
+</body>
+</html>

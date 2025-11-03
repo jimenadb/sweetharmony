@@ -1,8 +1,8 @@
 <?php
 
-//$conexion = new mysqli("localhost","root","123456","dbximena_flores"); //Base de datos local
-$conexion = new mysqli("localhost","rootsenati","Senatino#2025","dbximena_flores"); // para el servidor
-//$conexion = new mysqli("158.69.214.32","rootsenati","Senatino#2025","dbximena_flores"); //Con xammp
+$conexion = new mysqli("localhost","root","","dbximena_flores"); //Base de datos local pc
+//$conexion = new mysqli("localhost","rootsenati","Senatino#2025","dbximena_flores"); // para el servidor
+//$conexion = new mysqli("158.69.214.32","rootsenati","Senatino#2025","dbximena_flores"); //servidor ecterno Con xammp
 
 if ($conexion->connect_error) {
     http_response_code(500);

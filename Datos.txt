@@ -209,3 +209,12 @@ select * from wishlist;
 SHOW TABLES;
 -- drop table ...
 SHOW CREATE TABLE wishlist;
+
+
+ALTER TABLE orders 
+MODIFY status ENUM('pending', 'paid', 'processing', 'shipped', 'delivered', 'cancelled', 'completed') 
+DEFAULT 'pending';
+
+UPDATE orders
+SET status = 'pending'
+WHERE status NOT IN ('pending', 'paid', 'processing', 'shipped', 'delivered', 'cancelled', 'completed');

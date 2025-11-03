@@ -9,7 +9,8 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
   const data = { email, password };
 
   try {
-    const response = await fetch("http://158.69.214.32/ximena_flores/sweetharmony/login_register_users/php/LoginForm.php", {
+    //const response = await fetch("http://158.69.214.32/ximena_flores/sweetharmony/login_register_users/php/LoginForm.php", {
+    const response = await fetch("http://localhost/sweetharmony/sweetharmony/login_register_users/php/LoginForm.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

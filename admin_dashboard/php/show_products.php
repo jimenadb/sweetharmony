@@ -23,11 +23,13 @@ $productos = [];
 
 if ($result && $result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
+        // Asegurarte que la ruta de la imagen sea accesible desde el HTML
+        $row['image_url'] = !empty($row['image_url']) ? '../../uploads/' . $row['image_url'] : '../assets/default.jpg';
         $productos[] = $row;
     }
 }
 
 header("Content-Type: application/json");
-echo json_encode($productos);
+echo json_encode($productos, JSON_UNESCAPED_SLASHES);
 exit;
 ?>

@@ -1,11 +1,14 @@
 document.getElementById("catalogoForm")?.addEventListener("submit", async (e) => {
     e.preventDefault(); 
+
+    if (window.modoEditar) return;
   
     const formData = new FormData(e.target);
   
     try {
       const response = await fetch(
-        "http://158.69.214.32/ximena_flores/sweetharmony/admin_dashboard/php/save_products.php", 
+        //"http://158.69.214.32/ximena_flores/sweetharmony/admin_dashboard/php/save_products.php", 
+        "http://localhost/sweetharmony/sweetharmony/admin_dashboard/php/save_products.php", 
         {
           method: "POST",
           body: formData,
