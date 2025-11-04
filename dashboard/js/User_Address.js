@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("address-form");
     const addBtn = document.getElementById("add-address-btn");
     const closeBtn = document.querySelector(".close-btn");
-    const API = "http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/add_user_address.php";
+    //const API = "http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/add_user_address.php";
+    const API = "http://localhost/sweetharmony/sweetharmony/dashboard/php/add_user_address.php";
   
     if (!modal || !form || !addBtn || !closeBtn) {
       console.error("❌ No se encontraron elementos. Revisa los IDs en el HTML.");

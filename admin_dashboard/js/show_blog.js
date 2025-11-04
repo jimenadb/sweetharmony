@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function cargarEntradas() {
     try {
-      const res = await fetch("http://158.69.214.32/ximena_flores/sweetharmony/admin_dashboard/php/show_blog.php");
+      const res = await fetch("http://localhost/sweetharmony/sweetharmony/admin_dashboard/php/show_blog.php");
       const posts = await res.json();
       console.log(posts); // Verifica que traiga datos
 

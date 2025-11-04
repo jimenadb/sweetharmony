@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Función para cargar los posts desde el servidor
   function loadPosts() {
-    fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/dashboard_blog.php')  // Ruta al script PHP
+    fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_blog.php')  // Ruta al script PHP
       .then(response => response.json())
       .then(data => {
         filtered = data; // Guarda los posts en la variable global

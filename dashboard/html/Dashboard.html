@@ -64,22 +64,22 @@
               <a href="../../login_register_users/html/RegisterForm.html">Registrarse</a>
             </div>
           </div>
-          <button class="header-action-btn" aria-label="favourite item">
+          <a href="Dashboard_Wishlist.html" id="wishlistBtn" class="header-action-btn" aria-label="favourite item">
             <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-            <span class="btn-badge">0</span>
-          </button>
-          <a href="Dashboard_Cart.html">
+          </a>
+          
+          <a href="Dashboard_Cart.html" id="cartLink">
             <button id="cartBtn" class="header-action-btn" aria-label="cart item">
               <data id="cartTotal" class="btn-text" value="0"></data>
               <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-              <span id="cartCount" class="btn-badge">0</span>
             </button>
           </a>
-          <a href="Orders.html">
+          <a href="Dashboard_Order.html">
             <button id="ordersBtn" style="display:none;" class="header-action-btn" aria-label="view orders">
               <ion-icon name="cube-outline" aria-hidden="true"></ion-icon>
             </button>
           </a>
+          
           <a href="User_Address.html">
             <button id="addressesBtn" style="display:none;" class="header-action-btn" aria-label="ver direcciones">
               <ion-icon name="home-outline" aria-hidden="true"></ion-icon>
@@ -101,6 +101,17 @@
       </div>
     </div>
   </header>
+
+    <!-- Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <p>Necesitas iniciar sesión o crear una cuenta para acceder a esta función.</p>
+      <div class="modal-actions">
+        <a href="../../login_register_users/html/LoginForm.html" class="btn">Iniciar sesión</a>
+        <a href="../../login_register_users/html/RegisterForm.html" class="btn btn-secondary">Registrarse</a>
+      </div>
+    </div>
+  </div>
 
 
   <!-- 
@@ -135,46 +146,18 @@
               <div class="hero-card has-bg-image" style="background-image: url('../assets/hero-banner-1.jpg')">
                 <div class="card-content">
                   <h1 class="h1 hero-title">
-                    Reveal The <br>
-                    Beauty of Skin
+                    Descubre la <br>
+                    Magia de las Plantas
                   </h1>
                   <p class="hero-text">
-                    Made using clean, non-toxic ingredients, our products are designed for everyone.
+                    Cuida tu hogar y tu bienestar con nuestras plantas y accesorios ecológicos, perfectos para cualquier espacio.
                   </p>    
-                  <a href="#" class="btn btn-primary">Visita nuestor blog</a>
+                  <a href="../html/Dashboard_Blog.html" class="btn btn-primary">Visita nuestro blog</a>
                 </div>
               </div>
             </li>
-      
-            <li class="scrollbar-item">
-              <div class="hero-card has-bg-image" style="background-image: url('../assets/hero-banner-2.jpg')">
-                <div class="card-content">
-                  <h1 class="h1 hero-title">
-                    Reveal The <br>
-                    Beauty of Skin
-                  </h1>
-                  <p class="hero-text">
-                    Made using clean, non-toxic ingredients, our products are designed for everyone.
-                  </p>    
-                  <a href="#" class="btn btn-primary">Visita nuestor blog</a>
-                </div>
-              </div>
-            </li>
-      
-            <li class="scrollbar-item">
-              <div class="hero-card has-bg-image" style="background-image: url('../assets/hero-banner-3.jpg')">
-                <div class="card-content">
-                  <h1 class="h1 hero-title">
-                    Reveal The <br>
-                    Beauty of Skin
-                  </h1>
-                  <p class="hero-text">
-                    Made using clean, non-toxic ingredients, our products are designed for everyone.
-                  </p>    
-                  <a href="#" class="btn btn-primary">Visita nuestor blog</a>
-                </div>
-              </div>
-            </li>
+
+
           </ul>
         </div>
       </section>

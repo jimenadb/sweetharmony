@@ -32,9 +32,9 @@
 
       <div class="cart-actions">
         <button class="btn btn-secondary" id="delete-selected">Eliminar seleccionados</button>
-        <button class="btn btn-secondary" id="empty-cart">Vaciar carrito</button>
+        <!-- <button class="btn btn-secondary" id="empty-cart">Vaciar carrito</button>
         <input type="text" id="coupon" placeholder="Código de cupón">
-        <button class="btn btn-primary" id="apply-coupon">Aplicar cupón</button>
+        <button class="btn btn-primary" id="apply-coupon">Aplicar cupón</button> -->
       </div>
 
       <div class="cart-summary">
@@ -61,11 +61,12 @@
       <!-- Dirección de entrega -->
       <div class="delivery-address">
         <h3>Dirección de Entrega</h3>
-        <p id="address-info">No has seleccionado una dirección.</p>
+        <select id="select-address">
+          <option value="">Cargando direcciones...</option>
+        </select>
+        <p id="address-info"></p>
         <a href="User_Address.html">
-            <button class="btn btn-secondary" id="choose-address">
-                Confirmar / Cambiar Dirección
-            </button>
+          <button class="btn btn-secondary">Agregar nueva dirección</button>
         </a>
       </div>
 
@@ -77,5 +78,7 @@
   </main>
   
   <script defer src="../js/Dashboard_Cart.js"></script>
+  <script defer src="../js/Place_Order.js"></script>
+
 </body>
 </html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Perfil</title>
+<link rel="stylesheet" href="../css/Edit_User.css">
+</head>
+<body>
+
+<div class="profile-container">
+  <h1>Mi Perfil</h1>
+
+  <form class="profile-form" id="profileForm">
+    <div class="form-group">
+      <label for="first_name">Nombre</label>
+      <input type="text" id="first_name" name="first_name" placeholder="Tu nombre">
+    </div>
+
+    <div class="form-group">
+      <label for="last_name">Apellido</label>
+      <input type="text" id="last_name" name="last_name" placeholder="Tu apellido">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" name="email" placeholder="tu@email.com">
+    </div>
+
+    <div class="form-group">
+      <label for="password">Nueva contraseña</label>
+      <input type="password" id="password" name="password" placeholder="Dejar en blanco si no cambias">
+    </div>
+
+    <div class="form-group readonly">
+      <label for="role">Rol</label>
+      <input type="text" id="role" name="role" readonly>
+    </div>
+
+    <div class="form-group readonly">
+      <label for="created_at">Creado el</label>
+      <input type="text" id="created_at" name="created_at" readonly>
+    </div>
+
+    <div class="form-group readonly">
+      <label for="updated_at">Última actualización</label>
+      <input type="text" id="updated_at" name="updated_at" readonly>
+    </div>
+
+    <button type="submit" class="save-btn">Guardar Cambios</button>
+  </form>
+</div>
+
+</body>
+</html>

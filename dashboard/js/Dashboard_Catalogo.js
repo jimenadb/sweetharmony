@@ -1,6 +1,6 @@
 //Catalogo Completo
 
-fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/dashboard_catalogo.php')
+fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_catalogo.php')
 .then(response => response.json())
 .then(data => {
   const contenedor = document.getElementById('catalogo');
@@ -69,7 +69,7 @@ fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/dashboard_c
       const isFavorito = button.classList.contains('favorito'); // clase para saber si ya está
 
       try {
-        const response = await fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/add_wishlist.php', {
+        const response = await fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/add_wishlist.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ product_id: productId, action: isFavorito ? 'remove' : 'add' }),
@@ -113,7 +113,7 @@ fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/dashboard_c
       const isInCart = button.classList.contains('in-cart'); // saber si ya está agregado
 
       try {
-        const response = await fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/add_to_cart.php', {
+        const response = await fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/add_to_cart.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ product_id: productId, action: isInCart ? 'remove' : 'add' }),
@@ -160,7 +160,7 @@ fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/dashboard_c
       
       // Obtener detalles del producto desde el servidor
       try {
-        const response = await fetch(`http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/get_product_cart.php?product_id=${productId}`);
+        const response = await fetch(`http://localhost/sweetharmony/sweetharmony/dashboard/php/get_product_cart.php?product_id=${productId}`);
         const data = await response.json();
 
         if (response.ok && data.status === 'success') {
@@ -208,6 +208,29 @@ fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/dashboard_c
 
     // --- unir todo ---
     shopCard.append(cardBanner, cardContent);
+
+
+    shopCard.addEventListener('click', async () => {
+      const productId = producto.id;
+    
+      // Registrar la vista (aunque no esté logeado)
+      navigator.sendBeacon(`http://localhost/sweetharmony/sweetharmony/dashboard/php/register_view.php?id=${productId}`);
+    
+      // Obtener detalles del producto
+      try {
+        const response = await fetch(`http://localhost/sweetharmony/sweetharmony/dashboard/php/get_product_cart.php?product_id=${productId}`);
+        const data = await response.json();
+    
+        if (response.ok && data.status === 'success') {
+          openProductPopup(data.product);
+        }
+      } catch (err) {
+        console.error('Error al obtener los detalles del producto:', err);
+      }
+    });
+    
+
+
     li.appendChild(shopCard);
     contenedor.appendChild(li);
   });
@@ -221,7 +244,7 @@ fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/dashboard_c
 // -----------------------------------
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    const res = await fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/get_wishlist.php', {
+    const res = await fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/get_wishlist.php', {
       credentials: 'include'
     });
     const favoritos = await res.json();
@@ -243,7 +266,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // -----------------------------------
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    const res = await fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/get_cart_for_catalogo.php', {
+    const res = await fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/get_cart_for_catalogo.php', {
       credentials: 'include'
     });
     const carrito = await res.json();
@@ -297,7 +320,7 @@ function openProductPopup(product) {
     const quantity = parseInt(document.getElementById('product-quantity').value) || 1;
   
     try {
-      const res = await fetch('http://158.69.214.32/ximena_flores/sweetharmony/dashboard/php/add_item_popup.php', {
+      const res = await fetch('http://localhost/sweetharmonysweetharmony/dashboard/php/add_item_popup.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ product_id: product.id, quantity }),

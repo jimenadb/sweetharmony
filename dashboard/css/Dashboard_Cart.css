@@ -2,184 +2,200 @@
    ESTILOS BASE
 ========================================= */
 body {
-    font-family: 'Urbanist', sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    font-size: 16px;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  h1.h1 {
-    margin-bottom: 30px;
-    font-size: 2.5rem;
-    font-weight: 700;
-  }
-  
-  /* =========================================
-     TABLA DEL CARRITO
-  ========================================= */
-  .cart-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  }
-  
-  .cart-table th,
-  .cart-table td {
-    padding: 15px;
-    text-align: center;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .cart-table th {
-    background-color: #f0f0f0;
-    font-weight: 600;
-  }
-  
-  .cart-table img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-right: 10px;
-    vertical-align: middle;
-  }
-  
-  .product-info {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-  }
-  
-  .quantity {
-    width: 60px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    text-align: center;
-  }
-  
-  .total-price {
-    font-weight: 700;
-    color: hsl(148, 20%, 38%);
-  }
-  
-  /* =========================================
-     ACCIONES DEL CARRITO
-  ========================================= */
-  .cart-actions {
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    align-items: center;
-  }
-  
-  .cart-actions input[type="text"] {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    flex: 1;
-    max-width: 200px;
-  }
-  
-  /* =========================================
-     BOTONES GENERALES
-  ========================================= */
-  .btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  .btn-primary {
-    background-color: hsl(148, 20%, 38%);
-    color: #fff;
-  }
-  
-  .btn-primary:hover {
-    background-color: hsl(148, 20%, 28%);
-  }
-  
-  .btn-secondary {
-    background-color: #ccc;
-    color: #000;
-  }
-  
-  .btn-secondary:hover {
-    background-color: #999;
-  }
-  
-  /* =========================================
-     RESUMEN DEL CARRITO
-  ========================================= */
-  .cart-summary {
-    margin-top: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.2rem;
-    font-weight: 700;
-  }
-  
- /* =========================================
+  font-family: 'Urbanist', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1.h1 {
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+/* =========================================
+   TABLA DEL CARRITO
+========================================= */
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.cart-table th,
+.cart-table td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-table th {
+  background-color: #f0f0f0;
+  font-weight: 600;
+}
+
+.cart-table img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.quantity {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.total-price {
+  font-weight: 700;
+  color: hsl(148, 20%, 38%);
+}
+
+/* =========================================
+   CHECKBOXES
+========================================= */
+/* Checkboxes redondos */
+.cart-table input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%; /* checkbox redondo */
+  cursor: pointer;
+  accent-color: hsl(148, 20%, 38%); /* color del check dentro */
+}
+
+/* Resaltar fila al seleccionar */
+.cart-table tbody tr.selected {
+  background-color: hsl(148, 20%, 38%, 0.1); /* color suave para resaltar */
+}
+
+/* =========================================
+   ACCIONES DEL CARRITO
+========================================= */
+.cart-actions {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+}
+
+.cart-actions input[type="text"] {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1;
+  max-width: 200px;
+}
+
+/* =========================================
+   BOTONES GENERALES
+========================================= */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary {
+  background-color: hsl(148, 20%, 38%);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: hsl(148, 20%, 28%);
+}
+
+.btn-secondary {
+  background-color: #ccc;
+  color: #000;
+}
+
+.btn-secondary:hover {
+  background-color: #999;
+}
+
+/* =========================================
+   RESUMEN DEL CARRITO
+========================================= */
+.cart-summary {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* =========================================
    AJUSTES DE DISEÑO - CHECKOUT
 ========================================= */
 .checkout-section {
-    display: none;
-    max-width: 700px;
-    margin: 40px auto; /* centra horizontalmente */
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-    text-align: left;
-  }
-  
-  .checkout-section h2 {
-    text-align: center;
-    color: hsl(148, 20%, 38%);
-    font-weight: 700;
-    margin-bottom: 25px;
-  }
-  
-  .invoice-preview,
-  .delivery-address {
-    background-color: #fafafa;
-    padding: 15px 20px;
-    border-radius: 8px;
-    border: 1px solid #eee;
-    margin-bottom: 25px;
-  }
-  
-  .invoice-preview h3,
-  .delivery-address h3 {
-    color: #444;
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-  }
-  
-  .final-action {
-    text-align: center; /* centra el botón final */
-    margin-top: 20px;
-  }
-  
-  #place-order {
-    padding: 12px 28px;
-    font-size: 1.05rem;
-  }
-  
+  display: none;
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+
+.checkout-section h2 {
+  text-align: center;
+  color: hsl(148, 20%, 38%);
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.invoice-preview,
+.delivery-address {
+  background-color: #fafafa;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  margin-bottom: 25px;
+}
+
+.invoice-preview h3,
+.delivery-address h3 {
+  color: #444;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.final-action {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#place-order {
+  padding: 12px 28px;
+  font-size: 1.05rem;
+}

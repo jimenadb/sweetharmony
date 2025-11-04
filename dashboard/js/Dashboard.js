@@ -148,3 +148,49 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("addressesBtn").style.display = "inline-block";
   }
 });
+
+/*-----------------------------------
+ OCULTAR BOTONES
+-----------------------------------*/
+document.addEventListener('DOMContentLoaded', () => {
+  const userId = localStorage.getItem('user_id'); // o 'token' según tu sistema
+  const ordersBtn = document.getElementById('ordersBtn');
+  const addressesBtn = document.getElementById('addressesBtn');
+
+  if (userId) {
+    // ✅ Usuario ha iniciado sesión → mostrar botones
+    ordersBtn.style.display = 'inline-block';
+    addressesBtn.style.display = 'inline-block';
+  } else {
+    // ❌ No ha iniciado sesión → mantenerlos ocultos
+    ordersBtn.style.display = 'none';
+    addressesBtn.style.display = 'none';
+  }
+});
+/*-----------------------------------
+ MODAL
+-----------------------------------*/
+
+document.addEventListener('DOMContentLoaded', () => {
+  const userId = localStorage.getItem('user_id'); // o token
+  const wishlistBtn = document.getElementById('wishlistBtn');
+  const cartLink = document.getElementById('cartLink');
+  const modal = document.getElementById('loginModal');
+
+  function showModal(e) {
+    e.preventDefault(); // Evita que navegue
+    modal.style.display = 'flex';
+  }
+
+  if (!userId) {
+    wishlistBtn.addEventListener('click', showModal);
+    cartLink.addEventListener('click', showModal);
+  }
+
+  // Cerrar modal al hacer clic afuera
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+});
