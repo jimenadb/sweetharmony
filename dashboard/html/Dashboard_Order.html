@@ -1,65 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mis Pedidos</title>
-<link rel="stylesheet" href="../css/Dashboard_Order.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Pedidos</title>
+  <link rel="stylesheet" href="../css/Dashboard_Order.css">
 </head>
 <body>
-
-<h1>Mis Pedidos</h1>
-
-<div class="orders-container">
-
-  <div class="order-card">
-    <div class="order-header">
-      <span class="order-number">Pedido #12345</span>
-      <span class="order-status">Enviado</span>
-    </div>
-    <div class="products-list">
-      <div class="product-item">
-        <img src="uploads/product-01.jpg" alt="Planta Ficus">
-        <div class="product-details">
-          <span class="product-name">Planta Ficus</span>
-          <span class="product-quantity">Cantidad: 2</span>
-        </div>
-      </div>
-      <div class="product-item">
-        <img src="uploads/product-02.jpg" alt="Maceta Decorativa">
-        <div class="product-details">
-          <span class="product-name">Maceta Decorativa</span>
-          <span class="product-quantity">Cantidad: 1</span>
-        </div>
-      </div>
-    </div>
-    <div class="order-footer">
-      <span>Total: $45.00</span>
-      <span class="tracking-number">Seguimiento: 1Z23456789</span>
-    </div>
+  
+  <div class="orders-container">
+    <h1>Mis Pedidos</h1>
+    <!-- Los pedidos se cargarán dinámicamente con JS -->
   </div>
-
-  <div class="order-card">
-    <div class="order-header">
-      <span class="order-number">Pedido #12346</span>
-      <span class="order-status">Procesando</span>
-    </div>
-    <div class="products-list">
-      <div class="product-item">
-        <img src="uploads/product-03.jpg" alt="Planta Suculenta">
-        <div class="product-details">
-          <span class="product-name">Planta Suculenta</span>
-          <span class="product-quantity">Cantidad: 3</span>
-        </div>
-      </div>
-    </div>
-    <div class="order-footer">
-      <span>Total: $30.00</span>
-      <span class="tracking-number">Seguimiento: N/A</span>
-    </div>
-  </div>
-
-</div>
-
+  <script src="../js/Dashboard_Order.js"></script>
+  <script src="../../components/back_button.js"></script>
 </body>
 </html>

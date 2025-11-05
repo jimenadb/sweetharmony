@@ -1,96 +1,119 @@
-body {
-    font-family: 'Urbanist', sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    font-size: 16px;
-    margin: 0;
-    padding: 0;
+:root{
+  --hoockers-green: hsl(148,20%,38%);
+  --white: hsl(0,0%,100%);
+  --black: hsl(0,0%,0%);
+  --gray: hsl(0,0%,70%);
+  --radius: 12px;
+  --max-width: 700px;
+}
+
+body{
+  font-family: 'Urbanist', sans-serif;
+  background: url("../assets/fondo2.jpg") no-repeat center center fixed;
+  background-size: cover;
+  margin:0;
+  padding:20px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  min-height:100vh;
+}
+
+.wishlist-container{
+  max-width: var(--max-width);
+  width:100%;
+  background: rgba(255,255,255,0.9); /* fondo blanco con transparencia */
+  padding:30px;
+  border-radius: var(--radius);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.wishlist-title{
+  text-align:center;
+  color: var(--hoockers-green); /* verde de tu marca */
+  font-size: 1.6rem;
+  margin-bottom:25px;
+  font-weight:700;
+}
+
+.wishlist-table{
+  width:100%;
+  border-collapse: collapse;
+}
+
+.wishlist-table th,
+.wishlist-table td{
+  padding:12px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--gray);
+}
+
+.wishlist-table {
+  width:100%;
+  border-collapse: collapse;
+  background: transparent; /* elimina fondo blanco de la tabla */
+}
+
+.wishlist-table th,
+.wishlist-table td {
+  padding:12px 10px;
+  text-align:left;
+  border-bottom:1px solid var(--gray);
+  background: transparent; /* elimina fondo blanco de las celdas */
+}
+
+.product-info span {
+  display:inline-block;
+  vertical-align:middle;
+  background: transparent; /* elimina fondo de los spans vacíos */
+}
+.product-info img {
+  width: 80px;       /* tamaño fijo ancho */
+  height: 80px;      /* tamaño fijo alto */
+  object-fit: cover; /* recorta la imagen manteniendo proporción */
+  border-radius: 8px; /* opcional: bordes redondeados */
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.btn{
+  padding:6px 12px;
+  border:none;
+  border-radius: var(--radius);
+  cursor:pointer;
+  font-weight:600;
+  font-size:0.9rem;
+  transition: all 0.2s ease;
+}
+
+.btn-primary{
+  background: var(--hoockers-green);
+  color: var(--white);
+  margin-left:5px;
+}
+
+.btn-primary:hover{
+  background: hsl(148,20%,28%);
+}
+
+.btn-secondary{
+  background:#f0f0f0;
+  color: var(--black);
+}
+
+.btn-secondary:hover{
+  background:#e0e0e0;
+}
+
+@media(max-width:500px){
+  .wishlist-container{
+    padding:20px;
   }
-  
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+  .wishlist-title{
+    font-size:1.4rem;
   }
-  
-  h1.h1 {
-    margin-bottom: 30px;
-    font-size: 2.5rem;
-    font-weight: 700;
-  }
-  
-  .wishlist-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  }
-  
   .wishlist-table th,
-  .wishlist-table td {
-    padding: 15px;
-    text-align: center;
-    border-bottom: 1px solid #eee;
+  .wishlist-table td{
+    padding:8px 6px;
   }
-  
-  .wishlist-table th {
-    background-color: #f0f0f0;
-    font-weight: 600;
-  }
-  
-  .wishlist-table img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-right: 10px;
-    vertical-align: middle;
-  }
-  
-  .product-info {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  
-  .price {
-    font-weight: 700;
-    color: hsl(148,20%,38%);
-  }
-  
-  .btn {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
-    margin: 2px;
-  }
-  
-  .btn-primary {
-    background-color: hsl(148,20%,38%);
-    color: #fff;
-  }
-  
-  .btn-primary:hover {
-    background-color: hsl(148,20%,28%);
-  }
-  
-  .btn-secondary {
-    background-color: #ccc;
-    color: #000;
-  }
-  
-  .btn-secondary:hover {
-    background-color: #999;
-  }
-  
-  .wishlist-actions {
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-  
+}

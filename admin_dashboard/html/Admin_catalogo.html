@@ -14,134 +14,170 @@
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-    <!-- 
-    - custom css link
-  -->
+  <!-- CSS -->
   <link rel="stylesheet" href="../css/Admin_catalogo.css">
-
+  <link rel="stylesheet" href="../css/Admin_view.css">
 </head>
 <body>
 
-  <header>
-    <h1>Mantenimiento de Productos</h1>
-    <button class="logout-btn" title="Cerrar sesión">
-      <ion-icon name="log-out-outline"></ion-icon>
-    </button>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-top" data-header>
+      <div class="container">
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </button>
+        <a href="#" class="logo">SWEET- HARMONY - ADMINISTRADOR</a>
+        <div class="header-actions">
+          <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión">
+            <ion-icon name="log-out-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+        <nav class="navbar">
+          <ul class="navbar-list">
+            <!-- <li><a href="Dashboard.html" class="navbar-link has-after">INICIO</a></li> -->
+            <li><a href="Admin_catalogo.html" class="navbar-link has-after">CATÁLOGO</a></li>
+            <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
+            <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </header>
 
-  <main>
+  <!-- MOBILE NAVBAR -->
+  <div class="sidebar">
+    <div class="mobile-navbar" data-navbar>
+      <div class="wrapper">
+        <a href="#" class="logo"><img src="../assets/logo.png" width="179" height="26" alt="Glowing"></a>
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+      <ul class="navbar-list">
+        <!-- <li><a href="Dashboard.html" class="navbar-link" data-nav-link>INICIO</a></li> -->
+        <li><a href="Admin_catalogo.html" class="navbar-link" data-nav-link>CATÁLOGO</a></li>
+        <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
+        <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
+      </ul>
+    </div>
+    <div class="overlay" data-nav-toggler data-overlay></div>
+  </div>
+
+  <main class="container">
+    <h1>Mantenimiento de Productos</h1>
+
     <button id="btnAgregar">
       <ion-icon name="add-circle-outline"></ion-icon>
       Agregar nuevo producto
     </button>
 
     <!-- Modal para agregar producto -->
-        <div id="modalAgregar" class="modal">
-            <div class="modal-content">
-                <span id="cerrarModal" class="close">&times;</span>
-                <form id="catalogoForm" method="POST" enctype="multipart/form-data" action="../php/view_catalog.php">
-                    <h3>Agregar Producto al Catálogo</h3>
+    <div id="modalAgregar" class="modal">
+      <div class="modal-wrapper">
+      <div class="modal-content">
+        <span id="cerrarModal" class="close">&times;</span>
+        <form id="catalogoForm" method="POST" enctype="multipart/form-data" action="../php/view_catalog.php">
+          <h3>Agregar Producto al Catálogo</h3>
+          <input type="hidden" id="product_id" name="id">
 
-                    <input type="hidden" id="product_id" name="id">
-
-
-                      <!-- Preview de imagen -->
-                    <div class="form-group">
-                      <label>Imagen actual</label>
-                      <div id="previewImagen" style="width:100px;height:100px;border:1px solid #ccc;display:flex;align-items:center;justify-content:center;">
-                        <span>Sin imagen</span>
-                      </div>
-                    </div>
-
-                    <!-- Input de nueva imagen -->
-                    <div class="form-group">
-                      <label for="image_url">Cambiar imagen</label>
-                      <input type="file" id="image_url" name="image_url" accept="image/*">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="product_name">Nombre del producto</label>
-                        <input type="text" id="product_name" name="product_name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="product_type">Tipo de producto</label>
-                        <select id="product_type" name="product_type">
-                            <option value="">-- Selecciona --</option>
-                            <option value="terrario">Terrario</option>
-                            <option value="maceta">Maceta</option>
-                            <option value="planta">Planta</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="plant_type">Tipo de planta</label>
-                        <select id="plant_type" name="plant_type">
-                            <option value="">-- Selecciona --</option>
-                            <option value="interior">Interior</option>
-                            <option value="sombra">Sombra</option>
-                            <option value="exterior">Exterior</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="price">Precio</label>
-                        <input type="number" id="price" name="price" step="0.01">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="discount">Descuento (%)</label>
-                        <input type="number" id="discount" name="discount" step="0.01" value="0.00">
-                    </div>
-
-                    <fieldset>
-                        <legend>Medidas de la planta (cm)</legend>
-                        <div class="form-inline">
-                            <label for="plant_height">Alto:</label>
-                            <input type="number" id="plant_height" name="plant_height" step="0.01">
-                            <label for="plant_width">Ancho:</label>
-                            <input type="number" id="plant_width" name="plant_width" step="0.01">
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend>Medidas de la maceta (cm)</legend>
-                        <div class="form-inline">
-                            <label for="pot_height">Alto:</label>
-                            <input type="number" id="pot_height" name="pot_height" step="0.01">
-                            <label for="pot_width">Ancho:</label>
-                            <input type="number" id="pot_width" name="pot_width" step="0.01">
-                        </div>
-                    </fieldset>
-
-                    <div class="form-group">
-                        <label for="pot_color">Color de la maceta</label>
-                        <input type="text" id="pot_color" name="pot_color">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="weight">Peso (kg)</label>
-                        <input type="number" id="weight" name="weight" step="0.01">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="units">Unidades</label>
-                        <input type="number" id="units" name="units" value="0" min="0">
-                    </div>
-
-                    <!-- <div class="form-group">
-                      <label for="product_descripction">Descripción</label>
-                      <input type="text" id="product_descripction" name="product_name" required>
-                    </div> -->
-
-
-                    <button type="submit">Guardar producto</button>
-                    <button type="button" id="btn-generar">Generar descripción con IA</button>
-
-                </form>
+          <!-- Preview de imagen -->
+          <div class="form-group">
+            <label>Imagen actual</label>
+            <div id="previewImagen" style="width:100px;height:100px;border:1px solid #ccc;display:flex;align-items:center;justify-content:center;">
+              <span>Sin imagen</span>
             </div>
-        </div>
+          </div>
 
+          <!-- Input de nueva imagen -->
+          <div class="form-group">
+            <label for="image_url">Cambiar imagen</label>
+            <input type="file" id="image_url" name="image_url" accept="image/*">
+          </div>
+
+          <div class="form-group">
+            <label for="product_name">Nombre del producto</label>
+            <input type="text" id="product_name" name="product_name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="product_type">Tipo de producto</label>
+            <select id="product_type" name="product_type">
+              <option value="">-- Selecciona --</option>
+              <option value="terrario">Terrario</option>
+              <option value="maceta">Maceta</option>
+              <option value="planta">Planta</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="plant_type">Tipo de planta</label>
+            <select id="plant_type" name="plant_type">
+              <option value="">-- Selecciona --</option>
+              <option value="interior">Interior</option>
+              <option value="sombra">Sombra</option>
+              <option value="exterior">Exterior</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="price">Precio</label>
+            <input type="number" id="price" name="price" step="0.01">
+          </div>
+
+          <div class="form-group">
+            <label for="discount">Descuento (%)</label>
+            <input type="number" id="discount" name="discount" step="0.01" value="0.00">
+          </div>
+
+          <fieldset>
+            <legend>Medidas de la planta (cm)</legend>
+            <div class="form-inline">
+              <label for="plant_height">Alto:</label>
+              <input type="number" id="plant_height" name="plant_height" step="0.01">
+              <label for="plant_width">Ancho:</label>
+              <input type="number" id="plant_width" name="plant_width" step="0.01">
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Medidas de la maceta (cm)</legend>
+            <div class="form-inline">
+              <label for="pot_height">Alto:</label>
+              <input type="number" id="pot_height" name="pot_height" step="0.01">
+              <label for="pot_width">Ancho:</label>
+              <input type="number" id="pot_width" name="pot_width" step="0.01">
+            </div>
+          </fieldset>
+
+          <div class="form-group">
+            <label for="pot_color">Color de la maceta</label>
+            <input type="text" id="pot_color" name="pot_color">
+          </div>
+
+          <div class="form-group">
+            <label for="weight">Peso (kg)</label>
+            <input type="number" id="weight" name="weight" step="0.01">
+          </div>
+
+          <div class="form-group">
+            <label for="units">Unidades</label>
+            <input type="number" id="units" name="units" value="0" min="0">
+          </div>
+
+          <div class="form-group">
+            <label for="product_descripction">Descripción</label>
+            <input type="text" id="product_descripction" name="product_name" required>
+          </div>
+
+          <button type="submit">Guardar producto</button>
+          <!-- <button type="button" id="btn-generar">Generar descripción con IA</button> -->
+        </form>
+      </div>
+    </div>
+    </div>
 
     <div class="table-responsive">
       <table>
@@ -165,25 +201,27 @@
         <tbody id="tablaProductos"></tbody>
       </table>
     </div>
-    
+
     <!-- Panel externo para acciones -->
     <div id="accionesProducto">
       <span id="productoSeleccionado">Selecciona un producto para editar</span>
-      <button id="btnEditar">Editar</button>
-      <button id="btnEliminar">Eliminar</button>
+      <div class="botones">
+        <button id="btnEditar">Editar</button>
+        <button id="btnEliminar">Eliminar</button>
+      </div>
     </div>
-
   </main>
 
-  <!-- 
-    - custom js link
-  -->
+  <!-- JS -->
+  <script src="../js/Admin_view.js" defer></script>
   <script src="../js/Admin_catalogo.js" defer></script>
   <script src="../js/save_products.js" defer></script>
   <script src="../js/show_products.js" defer></script>
   <script src="../js/update_products.js" defer></script>
   <script src="../js/IA_description.js" defer></script>
-
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="../js/logout.js" defer></script>
 
 </body>
 </html>

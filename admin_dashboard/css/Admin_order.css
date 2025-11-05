@@ -1,300 +1,283 @@
-/*-----------------------------------*\
-  #CUSTOM PROPERTY
-\*-----------------------------------*/
 :root {
-    --hoockers-green_20: hsl(148, 20%, 38%, 0.2);
-    --pale-spring-bud: hsl(60, 68%, 85%);
-    --hoockers-green: hsl(148, 20%, 38%);
-    --spanish-gray: hsl(0, 0%, 61%);
-    --light-gray: hsl(0, 0%, 80%);
-    --cultured-1: hsl(0, 0%, 97%);
-    --cultured-2: hsl(60, 6%, 93%);
-    --gray-web: hsl(0, 0%, 49%);
-    --white_30: hsla(0, 0%, 100%, 0.3);
-    --black_70: hsla(0, 0%, 0%, 0.7);
-    --black_50: hsla(0, 0%, 0%, 0.5);
-    --black_15: hsla(0, 0%, 0%, 0.15);
-    --black_10: hsla(0, 0%, 0%, 0.1);
-    --black_5: hsla(0, 0%, 0%, 0.05);
-    --white: hsl(0, 0%, 100%);
-    --black: hsl(0, 0%, 0%);
-    --radius: 10px;
-    --transition: 0.3s ease;
-    --shadow: 0 2px 8px var(--black_10);
-    --font-family: 'Urbanist', sans-serif;
-  }
-  
-  /*-----------------------------------*\
-    #BASE STYLES
-  \*-----------------------------------*/
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: var(--font-family);
-    background-color: var(--cultured-1);
-    color: var(--hoockers-green);
-    line-height: 1.5;
-    padding: 0 1rem 2rem;
-  }
-  
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--hoockers-green);
-    color: var(--white);
-    padding: 1rem 1.5rem;
-    border-radius: var(--radius);
-    margin: 1.5rem 0;
-    box-shadow: var(--shadow);
-  }
-  
-  header h1 {
-    font-size: 1.6rem;
-    font-weight: 700;
-  }
-  
-  .logout-btn {
-    background: transparent;
-    border: none;
-    color: var(--white);
-    font-size: 1.8rem;
-    cursor: pointer;
-    transition: var(--transition);
-  }
-  
-  .logout-btn:hover {
-    transform: scale(1.1);
-  }
-  
-  /*-----------------------------------*\
-    #TABLE
-  \*-----------------------------------*/
-  .table-responsive {
-    background-color: var(--white);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    overflow-x: auto;
-    margin-bottom: 1.5rem;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: center;
-    font-size: 0.95rem;
-  }
-  
-  thead {
-    background-color: var(--pale-spring-bud);
-    color: var(--black);
-  }
-  
-  thead th {
-    padding: 0.8rem;
-    font-weight: 600;
-  }
-  
-  tbody td {
-    padding: 0.75rem;
-    border-bottom: 1px solid var(--light-gray);
-  }
-  
-  tbody tr:hover {
-    background-color: var(--cultured-2);
-  }
-  
-  /*-----------------------------------*\
-    #BUTTONS
-  \*-----------------------------------*/
-  button {
-    cursor: pointer;
-    border: none;
-    border-radius: var(--radius);
-    transition: var(--transition);
-  }
-  
-  button:hover {
-    opacity: 0.9;
-  }
-  
-  .btnEditarEstado {
-    background-color: var(--hoockers-green);
-    color: var(--white);
-    padding: 0.4rem 0.8rem;
-    border-radius: var(--radius);
-  }
-  
-  #accionesPedido {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    background-color: var(--white);
-    padding: 1rem;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-  }
-  
-  #pedidoSeleccionado {
-    color: var(--gray-web);
-    font-size: 1rem;
-  }
-  
-  #btnVerDetalles,
-  #btnEliminarPedido {
-    background-color: var(--hoockers-green);
-    color: var(--white);
-    padding: 0.6rem 1.2rem;
-  }
-  
-  #btnEliminarPedido {
-    background-color: #b94a48;
-  }
-  
-  /*-----------------------------------*\
-    #MODAL
-  \*-----------------------------------*/
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 100;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--black_50);
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-content {
-    background-color: var(--white);
-    padding: 2rem;
-    border-radius: var(--radius);
-    width: 90%;
-    max-width: 400px;
-    box-shadow: var(--shadow);
-    position: relative;
-  }
-  
-  .modal.active {
-    display: flex; /* ✅ Hace visible el modal */
-  }
-  .modal-content h3 {
-    margin-bottom: 1rem;
-    text-align: center;
-    color: var(--hoockers-green);
-  }
-  
-  .modal-content label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-  }
-  
-  .modal-content select {
-    width: 100%;
-    padding: 0.5rem;
-    border-radius: var(--radius);
-    border: 1px solid var(--light-gray);
-    margin-bottom: 1rem;
-  }
-  
-  .modal-content button {
-    background-color: var(--hoockers-green);
-    color: var(--white);
-    padding: 0.6rem 1rem;
-    width: 100%;
-  }
-  
-  .close {
-    position: absolute;
-    top: 8px;
-    right: 12px;
-    font-size: 1.5rem;
-    color: var(--gray-web);
-    cursor: pointer;
-    transition: var(--transition);
-  }
-  
-  .close:hover {
-    color: var(--black);
-  }
-  
-
-  /* Fila seleccionada */
-#tablaPedidos tr.selected {
-    background-color: var(--pale-spring-bud);
-    font-weight: 600;
-    box-shadow: inset 0 0 0 2px var(--hoockers-green);
-  }
-  
-  /* Checkbox/radio más grande */
-  #tablaPedidos input[type="radio"] {
-    transform: scale(1.2);
-    cursor: pointer;
-  }
-
-
-/* Modal detalles pedido */
-.modal-detalles {
-    display: none;
-    position: fixed;
-    z-index: 200;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.6);
-    justify-content: center;
-    align-items: center;
-    overflow-y: auto;
-    padding: 1rem;
+  --primary: hsl(148, 20%, 38%);
+  --secondary: hsl(148, 30%, 78%);
+  --accent: hsl(148, 40%, 90%);
+  --dark-gray: hsl(0, 0%, 30%);
+  --light-gray: hsl(0, 0%, 80%);
+  --light: hsl(0, 0%, 97%);
+  --white: hsl(0, 0%, 100%);
+  --black: hsl(0, 0%, 0%);
+  --radius: 10px;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --transition: all 0.25s ease-in-out;
+  --font-family: 'Urbanist', sans-serif;
 }
 
-.modal-detalles.active {
-    display: flex;
+/* ---- FORMULARIOS ---- */
+.blog-form {
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin: 2rem auto;
+  max-width: 800px;
 }
 
-.modal-detalles .modal-content {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 1.5rem;
-    max-width: 600px;
-    width: 100%;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    position: relative;
-    max-height: 90vh;
-    overflow-y: auto;
+.form-group {
+  margin-bottom: 1.2rem;
 }
 
-.modal-detalles .close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 1.5rem;
-    cursor: pointer;
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
 }
 
-.modal-detalles ul {
-    list-style: none;
-    padding-left: 0;
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  font-family: inherit;
+  transition: var(--transition);
 }
 
-.modal-detalles li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.5rem;
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px hsla(148, 20%, 38%, 0.15);
 }
 
-.modal-detalles li img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    margin-right: 10px;
-    border-radius: 5px;
+input[type="file"] {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+/* ---- BOTONES ---- */
+button,
+.add-entry-btn,
+.row-actions button {
+  background-color: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+button:hover,
+.add-entry-btn:hover,
+.row-actions button:hover {
+  background-color: hsl(148, 20%, 30%);
+  transform: translateY(-1px);
+}
+
+/* ---- TABLAS ---- */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  margin: 2rem auto;
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+  max-height: 320px;
+  max-width: 1200px;   /* limita el ancho máximo para no ocupar toda la pantalla */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+th, td {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--light-gray);
+  white-space: nowrap;
+}
+
+thead {
+  background-color: var(--primary);
+  color: var(--white);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+tbody tr:hover {
+  background-color: var(--accent);
+}
+
+h1, h2 {
+  text-align: center;
+  margin: 1rem 0;
+}
+h1 { color: var(--hoockers-green); }
+h2 { color: var(--pale-spring-bud); }
+/* ---- ACCIONES FILA DE TABLA ---- */
+.row-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* ---- MODALES ---- */
+.modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  position: relative;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  width: 90%;
+  max-width: 700px;
+  padding: 2rem;
+  text-align: left;
+  animation: modalFadeIn 0.3s ease;
+  font-family: var(--font-family);
+  color: var(--black);
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--primary);
+  cursor: pointer;
+  background: var(--accent);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  line-height: 30px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: var(--transition);
+  z-index: 10;
+}
+
+.close-btn:hover {
+  background: var(--secondary);
+  color: var(--black);
+}
+
+@keyframes modalFadeIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ---- TÍTULO MODAL ---- */
+.modal-content h3 {
+  color: var(--primary);
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--secondary);
+  padding-bottom: 8px;
+}
+
+/* ---- FORMULARIO MODAL ESTADO ---- */
+#formActualizarEstado {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#formActualizarEstado label {
+  font-weight: 600;
+  color: var(--dark-gray);
+}
+
+#formActualizarEstado select {
+  padding: 10px;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  background-color: var(--accent);
+  color: var(--dark-gray);
+  font-size: 0.95rem;
+  outline: none;
+  transition: var(--transition);
+}
+
+#formActualizarEstado select:focus {
+  border-color: var(--primary);
+  background-color: var(--white);
+}
+
+#formActualizarEstado .btn-primary {
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 10px 15px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+#formActualizarEstado .btn-primary:hover {
+  background-color: var(--secondary);
+  color: var(--black);
+}
+
+/* ---- INPUTS & SELECTS MODAL GENERAL ---- */
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: var(--white);
+  color: var(--black);
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.modal-content input:focus,
+.modal-content select:focus,
+.modal-content textarea:focus {
+  border: 2px solid var(--primary);
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 128, 0, 0.2);
+}
+
+.modal-content fieldset {
+  border: none;
+  margin: 1rem 0;
+  padding: 0;
+}
+
+.modal-content fieldset input,
+.modal-content fieldset select,
+.modal-content fieldset textarea {
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  padding: 0.4rem;
 }

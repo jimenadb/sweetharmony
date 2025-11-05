@@ -8,9 +8,8 @@
   <link rel="stylesheet" href="../css/Dahsboard_Wishlist.css">
 </head>
 <body>
-  <div class="container">
-    <h1 class="h1">Mis Favoritos</h1>
-
+  <div class="wishlist-container">
+    <h1 class="wishlist-title">Mis Favoritos</h1>
     <table class="wishlist-table">
       <thead>
         <tr>
@@ -23,10 +22,7 @@
       <tbody>
         <tr>
           <td><input type="checkbox" class="select-item"></td>
-          <td class="product-info">
-            <!-- <img src="producto1.jpg" alt="Producto 1"> (se comento para evitar que carge el recurso) --> 
-            <span></span>
-          </td>
+          <td class="product-info"><span></span></td>
           <td class="price"></td>
           <td>
             <button class="btn btn-secondary remove-btn">Eliminar</button>
@@ -35,11 +31,8 @@
         </tr>
       </tbody>
     </table>
-
   </div>
-  <!-- 
-    - custom js link
-  -->
   <script src="../js/Dashboard_Whislist.js" defer></script>
+  <script src="../../components/back_button.js"></script>
 </body>
 </html>

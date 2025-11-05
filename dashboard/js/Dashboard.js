@@ -81,15 +81,32 @@ addEventOnElem(window, "scroll", scrollReveal);
 const userBtn = document.getElementById('userBtn');
 const dropdownMenu = document.getElementById('dropdownMenu');
 
-userBtn.addEventListener('click', () => {
-  dropdownMenu.classList.toggle('active');
-});
+// Verificar si el usuario está logueado
+const username = sessionStorage.getItem("username");
+const userId = sessionStorage.getItem("user_id");
 
-document.addEventListener('click', (e) => {
-  if (!userBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-    dropdownMenu.classList.remove('active');
-  }
-});
+if (username && userId) {
+  // Si está logueado, redirigir al perfil directamente al hacer clic
+  userBtn.addEventListener('click', () => {
+    window.location.href = "../../dashboard/html/Edit_User.html";
+  });
+
+  // Ocultar el dropdown (ya no se necesita)
+  dropdownMenu.style.display = "none";
+} else {
+  // Si no está logueado, mostrar el menú al hacer clic
+  userBtn.addEventListener('click', () => {
+    dropdownMenu.classList.toggle('active');
+  });
+
+  // Cerrar si hace clic fuera
+  document.addEventListener('click', (e) => {
+    if (!userBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+      dropdownMenu.classList.remove('active');
+    }
+  });
+}
+
 
 /*-----------------------------------
   HEADER LOGO Y BOTONES DINÁMICOS
@@ -139,40 +156,31 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /*-----------------------------------
-  MOSTRAR BOTON DE PEDIDOS
+  MOSTRAR BOTON DE PEDIDOS y direccion
 -----------------------------------*/
 document.addEventListener("DOMContentLoaded", () => {
-  const isLoggedIn = true; // ← cambia esto según tu lógica real de login
-  if (isLoggedIn) {
-    document.getElementById("ordersBtn").style.display = "inline-block";
-    document.getElementById("addressesBtn").style.display = "inline-block";
-  }
-});
+  const username = sessionStorage.getItem("username"); // ← revisa si hay sesión guardada
 
-/*-----------------------------------
- OCULTAR BOTONES
------------------------------------*/
-document.addEventListener('DOMContentLoaded', () => {
-  const userId = localStorage.getItem('user_id'); // o 'token' según tu sistema
-  const ordersBtn = document.getElementById('ordersBtn');
-  const addressesBtn = document.getElementById('addressesBtn');
+  const ordersBtn = document.getElementById("ordersBtn");
+  const addressesBtn = document.getElementById("addressesBtn");
 
-  if (userId) {
-    // ✅ Usuario ha iniciado sesión → mostrar botones
-    ordersBtn.style.display = 'inline-block';
-    addressesBtn.style.display = 'inline-block';
+  if (username) {
+    // ✅ Usuario logueado → mostrar botones
+    if (ordersBtn) ordersBtn.style.display = "inline-block";
+    if (addressesBtn) addressesBtn.style.display = "inline-block";
   } else {
-    // ❌ No ha iniciado sesión → mantenerlos ocultos
-    ordersBtn.style.display = 'none';
-    addressesBtn.style.display = 'none';
+    // ❌ No logueado → ocultar botones
+    if (ordersBtn) ordersBtn.style.display = "none";
+    if (addressesBtn) addressesBtn.style.display = "none";
   }
 });
-/*-----------------------------------
- MODAL
------------------------------------*/
 
+
+/*-----------------------------------
+  MODAL 
+-----------------------------------*/
 document.addEventListener('DOMContentLoaded', () => {
-  const userId = localStorage.getItem('user_id'); // o token
+  const userId = sessionStorage.getItem('user_id'); // ✅ corregido
   const wishlistBtn = document.getElementById('wishlistBtn');
   const cartLink = document.getElementById('cartLink');
   const modal = document.getElementById('loginModal');
@@ -183,8 +191,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (!userId) {
+    // ❌ No logueado → muestra el modal
     wishlistBtn.addEventListener('click', showModal);
     cartLink.addEventListener('click', showModal);
+  } else {
+    // ✅ Logueado → redirige normalmente
+    wishlistBtn.addEventListener('click', () => window.location.href = "Dashboard_Wishlist.html");
+    cartLink.addEventListener('click', () => window.location.href = "Dashboard_Cart.html");
   }
 
   // Cerrar modal al hacer clic afuera
@@ -194,3 +207,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+
+

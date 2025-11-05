@@ -1,6 +1,6 @@
 const tbody = document.querySelector(".wishlist-table tbody");
 
-fetch("../php/get_wishlist_details.php", { credentials: "include" })
+fetch("http://localhost/sweetharmony/sweetharmony/dashboard/php/get_wishlist_details.php", { credentials: "include" })
   .then(res => res.json())
   .then(productos => {
     if (!productos || productos.length === 0) {
@@ -17,7 +17,7 @@ fetch("../php/get_wishlist_details.php", { credentials: "include" })
       <tr>
         <td><input type="checkbox" class="select-item"></td>
         <td class="product-info">
-          <img src="${p.image_url}" alt="${p.product_name}">
+          <img src="../../uploads/${p.image_url}" alt="${p.product_name}">
           <span>${p.product_name}</span>
         </td>
         <td class="price">$${p.price}</td>
@@ -38,3 +38,62 @@ fetch("../php/get_wishlist_details.php", { credentials: "include" })
       </tr>
     `;
   });
+
+
+
+
+tbody.addEventListener('click', e => {
+  if (e.target.classList.contains('remove-btn')) {
+    const btn = e.target;
+    const productId = btn.dataset.id;
+
+    fetch("http://localhost/sweetharmony/sweetharmony/dashboard/php/delete_product_wishlist.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ product_id: productId }),
+      credentials: "include"
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        // Elimina la fila visualmente
+        btn.closest("tr").remove();
+      } else {
+        alert(data.message || "Error al eliminar el producto");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Ocurrió un error al eliminar el producto");
+    });
+  }
+});
+
+
+
+
+tbody.addEventListener('click', e => {
+  if (e.target.classList.contains('add-cart-btn')) {
+    const btn = e.target;
+    const productId = btn.dataset.id;
+
+    fetch("http://localhost/sweetharmony/sweetharmony/dashboard/php/add_to_cart.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ product_id: productId }),
+      credentials: "include"
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert("Producto agregado al carrito");
+      } else {
+        alert(data.message || "Error al agregar el producto");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Ocurrió un error al agregar el producto");
+    });
+  }
+});

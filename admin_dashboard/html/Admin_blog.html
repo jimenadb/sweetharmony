@@ -5,87 +5,123 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mantenimiento del Blog — Sweet Harmony</title>
 
-  <!-- Fuente y estilos base -->
+  <!-- Fuente -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/Admin_view.css">
+  <link rel="stylesheet" href="../css/Admin_blog.css">
+
   <!-- Iconos -->
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
-    <!-- 
-    - custom css link
-  -->
-  <link rel="stylesheet" href="../css/Admin_blog.css">
-  
 </head>
 <body>
 
-  <header>
-    <h1>Mantenimiento del Blog</h1>
-    <button class="logout-btn" title="Cerrar sesión">
-      <ion-icon name="log-out-outline"></ion-icon>
-    </button>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-top" data-header>
+      <div class="container">
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </button>
+        <a href="#" class="logo">SWEET- HARMONY - ADMINISTRADOR</a>
+        <div class="header-actions">
+          <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión">
+            <ion-icon name="log-out-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+        <nav class="navbar">
+          <ul class="navbar-list">
+            <li><a href="Admin_catalogo.html" class="navbar-link has-after">CATÁLOGO</a></li>
+            <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
+            <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </header>
 
-  <main>
-
-        <!-- Botón para mostrar/ocultar formulario -->
-    <button class="add-entry-btn" id="toggleFormBtn">
-        <ion-icon name="add-circle-outline"></ion-icon> Agregar entrada
-    </button>
-
-    <!-- Agregar nueva entrada -->
-    <section class="blog-form" id="newPostSection">
-        <h2>Agregar nueva entrada</h2>
-        <form id="newPostForm" enctype="multipart/form-data" method="POST">
-        <div class="form-group">
-            <label for="postTitle">Título</label>
-            <input type="text" id="postTitle" name="title" required>
-        </div>
-
-        <div class="form-group">
-            <label for="postContent">Contenido</label>
-            <textarea id="postContent" name="content" rows="5" required></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="postImages">Imágenes (opcional)</label>
-            <input type="file" id="postImages" name="images" accept="image/*" multiple>
-        </div>
-
-        <button type="submit">
-            <ion-icon name="create-outline"></ion-icon> Publicar entrada
+  <!-- MOBILE NAVBAR -->
+  <div class="sidebar">
+    <div class="mobile-navbar" data-navbar>
+      <div class="wrapper">
+        <a href="#" class="logo"><img src="../assets/logo.png" width="179" height="26" alt="Glowing"></a>
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
         </button>
-        </form>
-    </section>
+      </div>
+      <ul class="navbar-list">
+        <li><a href="Admin_catalogo.html" class="navbar-link" data-nav-link>CATÁLOGO</a></li>
+        <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
+        <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
+      </ul>
+    </div>
+    <div class="overlay" data-nav-toggler data-overlay></div>
+  </div>
 
-    <!-- Entradas existentes -->
-    <section>
-        <h2>Entradas publicadas</h2>
-        <div class="table-container">
-        <table>
-            <thead>
-            <tr>
-                <th>Título</th>
-                <th>Fecha</th>
-                <th>Acciones</th>
-            </tr>
-            </thead>
-            <tbody id="blogPostsTable">
-            </tbody>
-        </table>
+  <!-- MAIN CONTENT -->
+  <main class="container">
+    <h1>Mantenimiento del Blog</h1>
+
+    <!-- Botón Agregar Entrada -->
+    <div class="btn-wrapper">
+      <button class="add-entry-btn" id="toggleFormBtn">
+        <ion-icon name="add-circle-outline"></ion-icon> Agregar entrada
+      </button>
+    </div>
+
+    <!-- Formulario de Nueva Entrada -->
+    <section class="blog-form" id="newPostSection">
+      <h1>Agregar nueva entrada</h1>
+      <form id="newPostForm" enctype="multipart/form-data" method="POST">
+        <div class="form-group">
+          <label for="postTitle">Título</label>
+          <input type="text" id="postTitle" name="title" required>
         </div>
+        <div class="form-group">
+          <label for="postContent">Contenido</label>
+          <textarea id="postContent" name="content" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="postImages">Imágenes (opcional)</label>
+          <input type="file" id="postImages" name="images" accept="image/*" multiple>
+        </div>
+        <div class="btn-wrapper">
+          <button class="add-entry-btn" type="submit" id="publishEntryBtn">
+            <ion-icon name="create-outline"></ion-icon> Publicar entrada
+          </button>
+        </div>
+      </form>
     </section>
 
+    <!-- Entradas Publicadas -->
+    <section>
+      <h1>Entradas publicadas</h1>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="blogPostsTable"></tbody>
+        </table>
+      </div>
+    </section>
   </main>
 
-  <!-- Modal de edición -->
+  <!-- Modal Edición -->
   <div class="modal" id="editModal">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>Editar entrada</h3>
+        <h3>Editar Entrada</h3>
         <button class="close-btn" id="closeModal">
           <ion-icon name="close-outline"></ion-icon>
         </button>
@@ -107,19 +143,20 @@
             <option value="archived">Archivado</option>
           </select>
         </div>
-        <button type="submit">
-          <ion-icon name="save-outline"></ion-icon> Guardar cambios
-        </button>
+        <div class="btn-wrapper">
+          <button type="submit">
+            <ion-icon name="save-outline"></ion-icon> Guardar cambios
+          </button>
+        </div>
       </form>
     </div>
   </div>
 
-    <!-- 
-    - custom js link
-  -->
+  <!-- Scripts -->
   <script src="../js/Admin_blog.js" defer></script>
   <script src="../js/save_blog.js" defer></script>
   <script src="../js/show_blog.js" defer></script>
-
+  <script src="../js/Admin_view.js" defer></script>
+  <script src="../js/logout.js" defer></script>
 </body>
 </html>

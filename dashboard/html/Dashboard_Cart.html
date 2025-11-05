@@ -1,84 +1,68 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Carrito - SWEET HARMONY</title>
-  <link rel="stylesheet" href="../css/Dashboard_Cart.css">
-  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Carrito - SWEET HARMONY</title>
+<link rel="stylesheet" href="../css/Dashboard_Cart.css">
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+<div class="cart-container">
+  <h1 class="cart-title">Mi Carrito</h1>
+  <table class="cart-table">
+    <thead>
+      <tr>
+        <th><input type="checkbox" id="select-all"></th>
+        <th>Producto</th>
+        <th>Precio Unitario</th>
+        <th>Cantidad</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody id="cart-items"></tbody>
+  </table>
+  <div class="cart-actions">
+    <button class="btn btn-secondary" id="delete-selected">Eliminar seleccionados</button>
+  </div>
+  <div class="cart-summary">
+    <p>Total General: <span id="grand-total">$85.00</span></p>
+    <button class="btn btn-primary" id="checkout-btn">Realizar Compra</button>
+  </div>
 
-  <!-- MAIN CARRO -->
-  <main class="cart-page section">
-    <div class="container">
-      <h1 class="h1">Mi Carrito</h1>
-
-      <table class="cart-table">
-        <thead>
-          <tr>
-            <th><input type="checkbox" id="select-all"></th>
-            <th>Producto</th>
-            <th>Precio Unitario</th>
-            <th>Cantidad</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody id="cart-items">
-          
-        </tbody>
-      </table>
-
-      <div class="cart-actions">
-        <button class="btn btn-secondary" id="delete-selected">Eliminar seleccionados</button>
-        <!-- <button class="btn btn-secondary" id="empty-cart">Vaciar carrito</button>
-        <input type="text" id="coupon" placeholder="Código de cupón">
-        <button class="btn btn-primary" id="apply-coupon">Aplicar cupón</button> -->
-      </div>
-
-      <div class="cart-summary">
-        <p>Total General: <span id="grand-total">$85.00</span></p>
-        <button class="btn btn-primary" id="checkout-btn">Realizar Compra</button>
-      </div>
+  <section class="checkout-section">
+    <h2 class="checkout-title">Resumen de Compra</h2>
+    <div class="invoice-preview">
+      <h3>Factura Previa</h3>
+      <p><strong>Subtotal:</strong> <span id="subtotal">$0.00</span></p>
+      <p><strong>Envío:</strong> <span id="shipping">$5.00</span></p>
+      <p><strong>Total a Pagar:</strong> <span id="total-payable">$0.00</span></p>
     </div>
-
-    <!-- ==========================
-     FACTURA PREVIA Y ENTREGA
-    ========================== -->
-    <section class="checkout-section">
-      <h2 class="h2">Resumen de Compra</h2>
-
-      <!-- Factura previa -->
-      <div class="invoice-preview">
-        <h3>Factura Previa</h3>
-        <p><strong>Subtotal:</strong> <span id="subtotal">$0.00</span></p>
-        <p><strong>Descuento:</strong> <span id="discount-amount">$0.00</span></p>
-        <p><strong>Envío:</strong> <span id="shipping">$5.00</span></p>
-        <p><strong>Total a Pagar:</strong> <span id="total-payable">$0.00</span></p>
-      </div>
-
-      <!-- Dirección de entrega -->
-      <div class="delivery-address">
-        <h3>Dirección de Entrega</h3>
-        <select id="select-address">
-          <option value="">Cargando direcciones...</option>
-        </select>
-        <p id="address-info"></p>
-        <a href="User_Address.html">
-          <button class="btn btn-secondary">Agregar nueva dirección</button>
-        </a>
-      </div>
-
-      <!-- Acción final -->
-      <div class="final-action">
-        <button class="btn btn-primary" id="place-order">Realizar Pedido</button>
-      </div>
-    </section>
-  </main>
-  
-  <script defer src="../js/Dashboard_Cart.js"></script>
-  <script defer src="../js/Place_Order.js"></script>
-
+    <div class="delivery-address">
+      <h3>Dirección de Entrega</h3>
+      <select id="select-address">
+        <option value="">Cargando direcciones...</option>
+      </select>
+      <p id="address-info"></p>
+      <a href="User_Address.html"><button class="btn btn-secondary">Agregar nueva dirección</button></a>
+    </div>
+    <div class="yape-payment">
+      <h3>Pagar con Yape</h3>
+      <p>Escanea este QR con la app de Yape y luego sube la captura de pago:</p>
+      <img src="../assets/yaper_qr.jpeg" alt="QR Yape" class="yape-qr">
+      <form id="yape-form">
+        <input type="file" id="yape-proof" name="yape-proof" accept="image/*" required>
+        <img id="yape-preview" class="yape-preview">
+      </form>
+      <div id="yape-msg"></div>
+    </div>
+    <div class="final-action">
+      <button class="btn btn-primary" id="place-order">Realizar Pedido</button>
+    </div>
+  </section>
+</div>
+<script src="../../components/back_button.js"></script>
+<script defer src="../js/Dashboard_Cart.js"></script>
+<script defer src="../js/Place_Order.js"></script>
 </body>
 </html>

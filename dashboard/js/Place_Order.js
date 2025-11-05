@@ -1,30 +1,34 @@
 document.getElementById('place-order').addEventListener('click', async () => {
     const selectAddress = document.getElementById('select-address');
-    const delivery_address_id = parseInt(selectAddress.value); // <-- convertimos a número
+    const delivery_address_id = parseInt(selectAddress.value);
+    const yapeInput = document.getElementById('yape-proof');
+    const file = yapeInput?.files[0];
   
     if (!delivery_address_id) {
       alert("Selecciona una dirección de entrega");
       return;
     }
-
-    
   
     try {
+      const formData = new FormData();
+      formData.append('delivery_address_id', delivery_address_id);
+      if (file) formData.append('yape_proof', file);
+  
       const res = await fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/place_order.php', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ delivery_address_id })
+        body: formData
       });
-      const data = await res.json();
   
+      const data = await res.json();
       if (data.success) {
         alert(`✅ Pedido realizado correctamente.\nNúmero de seguimiento: ${data.order_id}`);
         location.reload();
       } else {
-        alert(data.message);
+        alert(`⚠️ Error: ${data.message}`);
       }
+  
     } catch (err) {
-      console.error(err);
+      console.error("Error al realizar pedido:", err);
       alert("Ocurrió un error al generar el pedido");
     }
   });

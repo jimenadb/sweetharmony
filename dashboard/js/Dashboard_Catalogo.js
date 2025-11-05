@@ -19,22 +19,23 @@ fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_catalo
     cardBanner.style.setProperty('--width','540');
     cardBanner.style.setProperty('--height','720');
 //-------------imagen------------
-    const img = document.createElement('img');
-    img.src = producto.img_url || '../assets/product-01.jpg';
-    img.width = 540;
-    img.height = 720;
-    img.loading = 'lazy';
-    img.alt = producto.product_name;
-    img.classList.add('img-cover');
-    cardBanner.appendChild(img);
+const img = document.createElement('img');
+img.src = producto.image_url || '../assets/product-01.jpg'; // <- aquí
+img.width = 540;
+img.height = 720;
+img.loading = 'lazy';
+img.alt = producto.product_name;
+img.classList.add('img-cover');
+cardBanner.appendChild(img);
 
-    if (producto.discount) {
-      const spanBadge = document.createElement('span');
-      spanBadge.classList.add('badge');
-      spanBadge.setAttribute('aria-label',`${producto.discount}% off`);
-      spanBadge.textContent = `-${producto.discount}%`;
-      cardBanner.appendChild(spanBadge);
-    }
+if (producto.discount) {
+  const spanBadge = document.createElement('span');
+  spanBadge.classList.add('badge');
+  spanBadge.setAttribute('aria-label', `${producto.discount}% off`);
+  spanBadge.textContent = `-${producto.discount}%`;
+  cardBanner.appendChild(spanBadge);
+}
+
 
 //-------------card actions ---------------
     const cardActions = document.createElement('div');
@@ -210,24 +211,7 @@ fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_catalo
     shopCard.append(cardBanner, cardContent);
 
 
-    shopCard.addEventListener('click', async () => {
-      const productId = producto.id;
     
-      // Registrar la vista (aunque no esté logeado)
-      navigator.sendBeacon(`http://localhost/sweetharmony/sweetharmony/dashboard/php/register_view.php?id=${productId}`);
-    
-      // Obtener detalles del producto
-      try {
-        const response = await fetch(`http://localhost/sweetharmony/sweetharmony/dashboard/php/get_product_cart.php?product_id=${productId}`);
-        const data = await response.json();
-    
-        if (response.ok && data.status === 'success') {
-          openProductPopup(data.product);
-        }
-      } catch (err) {
-        console.error('Error al obtener los detalles del producto:', err);
-      }
-    });
     
 
 
@@ -298,7 +282,9 @@ function openProductPopup(product) {
 
   // Llenar los datos, aunque sean null
   nameEl.textContent = product.product_name || 'Nombre no disponible';
-  imgEl.src = product.image_url && product.image_url !== '' ? product.image_url : '../assets/product-01.jpg';
+  imgEl.src = product.image_url
+    ? '../../uploads/' + encodeURIComponent(product.image_url)
+    : '../dashboard/assets/product-01.jpg';
   typeEl.textContent = product.product_type || 'Tipo no disponible';
   plantTypeEl.textContent = product.plant_type || 'Tipo de planta no disponible';
   discountEl.textContent = product.discount > 0 ? `Descuento: ${product.discount}%` : '';
@@ -320,7 +306,7 @@ function openProductPopup(product) {
     const quantity = parseInt(document.getElementById('product-quantity').value) || 1;
   
     try {
-      const res = await fetch('http://localhost/sweetharmonysweetharmony/dashboard/php/add_item_popup.php', {
+      const res = await fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/add_item_popup.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ product_id: product.id, quantity }),
@@ -360,7 +346,7 @@ function openProductPopup(product) {
 /*-----------------------------------
   UTILS
 -----------------------------------*/
-const addEventOnElem = function(elem, type, callback) {
+const addEventOnElemCatalog = function(elem, type, callback) {
   if (elem.length > 1) {
     for (let i = 0; i < elem.length; i++) {
       elem[i].addEventListener(type, callback);
@@ -371,31 +357,3 @@ const addEventOnElem = function(elem, type, callback) {
 };
 
 
-/*-----------------------------------
-  BACK TO TOP BUTTON
------------------------------------*/
-const backTopBtn = document.querySelector("[data-back-top-btn]");
-
-const backTopBtnActive = function() {
-  if (backTopBtn) {
-    if (window.scrollY > 150) {
-      backTopBtn.classList.add("active");
-    } else {
-      backTopBtn.classList.remove("active");
-    }
-  }
-};
-addEventOnElem(window, "scroll", backTopBtnActive);
-/*-----------------------------------
-  SCROLL REVEAL EFFECT
------------------------------------*/
-const sections = document.querySelectorAll("[data-section]");
-const scrollReveal = function() {
-  for (let i = 0; i < sections.length; i++) {
-    if (sections[i].getBoundingClientRect().top < window.innerHeight / 2) {
-      sections[i].classList.add("active");
-    }
-  }
-};
-scrollReveal();
-addEventOnElem(window, "scroll", scrollReveal);

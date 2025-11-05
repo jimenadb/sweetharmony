@@ -1,69 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-      <!-- 
-        - custom css link
-        -->
-        <link rel="stylesheet" href="../css/User_Address.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Direcciones</title>
+  <link rel="stylesheet" href="../css/User_Address.css">
 </head>
 <body>
-    <section class="address-section">
-        <h2>Mis Direcciones de Entrega</h2>
-        <div id="address-list" class="address-list"></div>
-      
-        <button id="add-address-btn" class="btn btn-primary">+ Agregar Nueva Dirección</button>
-      </section>
-      
-       <!-- ===================
-    POPUP FORMULARIO
-  =================== -->
+  <section class="address-section">
+    <h2>Mis Direcciones de Entrega</h2>
+    <div id="address-list" class="address-list"></div>
+    <button id="add-address-btn" class="btn btn-primary">+ Agregar Nueva Dirección</button>
+  </section>
   <div id="address-modal" class="modal">
     <div class="modal-content">
+      <div class="modal-scroll">
       <span class="close-btn">&times;</span>
       <h3>Agregar / Editar Dirección</h3>
-  
       <form id="address-form">
         <input type="hidden" name="id" id="address-id">
-  
-        <label>Full Name</label>
+        <label>Nombre completo</label>
         <input type="text" name="full_name" id="full_name" required>
-  
+        <label>Email</label>
+        <input type="email" name="email" id="email" required>
         <label>DNI</label>
         <input type="text" name="dni" id="dni" required>
-  
-        <label>Address</label>
+        <label>Dirección</label>
         <input type="text" name="address" id="address" required>
-  
-        <label>District</label>
+        <label>Distrito</label>
         <input type="text" name="district" id="district" required>
-  
-        <label>City</label>
+        <label>Ciudad</label>
         <input type="text" name="city" id="city" required>
-  
-        <label>Postal Code</label>
+        <label>Código Postal</label>
         <input type="text" name="postal_code" id="postal_code" required>
-  
-        <label>Reference</label>
-        <input type="text" name="reference" id="reference" required>
-  
-        <label class="checkbox">
+        <label>Referencia</label>
+        <input type="text" name="reference" id="reference">
+        <label>
           <input type="checkbox" name="is_default" id="is_default">
-          Set as default
+          Predeterminada
         </label>
-  
-        <button type="submit" class="btn btn-primary">Save Address</button>
+        <button type="submit" class="btn btn-primary">Guardar Dirección</button>
       </form>
+      </div>
     </div>
   </div>
-  
-
-      <!-- 
-        - custom script link
-        -->
-        <script src="../js/User_Address.js" defer></script>
+  <script src="../js/User_Address.js" defer></script>
+  <script src="../js/Show_User_Address.js" defer></script>
+  <script src="../../components/back_button.js"></script>
 </body>
 </html>

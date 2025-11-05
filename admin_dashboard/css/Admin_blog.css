@@ -1,185 +1,225 @@
+:root {
+  --primary: hsl(148, 20%, 38%);
+  --secondary: hsl(148, 30%, 78%);
+  --accent: hsl(148, 40%, 90%);
+  --dark-gray: hsl(0, 0%, 30%);
+  --light-gray: hsl(0, 0%, 80%);
+  --light: hsl(0, 0%, 97%);
+  --white: hsl(0, 0%, 100%);
+  --black: hsl(0, 0%, 0%);
+  --radius: 8px;
+  --shadow: 0 4px 12px rgba(0,0,0,0.1);
+  --transition: all 0.2s ease-in-out;
+  --font-family: 'Urbanist', sans-serif;
+}
 
-    :root {
-      --hoockers-green: hsl(148, 20%, 38%);
-      --pale-spring-bud: hsl(60, 68%, 85%);
-      --light-gray: hsl(0, 0%, 85%);
-      --white: #fff;
-    }
+/* ---- CONTENEDOR GENERAL ---- */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+}
 
-    body {
-      font-family: 'Urbanist', sans-serif;
-      margin: 0;
-      background-color: var(--white);
-      color: #222;
-    }
+/* ---- ENCABEZADOS ---- */
+h1, h2 {
+  text-align: center;
+  margin: 1rem 0;
+}
+h1 { color: var(--primary); }
+h2 { color: var(--secondary); }
 
-    header {
-      background-color: var(--hoockers-green);
-      color: var(--white);
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+/* ---- FORMULARIOS ---- */
+.blog-form {
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+}
 
-    header h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-    }
+.form-group {
+  margin-bottom: 1rem;
+}
 
-    header .logout-btn {
-      background: none;
-      border: none;
-      color: var(--white);
-      font-size: 1.7rem;
-      cursor: pointer;
-      transition: opacity 0.3s;
-    }
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
 
-    header .logout-btn:hover {
-      opacity: 0.8;
-    }
+input[type="text"], textarea, select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  font-family: inherit;
+}
 
-    main {
-      padding: 2rem;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
+input[type="file"] {
+  display: block;
+  margin-top: 0.4rem;
+}
 
-    h2 {
-      color: var(--hoockers-green);
-      margin-bottom: 1rem;
-    }
+/* ---- BOTONES ---- */
+button,
+.add-entry-btn,
+.row-actions button {
+  background-color: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1.2rem;
+  text-align: center;
+}
 
-    /* Formularios */
-    .blog-form {
-      background: var(--white);
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      margin-bottom: 2rem;
-    }
+button:hover,
+.add-entry-btn:hover,
+.row-actions button:hover {
+  background-color: hsl(148, 20%, 28%);
+}
 
-    .form-group {
-      margin-bottom: 1rem;
-    }
+.add-entry-btn {
+  font-size: 1.8rem;
+  padding: 0.9rem 1.8rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
 
-    label {
-      display: block;
-      font-weight: 500;
-      margin-bottom: 0.4rem;
-    }
+/* ---- TABLAS ---- */
+.table-container {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  margin-bottom: 2rem;
+  border: 1px solid var(--light-gray);
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+}
 
-    input[type="text"],
-    textarea {
-      width: 100%;
-      padding: 0.6rem;
-      border: 1px solid var(--light-gray);
-      border-radius: 5px;
-      font-family: inherit;
-    }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
 
-    input[type="file"] {
-      display: block;
-      margin-top: 0.4rem;
-    }
+th, td {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--light-gray);
+  white-space: nowrap;
+}
 
-    button {
-      background-color: var(--hoockers-green);
-      color: var(--white);
-      border: none;
-      padding: 0.7rem 1.2rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: background 0.2s;
-    }
+thead {
+  background-color: var(--primary);
+  color: var(--white);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
 
-    button:hover {
-      background-color: hsl(148, 20%, 28%);
-    }
+tr:hover {
+  background-color: var(--accent);
+}
 
-    /* Tabla de entradas */
-    .table-responsive {
-      max-height: none; /* ya no limitamos altura */
-      overflow-x: auto; /* scroll horizontal si es necesario */
-      border: 1px solid var(--light-gray);
-      border-radius: 8px;
-      margin-bottom: 2rem;
-    }
-    
-    table {
-      width: max-content; /* se expande según columnas */
-      min-width: 100%;    /* ocupa todo el contenedor */
-      border-collapse: collapse;
-      text-align: center;
-    }
-    
-    th, td {
-      padding: 0.6rem 1rem; /* un poco más ancho */
-      border-bottom: 1px solid var(--light-gray);
-      white-space: nowrap;  /* evita saltos de línea */
-    }
-    
-    thead {
-      background-color: var(--hoockers-green);
-      color: var(--white);
-      position: sticky;
-      top: 0;
-      z-index: 1;
-    }
-    
-    tr:hover {
-      background-color: #f9f9f9;
-    }
-    
-    /* Modal de edición */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      justify-content: center;
-      align-items: center;
-    }
+/* ---- MODALES ---- */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  padding: 1rem;
+}
 
-    .modal-content {
-      background: var(--white);
-      padding: 1.5rem;
-      border-radius: 8px;
-      max-width: 500px;
-      width: 90%;
-    }
+.modal.active {
+  display: flex;
+}
 
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
+.modal-content {
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  max-width: 500px;
+  width: 100%;
+  box-shadow: var(--shadow);
+}
 
-    .close-btn {
-      background: none;
-      border: none;
-      font-size: 1.6rem;
-      cursor: pointer;
-      color: var(--hoockers-green);
-    }
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
 
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: var(--primary);
+  transition: var(--transition);
+}
 
-    .row-actions {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-    }
-    
-    .row-actions button {
-      padding: 6px 10px;
-      font-size: 13px;
-      border-radius: 5px;
-    }
+.close-btn:hover {
+  color: var(--black);
+}
+
+/* ---- INPUTS & SELECTS MODAL ---- */
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  font-family: 'Urbanist', sans-serif;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: var(--white);
+  color: var(--black);
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.modal-content input:focus,
+.modal-content select:focus,
+.modal-content textarea:focus {
+  border: 2px solid var(--primary);
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 128, 0, 0.2);
+}
+
+/* ---- ACCIONES FILA DE TABLA ---- */
+.row-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* ---- HEADER ICONOS ---- */
+.header-action-btn {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2c3e50;
+  transition: var(--transition);
+}
+
+.header-action-btn ion-icon {
+  font-size: 28px;
+}
+
+.header-action-btn:is(:hover, :focus) {
+  color: var(--black);
+}

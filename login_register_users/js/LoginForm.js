@@ -26,6 +26,12 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
       if (result.username) {
         sessionStorage.setItem('username', result.username);
       }
+
+      // ✅ 👇 NUEVO: guardar también el ID del usuario
+      if (result.user_id) {
+        sessionStorage.setItem('user_id', result.user_id);
+      }
+
       if (result.redirect) {
         window.location.href = result.redirect;
       } else {

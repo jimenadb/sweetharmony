@@ -14,30 +14,74 @@
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-  <!-- Estilo general -->
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../css/Admin_view.css">
   <link rel="stylesheet" href="../css/Admin_order.css">
 </head>
-<body>
 
-  <header>
-    <h1>Gestión de Pedidos</h1>
-    <button class="logout-btn" title="Cerrar sesión">
-      <ion-icon name="log-out-outline"></ion-icon>
-    </button>
+<body id="top">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-top" data-header>
+      <div class="container">
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </button>
+        <a href="#" class="logo">SWEET- HARMONY - ADMINISTRADOR</a>
+        <div class="header-actions">
+          <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión">
+            <ion-icon name="log-out-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+        <nav class="navbar">
+          <ul class="navbar-list">
+            <li><a href="Admin_catalogo.html" class="navbar-link has-after">CATÁLOGO</a></li>
+            <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
+            <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </header>
 
+  <!-- MOBILE NAVBAR -->
+  <div class="sidebar">
+    <div class="mobile-navbar" data-navbar>
+      <div class="wrapper">
+        <a href="#" class="logo">
+          <img src="../assets/logo.png" width="179" height="26" alt="Glowing">
+        </a>
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+      <ul class="navbar-list">
+        <li><a href="Admin_catalogo.html" class="navbar-link" data-nav-link>CATÁLOGO</a></li>
+        <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
+        <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
+      </ul>
+    </div>
+    <div class="overlay" data-nav-toggler data-overlay></div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
   <main>
+    <h1 style="text-align:center; margin:2rem 0;">Gestión de Pedidos</h1>
+
     <div class="table-responsive">
       <table>
         <thead>
           <tr>
-            <th></th> 
+            <th></th>
             <th>ID Pedido</th>
-            <th>Cliente (user_id)</th>
-            <th>Total (S/)</th>
+            <th>Cliente</th>
+            <th>Total</th>
             <th>Estado</th>
             <th>Dirección</th>
-            <th>Creado</th>
+            <th>Fecha de Pedido</th>
             <th>Actualizar Estado</th>
           </tr>
         </thead>
@@ -45,39 +89,37 @@
       </table>
     </div>
 
-    <div id="accionesPedido">
-      <span id="pedidoSeleccionado">Selecciona un pedido para ver detalles</span>
-      <button id="btnVerDetalles">Ver Detalles</button>
-      <!-- <button id="btnEliminarPedido">Eliminar</button> -->
+    <div id="accionesPedido" style="text-align:center; margin-bottom:2rem;">
+      <button id="btnVerDetalles" class="btn btn-primary">Ver Detalles</button>
     </div>
 
     <!-- Modal para actualizar estado -->
     <div id="modalEstado" class="modal">
       <div class="modal-content">
-        <span id="cerrarModalEstado" class="close">&times;</span>
+        <span id="cerrarModalEstado" class="close-btn">&times;</span>
         <form id="formActualizarEstado">
           <h3>Actualizar Estado del Pedido</h3>
           <input type="hidden" id="order_id" name="order_id">
-
           <label for="status">Nuevo estado:</label>
           <select id="status" name="status" required>
             <option value="processing">En proceso</option>
+            <option value="paid">Pagado</option>
             <option value="shipped">Enviado</option>
             <option value="delivered">Entregado</option>
             <option value="completed">Completado</option>
             <option value="cancelled">Cancelado</option>
           </select>
-
-          <button type="submit">Actualizar</button>
+          <button type="submit" class="btn btn-primary">Actualizar</button>
         </form>
       </div>
     </div>
-
   </main>
+
+  <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="../js/Admin_order.js" defer></script>
-  
-
+  <script src="../js/Admin_view.js" defer></script>
+  <script src="../js/logout.js" defer></script>
 
 </body>
 </html>

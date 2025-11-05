@@ -35,13 +35,14 @@ if (password_verify($password, $user['password'])) {
     $_SESSION['role'] = $user['role'];           // rol del usuario
 	//CAMBIO EN LA REDIRECCION 
     $redirect = ($user['role'] === 'admin')
-        ? "../../admin_dashboard/html/Admin_view.html"
+        ? "../../admin_dashboard/html/Admin_catalogo.html"
         : "../../dashboard/html/Dashboard.html";
 
 	echo json_encode([
         "message" => "Login exitoso",
         "redirect" => $redirect,
-        "username" => $user['first_name']
+        "username" => $user['first_name'],
+        "user_id" => $user['id']
     ]);
 } else {
     http_response_code(401);
