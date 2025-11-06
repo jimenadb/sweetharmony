@@ -731,8 +731,78 @@ body {
   padding: 10px;
 }
 
+/*-----------------------------------*\
+  #BLOG
+\*-----------------------------------*/
 
+.blog-card {
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: var(--transition);
+  max-width: 280px;
+}
 
+.blog-card:hover {
+  transform: translateY(-5px);
+}
+
+.blog-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.blog-content {
+  padding: 1rem;
+}
+
+.blog-title {
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  
+}
+
+.blog-excerpt {
+  font-size: 0.95rem;
+  color: var(--dark-gray);
+  margin-bottom: 0.8rem;
+}
+
+.blog-card .span {
+  color: var(--black);
+  font-weight: var(--fw-700);
+}
+
+.title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.title-wrapper .span {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.title-wrapper .span:hover {
+  color: var(--black);
+}
+
+/* Más espacio solo en el bloque "Blog recientes" */
+#recent-blog .title-wrapper {
+  margin-bottom: 4rem; /* aumenta espacio entre título y lista de blogs */
+}
+
+#recent-blog #recent-posts {
+  margin-top: 1rem; /* opcional, añade más separación si quieres */
+}
 /*-----------------------------------*\
   #BANNER
 \*-----------------------------------*/

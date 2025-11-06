@@ -175,6 +175,41 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+/*-----------------------------------
+  BLOG 
+-----------------------------------*/
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_blog.php")
+    .then(res => res.json())
+    .then(posts => {
+      const recentList = document.getElementById("recent-posts");
+      if (!posts.length) {
+        recentList.innerHTML = "<p>No hay blogs recientes disponibles.</p>";
+        return;
+      }
+
+      // Mostrar solo 4 entradas
+      const recentPosts = posts.slice(0, 4);
+
+      recentList.innerHTML = recentPosts.map(post => `
+        <li class="scrollbar-item">
+          <a href="Dashboard_Blog.html?id=${post.id}" class="blog-card" style="text-decoration: none; color: inherit;">
+            <div class="card-banner img-holder" 
+                 style="--width:720; --height:480; overflow:hidden; border-radius:10px;">
+              <img src="../../uploads/blog/${post.image_url}" 
+                   alt="${post.title}" 
+                   class="blog-img"
+                   style="width:100%; height:100%; object-fit:cover; object-position:center;">
+            </div>
+            <div class="blog-content" style="padding-top: 0.5rem;">
+              <h3 class="blog-title" style="text-align:center;">${post.title}</h3>
+            </div>
+          </a>
+        </li>
+      `).join("");
+    })
+    .catch(err => console.error("Error cargando blogs recientes:", err));
+});
 
 /*-----------------------------------
   MODAL 

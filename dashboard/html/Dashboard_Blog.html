@@ -4,109 +4,101 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Blog — Sweet Harmony</title>
-
-  <!-- Google Font -->
+  <!--  Fuentes y estilos -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- CSS externo -->
   <link rel="stylesheet" href="../css/Dashboard_Blog.css">
   <link rel="stylesheet" href="../css/Dashboard.css">
-
 </head>
 <body>
-<!-- #HEADER -->
-<header class="header">
-  <div class="header-top" data-header>
-    <div class="container">
-      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></button>
-      <div class="input-wrapper">
-        <input type="search" name="search" placeholder="Search product" class="search-field">
-        <button class="search-submit" aria-label="search"><ion-icon name="search-outline" aria-hidden="true"></ion-icon></button>
-      </div>
-      <a href="#" class="logo">SWEET-HARMONY</a>
-      <div class="header-actions">
-        <div class="user-dropdown">
-          <button class="header-action-btn" id="userBtn"><ion-icon name="person-outline"></ion-icon></button>
-          <div class="dropdown-menu" id="dropdownMenu">
-            <a href="../../login_register_users/html/LoginForm.html">Iniciar sesión</a>
-            <a href="../../login_register_users/html/RegisterForm.html">Registrarse</a>
-          </div>
+  <!--  HEADER -->
+  <header class="header">
+    <div class="header-top" data-header>
+      <div class="container">
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+          <span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span>
+        </button>
+        <div class="input-wrapper">
+          <input type="search" name="search" placeholder="Search product" class="search-field">
+          <button class="search-submit" aria-label="search"><ion-icon name="search-outline" aria-hidden="true"></ion-icon></button>
         </div>
-        <a href="Dashboard_Wishlist.html" id="wishlistBtn" class="header-action-btn" aria-label="favourite item"><ion-icon name="star-outline" aria-hidden="true"></ion-icon></a>
-        <a href="Dashboard_Cart.html" id="cartLink"><button id="cartBtn" class="header-action-btn" aria-label="cart item"><data id="cartTotal" class="btn-text" value="0"></data><ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon></button></a>
-        <a href="Dashboard_Order.html"><button id="ordersBtn" style="display:none;" class="header-action-btn" aria-label="view orders"><ion-icon name="cube-outline" aria-hidden="true"></ion-icon></button></a>
-        <a href="User_Address.html"><button id="addressesBtn" style="display:none;" class="header-action-btn" aria-label="ver direcciones"><ion-icon name="home-outline" aria-hidden="true"></ion-icon></button></a>
-        <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión"><ion-icon name="log-out-outline" aria-hidden="true"></ion-icon></button>
+        <a href="#" class="logo">SWEET-HARMONY</a>
+        <div class="header-actions">
+          <div class="user-dropdown">
+            <button class="header-action-btn" id="userBtn"><ion-icon name="person-outline"></ion-icon></button>
+            <div class="dropdown-menu" id="dropdownMenu">
+              <a href="../../login_register_users/html/LoginForm.html">Iniciar sesión</a>
+              <a href="../../login_register_users/html/RegisterForm.html">Registrarse</a>
+            </div>
+          </div>
+          <a href="Dashboard_Wishlist.html" id="wishlistBtn" class="header-action-btn" aria-label="favourite item"><ion-icon name="star-outline" aria-hidden="true"></ion-icon></a>
+          <a href="Dashboard_Cart.html" id="cartLink"><button id="cartBtn" class="header-action-btn" aria-label="cart item"><data id="cartTotal" class="btn-text" value="0"></data><ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon></button></a>
+          <a href="Dashboard_Order.html"><button id="ordersBtn" style="display:none;" class="header-action-btn" aria-label="view orders"><ion-icon name="cube-outline" aria-hidden="true"></ion-icon></button></a>
+          <a href="User_Address.html"><button id="addressesBtn" style="display:none;" class="header-action-btn" aria-label="ver direcciones"><ion-icon name="home-outline" aria-hidden="true"></ion-icon></button></a>
+          <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión"><ion-icon name="log-out-outline" aria-hidden="true"></ion-icon></button>
+        </div>
+        <nav class="navbar">
+          <ul class="navbar-list">
+            <li><a href="Dashboard.html" class="navbar-link has-after">INICIO</a></li>
+            <li><a href="Dashboard_Catalogo.html" class="navbar-link has-after">CATÁLOGO</a></li>
+            <li><a href="Dashboard_Blog.html" class="navbar-link has-after">BLOG</a></li>
+            <li><a href="Dashboard_About.html" class="navbar-link has-after">NOSOTROS</a></li>
+          </ul>
+        </nav>
       </div>
-      <nav class="navbar">
-        <ul class="navbar-list">
-          <li><a href="Dashboard.html" class="navbar-link has-after">INICIO</a></li>
-          <li><a href="Dashboard_Catalogo.html" class="navbar-link has-after">CATÁLOGO</a></li>
-          <li><a href="Dashboard_Blog.html" class="navbar-link has-after">BLOG</a></li>
-          <li><a href="Dashboard_About.html" class="navbar-link has-after">NOSOTROS</a></li>
-        </ul>
-      </nav>
+    </div>
+  </header>
+
+  <!--  MODAL LOGIN -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <p>Necesitas iniciar sesión o crear una cuenta para acceder a esta función.</p>
+      <div class="modal-actions">
+        <a href="../../login_register_users/html/LoginForm.html" class="btn">Iniciar sesión</a>
+        <a href="../../login_register_users/html/RegisterForm.html" class="btn btn-secondary">Registrarse</a>
+      </div>
     </div>
   </div>
-</header>
 
-<!-- MODAL -->
-<div id="loginModal" class="modal">
-  <div class="modal-content">
-    <p>Necesitas iniciar sesión o crear una cuenta para acceder a esta función.</p>
-    <div class="modal-actions">
-      <a href="../../login_register_users/html/LoginForm.html" class="btn">Iniciar sesión</a>
-      <a href="../../login_register_users/html/RegisterForm.html" class="btn btn-secondary">Registrarse</a>
+  <!--  NAVBAR MÓVIL -->
+  <div class="sidebar">
+    <div class="mobile-navbar" data-navbar>
+      <div class="wrapper">
+        <a href="#" class="logo"><img src="../assets/logo.png" width="179" height="26" alt="Glowing"></a>
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler><ion-icon name="close-outline" aria-hidden="true"></ion-icon></button>
+      </div>
+      <ul class="navbar-list">
+        <li><a href="Dashboard.html" class="navbar-link" data-nav-link>INICIO</a></li>
+        <li><a href="Dashboard_Catalogo.html" class="navbar-link" data-nav-link>CATÁLOGO</a></li>
+        <li><a href="Dashboard_Blog.html" class="navbar-link has-after">BLOG</a></li>
+        <li><a href="Dashboard_About.html" class="navbar-link has-after">NOSOTROS</a></li>
+      </ul>
     </div>
+    <div class="overlay" data-nav-toggler data-overlay></div>
   </div>
-</div>
 
-<!-- MOBILE NAVBAR -->
-<div class="sidebar">
-  <div class="mobile-navbar" data-navbar>
-    <div class="wrapper">
-      <a href="#" class="logo"><img src="../assets/logo.png" width="179" height="26" alt="Glowing"></a>
-      <button class="nav-close-btn" aria-label="close menu" data-nav-toggler><ion-icon name="close-outline" aria-hidden="true"></ion-icon></button>
-    </div>
-    <ul class="navbar-list">
-      <li><a href="Dashboard.html" class="navbar-link" data-nav-link>INICIO</a></li>
-      <li><a href="Dashboard_Catalogo.html" class="navbar-link" data-nav-link>CATÁLOGO</a></li>
-      <li><a href="Dashboard_Blog.html" class="navbar-link has-after">BLOG</a></li>
-      <li><a href="Dashboard_About.html" class="navbar-link has-after">NOSOTROS</a></li>
-    </ul>
-  </div>
-  <div class="overlay" data-nav-toggler data-overlay></div>
-</div>
-<main class="site" id="site">
-  <section class="blog-header">
-    
+  <!--  CONTENIDO PRINCIPAL -->
+  <main class="site" id="site">
+    <!-- 🔍 Buscador del blog -->
+    <section class="blog-header">
+      <div class="search-wrap" role="search" aria-label="Buscar en el blog">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M21 21l-4.35-4.35" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="11" cy="11" r="6" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <input id="search" class="search-field" placeholder="Buscar artículos, tags..." aria-label="Buscar artículos">
+      </div>
+    </section>
+    <!--  Lista de posts -->
+    <section id="posts" class="blog-grid" aria-live="polite"></section>
+    <!-- Paginación -->
+    <nav class="pager" aria-label="Paginación" id="pager"></nav>
+    <!-- Mostrar el Post -->
+    <div id="singlePost" style="display: none;"></div>
+  </main>
 
-    <div class="search-wrap" role="search" aria-label="Buscar en el blog">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M21 21l-4.35-4.35" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="11" cy="11" r="6" stroke="#333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <input id="search" class="search-field" placeholder="Buscar artículos, tags..." aria-label="Buscar artículos">
-    </div>
-  </section>
-
-
-
-  <!-- posts grid -->
-  <section id="posts" class="blog-grid" aria-live="polite">
-    <!-- posts renderizados por JS -->
-  </section>
-
-  <!-- pagination -->
-  <nav class="pager" aria-label="Paginación" id="pager"></nav>
-</main>
-
-  <!-- 
-    - #FOOTER
-  -->
-
+  <!--  FOOTER -->
   <footer class="footer" data-section>
     <div class="container">
       <div class="footer-top">
@@ -124,7 +116,6 @@
           <li><a href="Dashboard_About.html#terminos" class="footer-link">Términos y condiciones</a></li>
           <li><a href="Dashboard_About.html#privacidad" class="footer-link">Política de privacidad</a></li>
         </ul>
-        
         <ul class="footer-list">
           <li class="social-links">
             <p class="footer-list-title">Síguenos</p>
@@ -136,21 +127,21 @@
       </div>
     </div>
   </footer>
-   <!-- BOTÓN FLOTANTE WHATSAPP -->
-   <a href="https://wa.me/51910405014" class="whatsapp-float" target="_blank" aria-label="Chat en WhatsApp">
+
+  <!--  BOTÓN FLOTANTE WHATSAPP -->
+  <a href="https://wa.me/51910405014" class="whatsapp-float" target="_blank" aria-label="Chat en WhatsApp">
     <ion-icon name="logo-whatsapp"></ion-icon>
-</a>
-<!-- 
-- #BACK TO TOP
--->
-<a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
-<ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
-</a>
-  <!-- JS externo -->
+  </a>
+
+  <!--  BOTÓN BACK TO TOP -->
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
+  </a>
+
+  <!--  SCRIPTS -->
   <script src="../js/Dashboard_Blog.js"></script>
   <script src="../js/Dashboard.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
-

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,155 +9,172 @@
   <meta http-equiv="Expires" content="0" />
   <title>SWEET HARMONY</title>
 
-  <!-- 
-    - favicon
-  -->
+  <!-- favicon -->
   <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
 
-  <!-- 
-    - custom css link
-  -->
+  <!-- custom css -->
   <link rel="stylesheet" href="../css/Dashboard.css">
 
-  <!-- 
-    - google font link
-  -->
+  <!-- google fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 </head>
 
 <body id="top">
 
- <!-- #HEADER -->
-<header class="header">
-  <div class="header-top" data-header>
-    <div class="container">
-      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></button>
-      <div class="input-wrapper">
-        <input type="search" name="search" placeholder="Search product" class="search-field">
-        <button class="search-submit" aria-label="search"><ion-icon name="search-outline" aria-hidden="true"></ion-icon></button>
-      </div>
-      <a href="#" class="logo">SWEET-HARMONY</a>
-      <div class="header-actions">
-        <div class="user-dropdown">
-          <button class="header-action-btn" id="userBtn"><ion-icon name="person-outline"></ion-icon></button>
-          <div class="dropdown-menu" id="dropdownMenu">
-            <a href="../../login_register_users/html/LoginForm.html">Iniciar sesión</a>
-            <a href="../../login_register_users/html/RegisterForm.html">Registrarse</a>
-          </div>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-top" data-header>
+      <div class="container">
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </button>
+
+        <div class="input-wrapper">
+          <input type="search" name="search" placeholder="Search product" class="search-field">
+          <button class="search-submit" aria-label="search">
+            <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+          </button>
         </div>
-        <a href="Dashboard_Wishlist.html" id="wishlistBtn" class="header-action-btn" aria-label="favourite item"><ion-icon name="star-outline" aria-hidden="true"></ion-icon></a>
-        <a href="Dashboard_Cart.html" id="cartLink"><button id="cartBtn" class="header-action-btn" aria-label="cart item"><data id="cartTotal" class="btn-text" value="0"></data><ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon></button></a>
-        <a href="Dashboard_Order.html"><button id="ordersBtn" style="display:none;" class="header-action-btn" aria-label="view orders"><ion-icon name="cube-outline" aria-hidden="true"></ion-icon></button></a>
-        <a href="User_Address.html"><button id="addressesBtn" style="display:none;" class="header-action-btn" aria-label="ver direcciones"><ion-icon name="home-outline" aria-hidden="true"></ion-icon></button></a>
-        <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión"><ion-icon name="log-out-outline" aria-hidden="true"></ion-icon></button>
-      </div>
-      <nav class="navbar">
-        <ul class="navbar-list">
-          <li><a href="Dashboard.html" class="navbar-link has-after">INICIO</a></li>
-          <li><a href="Dashboard_Catalogo.html" class="navbar-link has-after">CATÁLOGO</a></li>
-          <li><a href="Dashboard_Blog.html" class="navbar-link has-after">BLOG</a></li>
-          <li><a href="Dashboard_About.html" class="navbar-link has-after">NOSOTROS</a></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-</header>
 
-<!-- MODAL -->
-<div id="loginModal" class="modal">
-  <div class="modal-content">
-    <p>Necesitas iniciar sesión o crear una cuenta para acceder a esta función.</p>
-    <div class="modal-actions">
-      <a href="../../login_register_users/html/LoginForm.html" class="btn">Iniciar sesión</a>
-      <a href="../../login_register_users/html/RegisterForm.html" class="btn btn-secondary">Registrarse</a>
-    </div>
-  </div>
-</div>
+        <a href="#" class="logo">SWEET-HARMONY</a>
 
-<!-- MOBILE NAVBAR -->
-<div class="sidebar">
-  <div class="mobile-navbar" data-navbar>
-    <div class="wrapper">
-      <a href="#" class="logo"><img src="../assets/logo.png" width="179" height="26" alt="Glowing"></a>
-      <button class="nav-close-btn" aria-label="close menu" data-nav-toggler><ion-icon name="close-outline" aria-hidden="true"></ion-icon></button>
-    </div>
-    <ul class="navbar-list">
-      <li><a href="Dashboard.html" class="navbar-link" data-nav-link>INICIO</a></li>
-      <li><a href="Dashboard_Catalogo.html" class="navbar-link" data-nav-link>CATÁLOGO</a></li>
-      <li><a href="Dashboard_Blog.html" class="navbar-link has-after">BLOG</a></li>
-      <li><a href="Dashboard_About.html" class="navbar-link has-after">NOSOTROS</a></li>
-    </ul>
-  </div>
-  <div class="overlay" data-nav-toggler data-overlay></div>
-</div>
-
-
-      <!-- 
-        - #HERO
-      -->
-      <section class="section hero" id="home" aria-label="hero" data-section>
-        <div class="container">
-          <ul class="has-scrollbar">
-            <li class="scrollbar-item">
-              <div class="hero-card has-bg-image" style="background-image: url('../assets/banner.jpg')">
-                <div class="card-content">
-                  <h1 class="h1 hero-title">
-                    Descubre la <br>
-                    Magia de las Plantas
-                  </h1>
-                  <p class="hero-text">
-                    Cuida tu hogar y tu bienestar con nuestras plantas y accesorios ecológicos, perfectos para cualquier espacio.
-                  </p>    
-                  <a href="../html/Dashboard_Blog.html" class="btn btn-primary">Visita nuestro blog</a>
-                </div>
-              </div>
-            </li>
-
-
-          </ul>
-        </div>
-      </section>
-      
-
-      <!-- 
-        - #VIEWS
-      -->
-      <section class="section shop" id="shop" aria-label="shop" data-section>
-        <div class="container">
-            <div class="title-wrapper">
-                <h2 class="h2 section-title">Mas Vistos</h2>
-                <a href="Dashboard_Catalogo.html"><span class="span">Shop All Products</span></a>
+        <div class="header-actions">
+          <div class="user-dropdown">
+            <button class="header-action-btn" id="userBtn">
+              <ion-icon name="person-outline"></ion-icon>
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+              <a href="../../login_register_users/html/LoginForm.html">Iniciar sesión</a>
+              <a href="../../login_register_users/html/RegisterForm.html">Registrarse</a>
             </div>
-            <ul id="most-view-products" class="has-scrollbar"></ul>
-        </div>
-    </section>
-    
-
-    
-
-       <!-- 
-        - #OFFERS
-      -->
-
-      <section class="section shop" id="shop" aria-label="shop" data-section>
-        <div class="container">
-          <div class="title-wrapper">
-            <h2 class="h2 section-title">Ofertas</h2>
-            <a href="Dashboard_Catalogo.html"><span class="span">Shop All Products</span></a>
           </div>
-          <ul id="discount-products" class="has-scrollbar"></ul>
+
+          <a href="Dashboard_Wishlist.html" id="wishlistBtn" class="header-action-btn" aria-label="favourite item">
+            <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+          </a>
+
+          <a href="Dashboard_Cart.html" id="cartLink">
+            <button id="cartBtn" class="header-action-btn" aria-label="cart item">
+              <data id="cartTotal" class="btn-text" value="0"></data>
+              <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+            </button>
+          </a>
+
+          <a href="Dashboard_Order.html">
+            <button id="ordersBtn" style="display:none;" class="header-action-btn" aria-label="view orders">
+              <ion-icon name="cube-outline" aria-hidden="true"></ion-icon>
+            </button>
+          </a>
+
+          <a href="User_Address.html">
+            <button id="addressesBtn" style="display:none;" class="header-action-btn" aria-label="ver direcciones">
+              <ion-icon name="home-outline" aria-hidden="true"></ion-icon>
+            </button>
+          </a>
+
+          <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión">
+            <ion-icon name="log-out-outline" aria-hidden="true"></ion-icon>
+          </button>
         </div>
-      </section>
-      
-      
 
-  <!-- 
-    - #FOOTER
-  -->
+        <nav class="navbar">
+          <ul class="navbar-list">
+            <li><a href="Dashboard.html" class="navbar-link has-after">INICIO</a></li>
+            <li><a href="Dashboard_Catalogo.html" class="navbar-link has-after">CATÁLOGO</a></li>
+            <li><a href="Dashboard_Blog.html" class="navbar-link has-after">BLOG</a></li>
+            <li><a href="Dashboard_About.html" class="navbar-link has-after">NOSOTROS</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
 
+  <!-- MODAL -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <p>Necesitas iniciar sesión o crear una cuenta para acceder a esta función.</p>
+      <div class="modal-actions">
+        <a href="../../login_register_users/html/LoginForm.html" class="btn">Iniciar sesión</a>
+        <a href="../../login_register_users/html/RegisterForm.html" class="btn btn-secondary">Registrarse</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE NAVBAR -->
+  <div class="sidebar">
+    <div class="mobile-navbar" data-navbar>
+      <div class="wrapper">
+        <a href="#" class="logo">
+          <img src="../assets/logo.png" width="179" height="26" alt="Glowing">
+        </a>
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+      <ul class="navbar-list">
+        <li><a href="Dashboard.html" class="navbar-link" data-nav-link>INICIO</a></li>
+        <li><a href="Dashboard_Catalogo.html" class="navbar-link" data-nav-link>CATÁLOGO</a></li>
+        <li><a href="Dashboard_Blog.html" class="navbar-link has-after">BLOG</a></li>
+        <li><a href="Dashboard_About.html" class="navbar-link has-after">NOSOTROS</a></li>
+      </ul>
+    </div>
+    <div class="overlay" data-nav-toggler data-overlay></div>
+  </div>
+
+  <!-- HERO -->
+  <section class="section hero" id="home" aria-label="hero" data-section>
+    <div class="container">
+      <ul class="has-scrollbar">
+        <li class="scrollbar-item">
+          <div class="hero-card has-bg-image" style="background-image: url('../assets/banner.jpg')">
+            <div class="card-content">
+              <h1 class="h1 hero-title">Descubre la <br> Magia de las Plantas</h1>
+              <p class="hero-text">Cuida tu hogar y tu bienestar con nuestras plantas y accesorios ecológicos, perfectos para cualquier espacio.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+  
+  <!-- #BLOG RECIENTES -->
+  <section class="section blog" id="recent-blog" aria-label="recent blog" data-section>
+    <div class="container">
+      <div class="title-wrapper">
+        <h2 class="h2 section-title">Blog</h2>
+        <a href="Dashboard_Blog.html"><span class="span">Ver todos los posts</span></a>
+      </div>
+      <ul id="recent-posts" class="has-scrollbar"></ul>
+    </div>
+  </section>
+
+  <!-- MOST VIEWED -->
+  <section class="section shop" id="shop" aria-label="shop" data-section>
+    <div class="container">
+      <div class="title-wrapper">
+        <h2 class="h2 section-title">Más Vistos</h2>
+        <a href="Dashboard_Catalogo.html"><span class="span">Shop All Products</span></a>
+      </div>
+      <ul id="most-view-products" class="has-scrollbar"></ul>
+    </div>
+  </section>
+
+  <!-- OFFERS -->
+  <section class="section shop" id="shop" aria-label="shop" data-section>
+    <div class="container">
+      <div class="title-wrapper">
+        <h2 class="h2 section-title">Ofertas</h2>
+        <a href="Dashboard_Catalogo.html"><span class="span">Shop All Products</span></a>
+      </div>
+      <ul id="discount-products" class="has-scrollbar"></ul>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer class="footer" data-section>
     <div class="container">
       <div class="footer-top">
@@ -168,6 +184,7 @@
           <li><p class="footer-list-text bold">+51 910405014</p></li>
           <li><p class="footer-list-text">hello@domain.com</p></li>
         </ul>
+
         <ul class="footer-list">
           <li><p class="footer-list-title">Información</p></li>
           <li><a href="Dashboard_About.html#devoluciones" class="footer-link">Iniciar una devolución</a></li>
@@ -176,7 +193,7 @@
           <li><a href="Dashboard_About.html#terminos" class="footer-link">Términos y condiciones</a></li>
           <li><a href="Dashboard_About.html#privacidad" class="footer-link">Política de privacidad</a></li>
         </ul>
-        
+
         <ul class="footer-list">
           <li class="social-links">
             <p class="footer-list-title">Síguenos</p>
@@ -189,29 +206,22 @@
     </div>
   </footer>
 
-  <!-- BOTÓN FLOTANTE WHATSAPP -->
-    <a href="https://wa.me/51910405014" class="whatsapp-float" target="_blank" aria-label="Chat en WhatsApp">
-        <ion-icon name="logo-whatsapp"></ion-icon>
-    </a>
-  <!-- 
-    - #BACK TO TOP
-  -->
+  <!-- WHATSAPP FLOAT BUTTON -->
+  <a href="https://wa.me/51910405014" class="whatsapp-float" target="_blank" aria-label="Chat en WhatsApp">
+    <ion-icon name="logo-whatsapp"></ion-icon>
+  </a>
+
+  <!-- BACK TO TOP -->
   <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
     <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
   </a>
-  <!-- 
-    - custom js link
-  -->
+
+  <!-- JS FILES -->
   <script src="../js/Dashboard.js" defer></script>
-      <!-- JS -->
-      <script src="../js/Most_View_Products.js" defer></script>
-      <script src="../js/Discount_Products.js" defer></script>
-      
-      
-      
-  <!-- 
-    - ionicon link
-  -->
+  <script src="../js/Most_View_Products.js" defer></script>
+  <script src="../js/Discount_Products.js" defer></script>
+
+  <!-- IONICONS -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
