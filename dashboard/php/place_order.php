@@ -65,7 +65,8 @@ $order_id = $stmt_order->insert_id;
 // Insertar items
 $stmt_item = $conexion->prepare("INSERT INTO order_items (order_id, product_id, quantity, price, created_at) VALUES (?, ?, ?, ?, NOW())");
 foreach ($cart_items as $item) {
-    $stmt_item->bind_param("iiii", $order_id, $item['product_id'], $item['quantity'], $item['price']);
+    $price = isset($item['price']) ? doubleval($item['price']) : 0.00; // aseguramos que no sea null
+    $stmt_item->bind_param("iiid", $order_id, $item['product_id'], $item['quantity'], $price);
     $stmt_item->execute();
 }
 

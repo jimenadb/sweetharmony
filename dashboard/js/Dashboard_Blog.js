@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const article = document.createElement('article');
       article.className = 'post';
       article.innerHTML = `
-        <img class="post-img" src="${post.image_url}" alt="${escapeHtml(post.title)}">
+        <img class="post-img" src="../../uploads/blog/${post.image_url}" alt="${escapeHtml(post.title)}">
         <div class="post-body">
           <div class="post-meta">${formatDate(post.created_at)} • <span>${post.status}</span></div>
           <h2 class="post-title">${escapeHtml(post.title)}</h2>
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </head><body>
           <h1>${escapeHtml(post.title)}</h1>
           <p style="color:#666">${formatDate(post.created_at)} • ${post.status}</p>
-          <img src="${post.image_url}" alt="${escapeHtml(post.title)}">
+          <img class="post-img" src="../../uploads/blog/${post.image_url}" alt="${escapeHtml(post.title)}">
           <p style="margin-top:18px">${escapeHtml(post.content)}</p>
           </body></html>
         `;

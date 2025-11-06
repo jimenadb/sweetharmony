@@ -140,3 +140,74 @@ h1{
     align-items: flex-start;
   }
 }
+
+
+/* Fondo del modal */
+/* Fondo del modal */
+.modal {
+  display: none; /* oculto por defecto */
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* overlay oscuro */
+  justify-content: center; /* centrar horizontal */
+  align-items: center;     /* centrar vertical */
+  padding: 1rem;
+  z-index: 1000;
+}
+
+/* Mostrar modal cuando tenga clase 'active' */
+.modal.active {
+  display: flex;
+}
+
+/* Contenido del modal */
+.modal-content {
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  max-width: 500px;
+  width: 100%;
+  box-shadow: var(--shadow);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column; /* importante para centrar el contenido */
+}
+
+/* Header del modal */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Botón de cerrar */
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: var(--primary);
+  transition: 0.2s;
+}
+
+.close-btn:hover {
+  color: black;
+}
+
+/* Cuerpo del modal */
+.modal-body {
+  max-height: 400px; /* altura máxima para scroll */
+  overflow-y: auto;
+}
+
+.modal-body p,
+.modal-body li {
+  margin-bottom: 0.5rem;
+}
+
+.modal-body ul {
+  padding-left: 1.2rem;
+}
