@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $plant_type = $_POST['plant_type'] ?: null;
     $price = $_POST['price'] !== '' ? floatval($_POST['price']) : null;
     $discount = $_POST['discount'] !== '' ? floatval($_POST['discount']) : 0;
+    $description = $_POST['description'] ?? '';
     $plant_height = $_POST['plant_height'] !== '' ? floatval($_POST['plant_height']) : null;
     $plant_width = $_POST['plant_width'] !== '' ? floatval($_POST['plant_width']) : null;
     $pot_height = $_POST['pot_height'] !== '' ? floatval($_POST['pot_height']) : null;
@@ -32,27 +33,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // UPDATE
+    // SQL base
     $sql = "UPDATE products SET 
             product_name=?, product_type=?, plant_type=?, price=?, discount=?,
-            plant_height=?, plant_width=?, pot_height=?, pot_width=?, pot_color=?,
-            weight=?, units=?".($image_url ? ", image_url=?" : "")." WHERE id=?";
+            description=?, plant_height=?, plant_width=?, pot_height=?, pot_width=?, pot_color=?,
+            weight=?, units=?";
+
+    if ($image_url) {
+        $sql .= ", image_url=?";
+    }
+
+    $sql .= " WHERE id=?";
 
     $stmt = $conexion->prepare($sql);
+
     if ($image_url) {
-        $stmt->bind_param("sssdddddssdiis",
+        // Con imagen
+        $stmt->bind_param(
+            "sssddsddddsdssi",
             $product_name, $product_type, $plant_type, $price, $discount,
-            $plant_height, $plant_width, $pot_height, $pot_width, $pot_color,
-            $weight, $units, $image_url, $id);
+            $description, $plant_height, $plant_width, $pot_height, $pot_width, $pot_color,
+            $weight, $units, $image_url, $id
+        );
     } else {
-        $stmt->bind_param("sssdddddsssii",
+        // Sin imagen
+        $stmt->bind_param(
+            "sssddsddddsdis",
             $product_name, $product_type, $plant_type, $price, $discount,
-            $plant_height, $plant_width, $pot_height, $pot_width, $pot_color,
-            $weight, $units, $id);
+            $description, $plant_height, $plant_width, $pot_height, $pot_width, $pot_color,
+            $weight, $units, $id
+        );
     }
 
     if ($stmt->execute()) {
-        echo json_encode(['success' => true, 'message' => 'Producto actualizado']);
+        echo json_encode(['success' => true, 'message' => 'Producto actualizado correctamente']);
     } else {
         echo json_encode(['success' => false, 'message' => $stmt->error]);
     }

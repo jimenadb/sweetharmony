@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const postsEl = document.getElementById('posts');
   const pagerEl = document.getElementById('pager');
   const searchEl = document.getElementById('search');
+  const params = new URLSearchParams(window.location.search);
+  const postIdFromURL = params.get('id');
 
   const PAGE_SIZE = 6; //controla cuantos posts se mostraran
   let currentPage = 1;
@@ -72,6 +74,36 @@ document.addEventListener('DOMContentLoaded', function() {
     renderPager();
     attachReadButtons();
   }
+
+  function loadPosts() {
+    fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_blog.php')
+      .then(response => response.json())
+      .then(data => {
+        allPosts = data;
+        filtered = data;
+  
+        // 1️⃣ Leer id del post desde la URL
+        const params = new URLSearchParams(window.location.search);
+        const postIdFromURL = params.get('id');
+  
+        if (postIdFromURL) {
+          const post = filtered.find(p => p.id === parseInt(postIdFromURL));
+          if (post) {
+            openPost(post.id);  // abre directamente el post
+            return;
+          }
+        }
+  
+        // 2️⃣ Si no hay id en URL, mostrar la lista normal
+        renderPosts();
+      })
+      .catch(error => {
+        console.error('Error al cargar los posts:', error);
+        postsEl.innerHTML = '<p>No se pudieron cargar los posts.</p>';
+      });
+  }
+  
+  
 
   // Renderizar paginación
   function renderPager() {

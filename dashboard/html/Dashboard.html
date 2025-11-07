@@ -32,14 +32,15 @@
           <span class="line line-2"></span>
           <span class="line line-3"></span>
         </button>
-
+        <!-- SEARCH BAR -->
         <div class="input-wrapper">
-          <input type="search" name="search" placeholder="Search product" class="search-field">
-          <button class="search-submit" aria-label="search">
+          <input type="search" id="search-input" name="search" placeholder="Buscar producto" class="search-field">
+          <button type="button" id="search-button" class="search-submit" aria-label="search">
             <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
           </button>
         </div>
-
+        <ul id="search-results" class="search-results"></ul>
+        <!-- END SEARCH BAR -->
         <a href="#" class="logo">SWEET-HARMONY</a>
 
         <div class="header-actions">
@@ -109,7 +110,7 @@
     <div class="mobile-navbar" data-navbar>
       <div class="wrapper">
         <a href="#" class="logo">
-          <img src="../assets/logo.png" width="179" height="26" alt="Glowing">
+          Sweet Harmony
         </a>
         <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
           <ion-icon name="close-outline" aria-hidden="true"></ion-icon>

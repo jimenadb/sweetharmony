@@ -13,6 +13,8 @@ $sql = "SELECT
     pot_height, 
     pot_width, 
     pot_color, 
+    units,
+    description,
     weight, 
     image_url
 FROM products";
