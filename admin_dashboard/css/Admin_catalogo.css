@@ -25,6 +25,13 @@ h1, h2 {
 h1 { color: var(--hoockers-green); }
 h2 { color: var(--pale-spring-bud); }
 
+/* ---- BOTÓN WRAPER  ---- */
+.btn-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* espacio entre botones */
+  margin-bottom: 1.5rem;
+}
 /* ---- BOTÓN AGREGAR ---- */
 #btnAgregar {
   display: flex;
@@ -41,6 +48,24 @@ h2 { color: var(--pale-spring-bud); }
   transition: background 0.2s;
 }
 #btnAgregar:hover {
+  background-color: hsl(148, 25%, 45%);
+}
+/* ---- BOTÓN TIPOS ---- */
+#btnTipos {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--hoockers-green);
+  color: var(--white);
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius);
+  font-size: 1.8rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: background 0.2s;
+}
+#btnTipos:hover {
   background-color: hsl(148, 25%, 45%);
 }
 
@@ -117,8 +142,6 @@ tr.seleccionada {
 #btnEliminar:hover {
   background-color: hsl(0, 0%, 70%);
 }
-
-
 
 /* ---- CONTENIDO DEL MODAL ---- */
 .modal {

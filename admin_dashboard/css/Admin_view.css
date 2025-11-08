@@ -233,6 +233,44 @@ body {
   color: var(--black_70);
 }
 
+.header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* logo a la izquierda, acciones a la derecha */
+  gap: 10px;
+}
+
+.header .logo {
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: var(--black);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* separacion entre admin y logout */
+}
+
+.header-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2c3e50;
+  font-size: 1.5rem;
+}
+
+.header-action-btn ion-icon {
+  font-size: 28px;
+}
+
+.header-action-btn:hover {
+  color: var(--black_70);
+}
 
 /*-----------------------------------*\
   #MOBILE NAVBAR

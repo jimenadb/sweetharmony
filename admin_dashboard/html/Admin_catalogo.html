@@ -16,6 +16,7 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="../css/Admin_catalogo.css">
+  <link rel="stylesheet" href="../css/Admin_catalogo_II.css">
   <link rel="stylesheet" href="../css/Admin_view.css">
 </head>
 <body>
@@ -31,13 +32,19 @@
         </button>
         <a href="#" class="logo">SWEET- HARMONY - ADMINISTRADOR</a>
         <div class="header-actions">
+          <a href="Edit_Admin.html">
+            <button id="adminBtn" class="header-action-btn" aria-label="editar admin">
+              <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+            </button>
+          </a>
+        
           <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión">
             <ion-icon name="log-out-outline" aria-hidden="true"></ion-icon>
           </button>
         </div>
         <nav class="navbar">
           <ul class="navbar-list">
-            <!-- <li><a href="Dashboard.html" class="navbar-link has-after">INICIO</a></li> -->
+            <li><a href="Admin_view.html" class="navbar-link has-after">INICIO</a></li>
             <li><a href="Admin_catalogo.html" class="navbar-link has-after">CATÁLOGO</a></li>
             <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
             <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
@@ -57,7 +64,7 @@
         </button>
       </div>
       <ul class="navbar-list">
-        <!-- <li><a href="Dashboard.html" class="navbar-link" data-nav-link>INICIO</a></li> -->
+        <li><a href="Admin_view.html" class="navbar-link" data-nav-link>INICIO</a></li>
         <li><a href="Admin_catalogo.html" class="navbar-link" data-nav-link>CATÁLOGO</a></li>
         <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
         <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
@@ -69,10 +76,17 @@
   <main class="container">
     <h1>Mantenimiento de Productos</h1>
 
-    <button id="btnAgregar">
-      <ion-icon name="add-circle-outline"></ion-icon>
-      Agregar nuevo producto
-    </button>
+    <div class="btn-wrapper">
+      <button id="btnAgregar" class="add-entry-btn">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        Agregar nuevo producto
+      </button>
+    
+      <button id="btnTipos" class="add-entry-btn">
+        <ion-icon name="options-outline"></ion-icon>
+        Editar tipos
+      </button>
+    </div>
 
     <!-- Modal para agregar producto -->
     <div id="modalAgregar" class="modal">
@@ -122,16 +136,6 @@
             </select>
           </div>
 
-          <div class="form-group">
-            <label for="price">Precio</label>
-            <input type="number" id="price" name="price" step="0.01">
-          </div>
-
-          <div class="form-group">
-            <label for="discount">Descuento (%)</label>
-            <input type="number" id="discount" name="discount" step="0.01" value="0.00">
-          </div>
-
           <fieldset>
             <legend>Medidas de la planta (cm)</legend>
             <div class="form-inline">
@@ -179,6 +183,58 @@
     </div>
     </div>
 
+
+<!-- Modal lateral para editar tipos -->
+<div id="modalTipos" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Administrar tipos</h3>
+      <button id="cerrarTipos" class="close-btn">&times;</button>
+    </div>
+
+    <!-- Sección: Tipos de productos -->
+    <section class="tipo-section">
+      <h4>Tipos de productos</h4>
+
+      <div class="form-group">
+        <input type="text" id="nuevoTipoProducto" placeholder="Ej. Terrario" />
+        <button id="agregarTipoProducto" class="small-btn">Agregar</button>
+      </div>
+
+      <ul id="listaTiposProducto" class="tipo-lista">
+        <!-- Cada tipo se mostrará así:
+        <li>
+          <span>Terrario</span>
+          <button class="delete-btn" data-tipo="producto" data-nombre="Terrario">🗑️</button>
+        </li>
+        -->
+      </ul>
+    </section>
+
+    <hr />
+
+    <!-- Sección: Tipos de plantas -->
+    <section class="tipo-section">
+      <h4>Tipos de plantas</h4>
+
+      <div class="form-group">
+        <input type="text" id="nuevoTipoPlanta" placeholder="Ej. Interior" />
+        <button id="agregarTipoPlanta" class="small-btn">Agregar</button>
+      </div>
+
+      <ul id="listaTiposPlanta" class="tipo-lista">
+        <!-- Cada tipo se mostrará así:
+        <li>
+          <span>Interior</span>
+          <button class="delete-btn" data-tipo="planta" data-nombre="Interior">🗑️</button>
+        </li>
+        -->
+      </ul>
+    </section>
+  </div>
+</div>
+
+
     <div class="table-responsive">
       <table>
         <thead>
@@ -219,7 +275,8 @@
   <script src="../js/save_products.js" defer></script>
   <script src="../js/show_products.js" defer></script>
   <script src="../js/update_products.js" defer></script>
-  <script src="../js/IA_description.js" defer></script>
+  <script src="../js/Admin_catalogo_tipos.js" defer></script>
+
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <script src="../js/logout.js" defer></script>

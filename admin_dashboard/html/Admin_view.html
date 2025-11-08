@@ -19,6 +19,7 @@
     - custom css link
   -->
   <link rel="stylesheet" href="../css/Admin_view.css">
+  <link rel="stylesheet" href="../css/Admin_view_metricas.css">
 
   <!-- 
     - google font link
@@ -41,14 +42,22 @@
 
       <a href="#" class="logo">SWEET- HARMONY - ADMINISTRADOR</a>
       <div class="header-actions">
-        <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión"><ion-icon name="log-out-outline" aria-hidden="true"></ion-icon></button>
+        <a href="Edit_Admin.html">
+          <button id="adminBtn" class="header-action-btn" aria-label="editar admin">
+            <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </a>
+      
+        <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión">
+          <ion-icon name="log-out-outline" aria-hidden="true"></ion-icon>
+        </button>
       </div>
       <nav class="navbar">
         <ul class="navbar-list">
-          <!-- <li><a href="Dashboard.html" class="navbar-link has-after">INICIO</a></li> -->
+          <li><a href="Admin_view.html" class="navbar-link has-after">INICIO</a></li>
           <li><a href="Admin_catalogo.html" class="navbar-link has-after">CATÁLOGO</a></li>
           <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
-          <li><a href="Admin_order.html" class="navbar-link has-after">NOSOTROS</a></li>
+          <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
         </ul>
       </nav>
     </div>
@@ -63,22 +72,68 @@
       <button class="nav-close-btn" aria-label="close menu" data-nav-toggler><ion-icon name="close-outline" aria-hidden="true"></ion-icon></button>
     </div>
     <ul class="navbar-list">
-      <!-- <li><a href="Dashboard.html" class="navbar-link" data-nav-link>INICIO</a></li> -->
+      <li><a href="Admin_view.html" class="navbar-link" data-nav-link>INICIO</a></li>
       <li><a href="Admin_catalogo.html" class="navbar-link" data-nav-link>CATÁLOGO</a></li>
       <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
       <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS/a></li>
     </ul>
   </div>
   <div class="overlay" data-nav-toggler data-overlay></div>
-
 </div>
 
-<!-- Privacy-friendly analytics by Plausible -->
-<script async src="https://plausible.io/js/pa-90_aog6Hzjh86MX-w-8CV.js"></script>
-<script>
-  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
-  plausible.init()
-</script>
+<main class="container">
+  <h1>Panel de Métricas</h1>
+
+  <div class="dashboard-grid">
+    <!-- Productos más vistos -->
+    <div class="card">
+      <h2>Productos más vistos</h2>
+      <ul id="mostViewed">
+        <li>Producto A - 120 vistas</li>
+        <li>Producto B - 95 vistas</li>
+        <li>Producto C - 80 vistas</li>
+      </ul>
+    </div>
+
+    <!-- Productos más vendidos -->
+    <div class="card">
+      <h2>Productos más vendidos</h2>
+      <ul id="mostSold">
+        <li>Producto X - 50 vendidos</li>
+        <li>Producto Y - 30 vendidos</li>
+        <li>Producto Z - 20 vendidos</li>
+      </ul>
+    </div>
+
+    <!-- Recomendaciones más vistas -->
+    <div class="card">
+      <h2>Recomendaciones más vistas</h2>
+      <ul id="topRecommendations">
+        <li>Producto A - 40 vistas</li>
+        <li>Producto Y - 35 vistas</li>
+        <li>Producto Z - 25 vistas</li>
+      </ul>
+    </div>
+
+    <!-- Alertas productos agotados -->
+    <div class="card alert">
+      <h2>Productos agotados</h2>
+      <ul id="outOfStock">
+        <li>Producto M</li>
+        <li>Producto N</li>
+      </ul>
+    </div>
+
+    <!-- Alertas de notificaciones -->
+    <div class="card alert">
+      <h2>Notificaciones pendientes</h2>
+      <ul id="notifications">
+        <li>Nuevo mensaje de soporte</li>
+        <li>Pedido pendiente de aprobación</li>
+      </ul>
+    </div>
+  </div>
+</main>
 
   <!-- 
     - custom js link
