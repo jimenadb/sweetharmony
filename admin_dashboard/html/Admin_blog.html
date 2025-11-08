@@ -75,29 +75,35 @@
       </button>
     </div>
 
-    <!-- Formulario de Nueva Entrada -->
-    <section class="blog-form" id="newPostSection">
-      <h1>Agregar nueva entrada</h1>
-      <form id="newPostForm" enctype="multipart/form-data" method="POST">
-        <div class="form-group">
-          <label for="postTitle">Título</label>
-          <input type="text" id="postTitle" name="title" required>
+        <!-- Formulario del modal -->
+        <section class="modal" id="newPostSection">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Nuevo Post</h2>
+              <button class="close-btn" id="closeNewPostModal">&times;</button>
+            </div>
+
+            <div class="form-group">
+              <label for="title">Título</label>
+              <input type="text" id="title" name="title" required>
+            </div>
+    
+            <div class="form-group">
+              <label for="content">Descripción</label>
+              <textarea id="content" name="content" rows="4" required></textarea>
+            </div>
+    
+            <div class="form-group">
+              <label for="image">Imagen</label>
+              <input type="file" id="image" name="image">
+            </div>
+    
+            <button type="submit">Guardar</button>
+          </form>
         </div>
-        <div class="form-group">
-          <label for="postContent">Contenido</label>
-          <textarea id="postContent" name="content" rows="5" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="postImages">Imágenes (opcional)</label>
-          <input type="file" id="postImages" name="images" accept="image/*" multiple>
-        </div>
-        <div class="btn-wrapper">
-          <button class="add-entry-btn" type="submit" id="publishEntryBtn">
-            <ion-icon name="create-outline"></ion-icon> Publicar entrada
-          </button>
-        </div>
-      </form>
+      </div>
     </section>
+    
 
     <!-- Entradas Publicadas -->
     <section>
@@ -117,40 +123,7 @@
     </section>
   </main>
 
-  <!-- Modal Edición -->
-  <div class="modal" id="editModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>Editar Entrada</h3>
-        <button class="close-btn" id="closeModal">
-          <ion-icon name="close-outline"></ion-icon>
-        </button>
-      </div>
-      <form id="editPostForm">
-        <div class="form-group">
-          <label for="editTitle">Título</label>
-          <input type="text" id="editTitle" name="title" required>
-        </div>
-        <div class="form-group">
-          <label for="editContent">Contenido</label>
-          <textarea id="editContent" name="content" rows="5" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="editStatus">Estado</label>
-          <select id="editStatus" name="status">
-            <option value="draft">Borrador</option>
-            <option value="published">Publicado</option>
-            <option value="archived">Archivado</option>
-          </select>
-        </div>
-        <div class="btn-wrapper">
-          <button type="submit">
-            <ion-icon name="save-outline"></ion-icon> Guardar cambios
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
+ 
 
   <!-- Scripts -->
   <script src="../js/Admin_blog.js" defer></script>

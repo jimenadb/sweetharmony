@@ -1,33 +1,50 @@
+document.addEventListener("DOMContentLoaded", () => {
+  // --- MODAL NUEVO POST ---
+  const newPostModal = document.getElementById("newPostSection");
+  const openNewPostBtn = document.getElementById("toggleFormBtn");
+  const closeNewPostBtn = document.getElementById("closeNewPostModal");
 
-    // Abrir modal de edición
-    const editButtons = document.querySelectorAll('.edit-btn');
-    const modal = document.getElementById('editModal');
-    const closeModal = document.getElementById('closeModal');
+  // Abrir modal de nuevo post
+  openNewPostBtn?.addEventListener("click", () => {
+    newPostModal.classList.add("active");
+  });
 
-    editButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        modal.style.display = 'flex';
-      });
-    });
+  // Cerrar con botón
+  closeNewPostBtn?.addEventListener("click", () => {
+    newPostModal.classList.remove("active");
+  });
 
-    closeModal.addEventListener('click', () => {
-      modal.style.display = 'none';
-    });
+  // Cerrar clic fuera
+  newPostModal?.addEventListener("click", (e) => {
+    if (e.target === newPostModal) newPostModal.classList.remove("active");
+  });
 
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) modal.style.display = 'none';
-    });
+  // --- MODAL DE EDICIÓN ---
+  const editModal = document.getElementById("editModal");
+  const closeEditModalBtn = document.getElementById("closeModal");
 
-  // Abrir modal de formulario
-  
-    const toggleBtn = document.getElementById('toggleFormBtn');
-    const formSection = document.getElementById('newPostSection');
-  
-    toggleBtn.addEventListener('click', () => {
-      formSection.style.display = formSection.style.display === 'none' || formSection.style.display === ''
-        ? 'block'
-        : 'none';
-    });
-  
-    // Inicialmente ocultamos el formulario
-    formSection.style.display = 'none';
+  // Cerrar modal de edición
+  closeEditModalBtn?.addEventListener("click", () => {
+    editModal.classList.remove("active");
+  });
+
+  // Delegar evento para abrir modal de edición
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".edit-btn")) {
+      const row = e.target.closest("tr");
+      const title = row.querySelector(".post-title")?.textContent || "";
+      const content = row.querySelector(".post-content")?.textContent || "";
+      const status = row.querySelector(".post-status")?.textContent || "draft";
+      const id = row.dataset.id;
+
+      // Llenar campos del modal de edición
+      document.getElementById("editTitle").value = title.trim();
+      document.getElementById("editContent").value = content.trim();
+      document.getElementById("editStatus").value = status.trim();
+      document.getElementById("editPostForm").dataset.postId = id;
+
+      // Mostrar modal
+      editModal.classList.add("active");
+    }
+  });
+});
