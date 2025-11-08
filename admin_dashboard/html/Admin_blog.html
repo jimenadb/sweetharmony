@@ -75,35 +75,42 @@
       </button>
     </div>
 
-        <!-- Formulario del modal -->
-        <section class="modal" id="newPostSection">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2>Nuevo Post</h2>
-              <button class="close-btn" id="closeNewPostModal">&times;</button>
-            </div>
+<!-- Formulario del modal -->
+<section class="modal" id="newPostSection">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Nuevo Post</h2>
+      <button class="close-btn" id="closeNewPostModal">&times;</button>
+    </div>
 
-            <div class="form-group">
-              <label for="title">Título</label>
-              <input type="text" id="title" name="title" required>
-            </div>
-    
-            <div class="form-group">
-              <label for="content">Descripción</label>
-              <textarea id="content" name="content" rows="4" required></textarea>
-            </div>
-    
-            <div class="form-group">
-              <label for="image">Imagen</label>
-              <input type="file" id="image" name="image">
-            </div>
-    
-            <button type="submit">Guardar</button>
-          </form>
+    <form id="newPostForm" enctype="multipart/form-data">
+      <!-- ID oculto para edición -->
+      <input type="hidden" id="postId" name="id">
+
+      <div class="form-group">
+        <label for="title">Título</label>
+        <input type="text" id="title" name="title" required>
+      </div>
+
+      <div class="form-group">
+        <label for="content">Descripción</label>
+        <textarea id="content" name="content" rows="4" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="image">Imagen</label>
+        <input type="file" id="image" name="image" accept="image/*">
+        <!-- Preview de imagen -->
+        <div id="imagePreview" style="margin-top: 0.5rem;">
+          <img id="previewImg" src="" alt="Preview" style="display:none; width:100px; height:100px; object-fit:cover; border:1px solid #ccc; border-radius:4px;">
         </div>
       </div>
-    </section>
-    
+
+      <button type="submit">Guardar</button>
+    </form>
+  </div>
+</section>
+
 
     <!-- Entradas Publicadas -->
     <section>
@@ -112,8 +119,10 @@
         <table>
           <thead>
             <tr>
-              <th>Título</th>
+              <th>Titulo</th>
               <th>Fecha</th>
+              <th>Contenido</th>
+              <th>Imagen</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -126,8 +135,8 @@
  
 
   <!-- Scripts -->
-  <script src="../js/Admin_blog.js" defer></script>
   <script src="../js/save_blog.js" defer></script>
+  <script src="../js/Admin_blog.js" defer></script>
   <script src="../js/show_blog.js" defer></script>
   <script src="../js/Admin_view.js" defer></script>
   <script src="../js/logout.js" defer></script>

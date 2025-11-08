@@ -12,15 +12,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $image_url = null;
-    if (!empty($_FILES['images']['name'][0])) {
+    if (!empty($_FILES['image']['name'])) { // ⚠️ usa 'image' y no 'images'
         $upload_dir = "../../uploads/blog/";
         if (!file_exists($upload_dir)) mkdir($upload_dir, 0777, true);
-
-        $fileName = time() . "_" . basename($_FILES['images']['name'][0]);
+    
+        $fileName = time() . "_" . basename($_FILES['image']['name']);
         $targetPath = $upload_dir . $fileName;
-
-        if (move_uploaded_file($_FILES['images']['tmp_name'][0], $targetPath)) {
-            $image_url = "uploads/blog/" . $fileName;
+    
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
+            // guardamos la ruta relativa que luego se usará en el frontend
+            $image_url = $fileName;
         }
     }
 

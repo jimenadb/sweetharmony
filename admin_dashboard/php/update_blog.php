@@ -3,17 +3,16 @@ header('Content-Type: application/json');
 require_once "../../conexion.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['id'] ?? '';
+    $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
     $title = $_POST['title'] ?? '';
-    $content = $_POST['content'] ?? '';
-    $status = $_POST['status'] ?? '';
+    $content = $_POST['content'] ?? ''; 
 
     if (!$id || !$title || !$content) {
         echo json_encode(['success' => false, 'message' => 'Faltan campos obligatorios.']);
         exit;
     }
 
-    // Obtener imagen actual por si no se reemplaza
+    // Obtener imagen actual
     $stmt = $conexion->prepare("SELECT image_url FROM blog_posts WHERE id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -21,33 +20,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->fetch();
     $stmt->close();
 
-    $image_url = $currentImage; // mantener imagen anterior
+    // Mantener la imagen actual por defecto
+    $image_url = $currentImage ?? "";
 
-    // Si el usuario sube una nueva imagen
-    if (!empty($_FILES['images']['name'])) {
+    // Si hay nueva imagen
+    if (!empty($_FILES['image']['name'])) {
         $upload_dir = "../../uploads/blog/";
         if (!file_exists($upload_dir)) mkdir($upload_dir, 0777, true);
 
-        $fileName = time() . "_" . basename($_FILES['images']['name']);
+        $fileName = time() . "_" . basename($_FILES['image']['name']);
         $targetPath = $upload_dir . $fileName;
 
-        if (move_uploaded_file($_FILES['images']['tmp_name'], $targetPath)) {
-            $image_url = "uploads/blog/" . $fileName;
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
+            $image_url = $fileName;
 
-            // (Opcional) eliminar imagen anterior del servidor
+            // Eliminar imagen anterior
             if ($currentImage && file_exists("../../" . $currentImage)) {
                 unlink("../../" . $currentImage);
             }
         }
     }
 
-    // Actualizar los datos
+    // Actualizar título, contenido e imagen
     $stmt = $conexion->prepare("
         UPDATE blog_posts
-        SET title = ?, content = ?, status = ?, image_url = ?
+        SET title = ?, content = ?, image_url = ?, updated_at = NOW()
         WHERE id = ?
     ");
-    $stmt->bind_param("ssssi", $title, $content, $status, $image_url, $id);
+    
+    // bind_param espera 4 valores, todos definidos
+    $stmt->bind_param("sssi", $title, $content, $image_url, $id);
 
     if ($stmt->execute()) {
         echo json_encode(['success' => true, 'message' => 'Entrada actualizada correctamente.']);

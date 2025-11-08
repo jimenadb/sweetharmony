@@ -1,50 +1,91 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // --- MODAL NUEVO POST ---
-  const newPostModal = document.getElementById("newPostSection");
-  const openNewPostBtn = document.getElementById("toggleFormBtn");
-  const closeNewPostBtn = document.getElementById("closeNewPostModal");
+  const modal = document.getElementById("newPostSection");
+  const openBtn = document.getElementById("toggleFormBtn");
+  const closeBtn = document.getElementById("closeNewPostModal");
+  const form = document.getElementById("newPostForm");
+  const postIdInput = document.getElementById("postId");
 
-  // Abrir modal de nuevo post
-  openNewPostBtn?.addEventListener("click", () => {
-    newPostModal.classList.add("active");
+  // --- ABRIR MODAL NUEVO ---
+  openBtn?.addEventListener("click", () => {
+    postIdInput.value = ""; // limpiar ID → modo "nuevo"
+    form.reset();
+    modal.classList.add("active");
   });
 
-  // Cerrar con botón
-  closeNewPostBtn?.addEventListener("click", () => {
-    newPostModal.classList.remove("active");
+  // --- CERRAR MODAL ---
+  closeBtn?.addEventListener("click", () => modal.classList.remove("active"));
+  modal?.addEventListener("click", (e) => {
+    if (e.target === modal) modal.classList.remove("active");
   });
 
-  // Cerrar clic fuera
-  newPostModal?.addEventListener("click", (e) => {
-    if (e.target === newPostModal) newPostModal.classList.remove("active");
-  });
-
-  // --- MODAL DE EDICIÓN ---
-  const editModal = document.getElementById("editModal");
-  const closeEditModalBtn = document.getElementById("closeModal");
-
-  // Cerrar modal de edición
-  closeEditModalBtn?.addEventListener("click", () => {
-    editModal.classList.remove("active");
-  });
-
-  // Delegar evento para abrir modal de edición
+  // --- ABRIR MODAL PARA EDITAR ---
   document.addEventListener("click", (e) => {
     if (e.target.closest(".edit-btn")) {
       const row = e.target.closest("tr");
+      const id = row.dataset.id;
       const title = row.querySelector(".post-title")?.textContent || "";
       const content = row.querySelector(".post-content")?.textContent || "";
-      const status = row.querySelector(".post-status")?.textContent || "draft";
-      const id = row.dataset.id;
 
-      // Llenar campos del modal de edición
-      document.getElementById("editTitle").value = title.trim();
-      document.getElementById("editContent").value = content.trim();
-      document.getElementById("editStatus").value = status.trim();
-      document.getElementById("editPostForm").dataset.postId = id;
+      postIdInput.value = id;
+      form.querySelector("#title").value = title.trim();
+      form.querySelector("#content").value = content.trim();
 
-      // Mostrar modal
-      editModal.classList.add("active");
+      modal.classList.add("active");
     }
   });
+
+  
+
+  // --- ENVIAR FORMULARIO ---
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const isEditing = postIdInput.value !== "";
+
+    try {
+      const res = await fetch(
+        isEditing
+          ? "http://localhost/sweetharmony/sweetharmony/admin_dashboard/php/update_blog.php"
+          : "http://localhost/sweetharmony/sweetharmony/admin_dashboard/php/save_blog.php",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await res.json();
+      alert(data.message);
+
+      if (data.success) {
+        form.reset();
+        modal.classList.remove("active");
+        // Puedes recargar o actualizar la tabla aquí si lo deseas
+      }
+    } catch (err) {
+      console.error("Error al guardar:", err);
+    }
+  });
+
+   // --- PREVIEW DE IMAGEN ---
+   const imageInput = document.getElementById("image");
+   const previewImg = document.getElementById("previewImg");
+ 
+   if (imageInput && previewImg) {
+     imageInput.addEventListener("change", () => {
+       const file = imageInput.files[0];
+       if (file) {
+         const reader = new FileReader();
+         reader.onload = (e) => {
+           previewImg.src = e.target.result;
+           previewImg.style.display = "block";
+         };
+         reader.readAsDataURL(file);
+       } else {
+         previewImg.src = "";
+         previewImg.style.display = "none";
+       }
+     });
+   }
 });
+
+
