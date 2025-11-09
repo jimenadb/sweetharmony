@@ -127,77 +127,85 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  // ==============================
-  // EVENTO: VER DETALLES DEL PEDIDO
-  // ==============================
-  btnVerDetalles.addEventListener("click", () => {
-    if (!pedidoActivo) {
-      alert("Selecciona un pedido primero.");
-      return;
-    }
+// ==============================
+// EVENTO: VER DETALLES DEL PEDIDO
+// ==============================
+btnVerDetalles.addEventListener("click", () => {
+  if (!pedidoActivo) {
+    alert("Selecciona un pedido primero.");
+    return;
+  }
 
-    fetch(`../php/get_details_orders.php?order_id=${pedidoActivo}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.error) {
-          alert(data.error);
-          return;
-        }
+  fetch(`http://localhost/sweetharmony/sweetharmony/admin_dashboard/php/get_details_orders.php?order_id=${pedidoActivo}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
 
-        // Crear modal dinámico
-        const modalDetalles = document.createElement("div");
-        modalDetalles.classList.add("modal");
-        modalDetalles.innerHTML = `
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>Pedido #${data.id}</h3>
-            <p><strong>Cliente:</strong> ${data.cliente}</p>
-            <p><strong>Dirección:</strong> ${data.address}, ${data.district}, ${data.city}, ${data.postal_code}</p>
-            <p><strong>Referencia:</strong> ${data.reference}</p>
-            <p><strong>Estado:</strong> ${data.status}</p>
-            <p><strong>Total:</strong> S/ ${data.total}</p>
-            <hr>
-            <h4>Productos:</h4>
-            <ul>
-              ${data.productos.map(p => `
-                <li>
-                  ${p.image_url ? `<img src="${p.image_url}" style="width:40px; vertical-align:middle; margin-right:5px;">` : ""}
-                  ${p.product_name} — ${p.quantity} x S/ ${p.price}
-                </li>
-              `).join("")}
-            </ul>
-            <button id="descargarPDF">Descargar PDF</button>
-          </div>
-        `;
-        document.body.appendChild(modalDetalles);
-        modalDetalles.classList.add("active");
+      // Crear modal dinámico
+      const modalDetalles = document.createElement("div");
+      modalDetalles.classList.add("modal");
+      modalDetalles.innerHTML = `
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h3>Pedido #${data.id}</h3>
 
-        // Cerrar modal de detalles
-        modalDetalles.querySelector(".close").addEventListener("click", () => modalDetalles.remove());
+          <h4>Cliente:</h4>
+          <p><strong>Nombre:</strong> ${data.full_name}</p>
+          <p><strong>Email:</strong> ${data.email}</p>
+          <p><strong>DNI:</strong> ${data.dni}</p>
 
-        // Descargar PDF
-        document.getElementById("descargarPDF").addEventListener("click", () => {
-          const { jsPDF } = window.jspdf;
-          const doc = new jsPDF();
-          doc.setFontSize(14);
-          doc.text(`Pedido #${data.id}`, 10, 10);
-          doc.text(`Cliente: ${data.cliente}`, 10, 20);
-          doc.text(`Dirección: ${data.address}, ${data.district}, ${data.city}, ${data.postal_code}`, 10, 30);
-          doc.text(`Referencia: ${data.reference}`, 10, 40);
-          doc.text(`Estado: ${data.status}`, 10, 50);
-          doc.text(`Total: S/ ${data.total}`, 10, 60);
-          doc.text("Productos:", 10, 70);
-          let y = 80;
-          data.productos.forEach(p => {
-            doc.text(`${p.product_name} — ${p.quantity} x S/ ${p.price}`, 10, y);
-            y += 10;
-          });
-          doc.save(`Pedido_${data.id}.pdf`);
-        });
-      })
-      .catch(err => console.error(err));
-  });
+          <h4>Dirección de entrega:</h4>
+          <p>${data.address}, ${data.district}, ${data.city}, ${data.postal_code}</p>
+          <p><strong>Referencia:</strong> ${data.reference}</p>
 
+          <p><strong>Estado:</strong> ${data.status}</p>
+          <p><strong>Total:</strong> S/ ${data.total}</p>
+
+          <h4>Comprobante de pago:</h4>
+          ${data.receipt ? `<img src="../../${data.receipt}" style="max-width:200px; display:block; margin-bottom:1rem;">` : `<p>No hay comprobante</p>`}
+
+          <hr>
+          <h4>Productos:</h4>
+          <ul>
+            ${data.productos.map(p => `
+              <li>
+                ${p.image_url ? `<img src="../../uploads/${p.image_url}" style="width:40px; vertical-align:middle; margin-right:5px;">` : ""}
+                ${p.product_name} — ${p.quantity} x S/ ${p.price}
+              </li>
+            `).join("")}
+          </ul>
+
+          <button id="descargarPDF">Descargar PDF</button>
+        </div>
+      `;
+      document.body.appendChild(modalDetalles);
+      modalDetalles.classList.add("active");
+
+      // Cerrar modal
+      modalDetalles.querySelector(".close").addEventListener("click", () => modalDetalles.remove());
+
+      // Descargar PDF
+      document.getElementById("descargarPDF").addEventListener("click", () => {
+        const modalContent = modalDetalles.querySelector(".modal-content");
+      
+        // Opciones para html2pdf
+        const opt = {
+          margin:       0.5,
+          filename:     `Pedido_${data.id}.pdf`,
+          image:        { type: 'jpeg', quality: 0.98 },
+          html2canvas:  { scale: 2, logging: true, useCORS: true },
+          jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+      
+        html2pdf().set(opt).from(modalContent).save();
+      });
+
+    })
+    .catch(err => console.error(err));
+});
 
   // ==============================
   // INICIALIZACIÓN

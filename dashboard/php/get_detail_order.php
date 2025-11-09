@@ -10,18 +10,23 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Primero obtenemos los pedidos del usuario con datos del cliente
+// 🔹 Filtramos solo los pedidos visibles
 $sql = "
   SELECT 
     o.id,
     o.total,
     o.status,
     o.created_at,
+    o.receipt,
     ua.full_name AS cliente,
-    CONCAT(ua.address, ', ', ua.district, ', ', ua.city) AS direccion
+    ua.email,
+    ua.dni,
+    CONCAT(ua.address, ', ', ua.district, ', ', ua.city, ' - ', ua.postal_code) AS direccion,
+    ua.reference
   FROM orders o
   LEFT JOIN user_addresses ua ON o.delivery_address_id = ua.id
-  WHERE o.user_id = ?
+  WHERE o.user_id = ? 
+    AND o.visible = 1        -- <--- 🔸 Solo mostrar pedidos no eliminados
   ORDER BY o.created_at DESC
 ";
 
@@ -37,24 +42,24 @@ while ($row = $result->fetch_assoc()) {
 
     // Obtenemos los productos de cada pedido
     $sql_items = "
-  SELECT p.product_name, p.image_url, oi.quantity, oi.price
-  FROM order_items oi
-  LEFT JOIN products p ON oi.product_id = p.id
-  WHERE oi.order_id = ?
-";
-$stmt_items = $conexion->prepare($sql_items);
-$stmt_items->bind_param("i", $order_id);
-$stmt_items->execute();
-$items_result = $stmt_items->get_result();
+      SELECT p.product_name, p.image_url, oi.quantity, oi.price
+      FROM order_items oi
+      LEFT JOIN products p ON oi.product_id = p.id
+      WHERE oi.order_id = ?
+    ";
+    $stmt_items = $conexion->prepare($sql_items);
+    $stmt_items->bind_param("i", $order_id);
+    $stmt_items->execute();
+    $items_result = $stmt_items->get_result();
 
-$items = [];
-while ($item = $items_result->fetch_assoc()) {
-    // Opcional: si quieres la ruta completa desde la web
-    $item['image_url'] = '../../uploads/' . $item['image_url'];
-    $items[] = $item;
-}
+    $items = [];
+    while ($item = $items_result->fetch_assoc()) {
+        $item['image_url'] = '../../uploads/' . $item['image_url']; // ruta completa
+        $items[] = $item;
+    }
 
-    $row['items'] = $items; // agregamos productos al pedido
+    $row['items'] = $items;      // agregamos productos al pedido
+    $row['receipt'] = $row['receipt'] ? '../../' . $row['receipt'] : null; // agregamos comprobante
     $orders[] = $row;
 }
 

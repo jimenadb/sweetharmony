@@ -1,27 +1,28 @@
 <?php
 require_once "../../conexion.php";
+header("Content-Type: application/json; charset=UTF-8");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Nombre obligatorio
     $product_name = trim($_POST['product_name'] ?? '');
     if ($product_name === '') {
-        echo "El nombre del producto es obligatorio.";
+        echo json_encode(["success" => false, "message" => "El nombre del producto es obligatorio."]);
         exit;
     }
 
     // Campos opcionales
-    $product_type  = $_POST['product_type'] ?: null;
-    $plant_type    = $_POST['plant_type'] ?: null;
-    $price         = $_POST['price'] !== '' ? floatval($_POST['price']) : null;
-    $discount      = $_POST['discount'] !== '' ? floatval($_POST['discount']) : 0.00;
-    $plant_height  = $_POST['plant_height'] !== '' ? floatval($_POST['plant_height']) : null;
-    $plant_width   = $_POST['plant_width'] !== '' ? floatval($_POST['plant_width']) : null;
-    $pot_height    = $_POST['pot_height'] !== '' ? floatval($_POST['pot_height']) : null;
-    $pot_width     = $_POST['pot_width'] !== '' ? floatval($_POST['pot_width']) : null;
-    $pot_color     = $_POST['pot_color'] ?: null;
-    $weight        = $_POST['weight'] !== '' ? floatval($_POST['weight']) : null;
-    
+    $product_type  = !empty($_POST['product_type']) ? intval($_POST['product_type']) : null;
+    $plant_type    = !empty($_POST['plant_type']) ? intval($_POST['plant_type']) : null;
+    $price         = isset($_POST['price']) && $_POST['price'] !== '' ? floatval($_POST['price']) : null;
+    $discount      = isset($_POST['discount']) && $_POST['discount'] !== '' ? floatval($_POST['discount']) : 0.00;
+    $plant_height  = isset($_POST['plant_height']) && $_POST['plant_height'] !== '' ? floatval($_POST['plant_height']) : null;
+    $plant_width   = isset($_POST['plant_width']) && $_POST['plant_width'] !== '' ? floatval($_POST['plant_width']) : null;
+    $pot_height    = isset($_POST['pot_height']) && $_POST['pot_height'] !== '' ? floatval($_POST['pot_height']) : null;
+    $pot_width     = isset($_POST['pot_width']) && $_POST['pot_width'] !== '' ? floatval($_POST['pot_width']) : null;
+    $pot_color     = $_POST['pot_color'] ?? null;
+    $weight        = isset($_POST['weight']) && $_POST['weight'] !== '' ? floatval($_POST['weight']) : null;
+    $description = $_POST['description'] ?? null;
 
     // Imagen opcional
     $image_url = null;
@@ -39,31 +40,48 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    // Insertar en la BD
+    // SQL con nombres de columna correctos
     $sql = "INSERT INTO products (
-                product_name, product_type, plant_type, price, discount,
+                product_name, product_types, plant_types, price, discount,
                 plant_height, plant_width, pot_height, pot_width, pot_color,
-                weight, image_url
-            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+                weight, image_url, description
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+    // Preparamos el statement
     $stmt = $conexion->prepare($sql);
+    if (!$stmt) {
+        echo json_encode(["success" => false, "message" => "Error en prepare: " . $conexion->error]);
+        exit;
+    }
+
+    // i = int, d = double, s = string
     $stmt->bind_param(
-        "sssdddddssss",
-        $product_name, $product_type, $plant_type, $price, $discount,
-        $plant_height, $plant_width, $pot_height, $pot_width,
-        $pot_color, $weight, $image_url
+        "siidddddsdsss",
+        $product_name,   // s
+        $product_type,   // i
+        $plant_type,     // i
+        $price,          // d
+        $discount,       // d
+        $plant_height,   // d
+        $plant_width,    // d
+        $pot_height,     // d
+        $pot_width,      // d
+        $pot_color,      // s
+        $weight,         // d
+        $image_url,       // s
+        $description
     );
 
     if ($stmt->execute()) {
         echo json_encode(["success" => true, "message" => "Producto guardado correctamente."]);
     } else {
-        echo json_encode(["success" => false, "message" => $stmt->error]);
+        echo json_encode(["success" => false, "message" => "Error al guardar: " . $stmt->error]);
     }
 
     $stmt->close();
-    
+
 } else {
     http_response_code(405);
-    echo "Método no permitido";
+    echo json_encode(["success" => false, "message" => "Método no permitido."]);
 }
 ?>

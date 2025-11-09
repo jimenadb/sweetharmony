@@ -31,8 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
           tr.innerHTML = `
             <td><img src="${p.image_url}" alt="${p.product_name}" style="width:50px;height:50px;object-fit:cover;"></td>
             <td>${p.product_name || '-'}</td>
-            <td>${p.product_type || '-'}</td>
-            <td>${p.plant_type || '-'}</td>
+            <td>${p.product_type_name || '-'}</td>
+            <td>${p.plant_type_name || '-'}</td>
             <td>${p.price != null ? '$' + p.price : '-'}</td>
             <td>${p.discount != null ? p.discount + '%' : '-'}</td>
             <td>${p.plant_height != null ? p.plant_height + 'cm' : '-'}</td>

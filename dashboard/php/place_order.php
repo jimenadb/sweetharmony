@@ -74,18 +74,18 @@ foreach ($cart_items as $item) {
 $conexion->query("DELETE FROM cart WHERE user_id = $user_id");
 
 // ✅ Subir comprobante Yape si existe
-if (isset($_FILES['yape_proof']) && $_FILES['yape_proof']['error'] === UPLOAD_ERR_OK) {
+if (isset($_FILES['yape-proof']) && $_FILES['yape-proof']['error'] === UPLOAD_ERR_OK) {
     $upload_dir = "../../uploads/receipts/";
     if (!is_dir($upload_dir)) {
         mkdir($upload_dir, 0777, true);
     }
 
-    $filename = time() . "_" . basename($_FILES['yape_proof']['name']);
+    $filename = time() . "_" . basename($_FILES['yape-proof']['name']);
     $target_path = $upload_dir . $filename;
 
-    if (move_uploaded_file($_FILES['yape_proof']['tmp_name'], $target_path)) {
+    if (move_uploaded_file($_FILES['yape-proof']['tmp_name'], $target_path)) {
         $relative_path = "uploads/receipts/" . $filename;
-        $stmt_update = $conexion->prepare("UPDATE orders SET comprobante=? WHERE id=? AND user_id=?");
+        $stmt_update = $conexion->prepare("UPDATE orders SET receipt=? WHERE id=? AND user_id=?");
         $stmt_update->bind_param("sii", $relative_path, $order_id, $user_id);
         $stmt_update->execute();
         error_log("DEBUG: Comprobante subido y guardado en BD: $relative_path");
@@ -93,6 +93,47 @@ if (isset($_FILES['yape_proof']) && $_FILES['yape_proof']['error'] === UPLOAD_ER
         error_log("ERROR: Falló move_uploaded_file()");
     }
 }
+
+// --- Enviar correo de confirmación ---
+require '../../admin_dashboard/PHPMailer-master/PHPMailer-master/src/Exception.php';
+require '../../admin_dashboard/PHPMailer-master/PHPMailer-master/src/PHPMailer.php';
+require '../../admin_dashboard/PHPMailer-master/PHPMailer-master/src/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+$mail = new PHPMailer(true);
+$mail->CharSet = 'UTF-8';
+
+try {
+    $mail->isSMTP();
+    $mail->Host = 'smtp.office365.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = '1524431@senati.pe';
+    $mail->Password = 'tiramisu1@';
+    $mail->SMTPSecure = 'tls';
+    $mail->Port = 587;
+
+    $mail->setFrom('1524431@senati.pe', 'Sweet Harmony');
+
+    // Aquí tus correos de prueba
+    $mail->addAddress('velardeximena28@gmail.com', 'Usuario Prueba'); // Usuario
+    $mail->addAddress('velardeximena28@gmail.com', 'Admin Prueba');   // Admin
+
+    $mail->isHTML(true);
+    $mail->Subject = "Confirmación de tu pedido #{$order_id}";
+    $mail->Body = "
+        <p>Tu pedido #{$order_id} se ha recibido correctamente.</p>
+        <p>Gracias por comprar con nosotros 🌸</p>
+    ";
+
+    $mail->send();
+    error_log("Correo enviado para pedido #$order_id");
+} catch (Exception $e) {
+    error_log("No se pudo enviar correo para pedido #$order_id: {$mail->ErrorInfo}");
+}
+
+
 
 echo json_encode([
     "success" => true,

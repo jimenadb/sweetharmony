@@ -98,6 +98,29 @@
   <div class="overlay" data-nav-toggler data-overlay></div>
 </div>
 
+
+<div class="filters">
+  <label for="filter_product_type">Tipo de producto:</label>
+  <select id="filter_product_type">
+    <option value="">-- Todos --</option>
+  </select>
+
+  <label for="filter_plant_type">Tipo de planta:</label>
+  <select id="filter_plant_type">
+    <option value="">-- Todos --</option>
+  </select>
+
+  <label for="filter_price_order">Ordenar por precio:</label>
+  <select id="filter_price_order">
+    <option value="">-- Ninguno --</option>
+    <option value="asc">Menor a mayor</option>
+    <option value="desc">Mayor a menor</option>
+  </select>
+
+  <button id="filterBtn">Aplicar filtros</button>
+  <button id="clearFilterBtn">Limpiar filtros</button>
+</div>
+
     <section class="section shop" id="shop" aria-label="shop" data-section>
       <div class="container">
         <div class="title-wrapper">
@@ -111,9 +134,34 @@
       </div>
     </section>
 
+
+
+
   <!-- Detalle del producto en la misma página -->
 <div id="product-detail-page" style="display:none;">
-  <!-- Aquí vamos a inyectar todo el contenido del producto como antes en el popup -->
+</div>
+
+ <!-- Flitro de productos -->
+<div class="filters">
+  <label for="filter_product_type">Tipo de producto:</label>
+  <select id="filter_product_type">
+    <option value="">-- Todos --</option>
+  </select>
+
+  <label for="filter_plant_type">Tipo de planta:</label>
+  <select id="filter_plant_type">
+    <option value="">-- Todos --</option>
+  </select>
+
+  <label for="filter_price_order">Ordenar por precio:</label>
+  <select id="filter_price_order">
+    <option value="">-- Ninguno --</option>
+    <option value="asc">Menor a mayor</option>
+    <option value="desc">Mayor a menor</option>
+  </select>
+
+  <button id="filterBtn">Aplicar filtros</button>
+  <button id="clearFilterBtn">Limpiar filtros</button>
 </div>
 
 

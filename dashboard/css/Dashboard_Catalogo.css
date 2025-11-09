@@ -223,3 +223,81 @@
     font-size: 1rem;
   }
 }
+/* ===============================
+   CONTENEDOR DE FILTROS
+   =============================== */
+   .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background-color: #ffffff;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  /* ===============================
+     LABELS Y SELECTS
+     =============================== */
+  .filters label {
+    font-weight: 500;
+    margin-right: 0.3rem;
+    color: #2c3e50;
+  }
+  
+  .filters select {
+    padding: 0.4rem 0.6rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-family: 'Urbanist', sans-serif;
+    font-size: 0.9rem;
+    transition: border 0.2s, box-shadow 0.2s;
+  }
+  
+  .filters select:focus {
+    border-color: #148b38;
+    box-shadow: 0 0 5px rgba(20, 139, 56, 0.3);
+    outline: none;
+  }
+  
+  /* ===============================
+     BOTONES
+     =============================== */
+  .filters button {
+    background-color: hsl(148, 20%, 38%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+  }
+  
+  .filters button:hover {
+    background-color: hsl(0, 0%, 61%);
+    transform: translateY(-1px);
+  }
+  
+  /* ===============================
+     RESPONSIVE
+     =============================== */
+  @media (max-width: 768px) {
+    .filters {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .filters label,
+    .filters select,
+    .filters button {
+      width: 100%;
+    }
+  
+    .filters button {
+      margin-top: 0.5rem;
+    }
+  }

@@ -35,14 +35,15 @@ if (password_verify($password, $user['password'])) {
     $_SESSION['role'] = $user['role'];           // rol del usuario
 	//CAMBIO EN LA REDIRECCION 
     $redirect = ($user['role'] === 'admin')
-        ? "../../admin_dashboard/html/Admin_catalogo.html"
-        : "../../dashboard/html/Dashboard.html";
+        ? "http://localhost/sweetharmony/sweetharmony/admin_dashboard/html/Admin_catalogo.html"
+        : "http://localhost/sweetharmony/sweetharmony/dashboard/html/Dashboard.html";
 
 	echo json_encode([
         "message" => "Login exitoso",
         "redirect" => $redirect,
         "username" => $user['first_name'],
-        "user_id" => $user['id']
+        "user_id" => $user['id'],
+        "role" => $user['role'] 
     ]);
 } else {
     http_response_code(401);

@@ -21,53 +21,57 @@
 
 <body id="top">
 
- <!-- #HEADER -->
- <header class="header">
-  <div class="header-top" data-header>
-    <div class="container">
-      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></button>
-
-      <a href="#" class="logo">SWEET- HARMONY - ADMINISTRADOR</a>
-      <div class="header-actions">
-        <a href="Edit_Admin.html">
-          <button id="adminBtn" class="header-action-btn" aria-label="editar admin">
-            <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-top" data-header>
+      <div class="container">
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </button>
+        <a href="#" class="logo">SWEET- HARMONY - ADMINISTRADOR</a>
+        <div class="header-actions">
+          <a href="Edit_Admin.html">
+            <button id="adminBtn" class="header-action-btn" aria-label="editar admin">
+              <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+            </button>
+          </a>
+        
+          <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión">
+            <ion-icon name="log-out-outline" aria-hidden="true"></ion-icon>
           </button>
-        </a>
-      
-        <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión">
-          <ion-icon name="log-out-outline" aria-hidden="true"></ion-icon>
+        </div>
+        <nav class="navbar">
+          <ul class="navbar-list">
+            <li><a href="Admin_view.html" class="navbar-link has-after">INICIO</a></li>
+            <li><a href="Admin_catalogo.html" class="navbar-link has-after">CATÁLOGO</a></li>
+            <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
+            <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE NAVBAR -->
+  <div class="sidebar">
+    <div class="mobile-navbar" data-navbar>
+      <div class="wrapper">
+        <a href="#" class="logo"><img src="../assets/logo.png" width="179" height="26" alt="Glowing"></a>
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
         </button>
       </div>
-      <nav class="navbar">
-        <ul class="navbar-list">
-          <li><a href="Admin_view.html" class="navbar-link has-after">INICIO</a></li>
-          <li><a href="Admin_catalogo.html" class="navbar-link has-after">CATÁLOGO</a></li>
-          <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
-          <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
-        </ul>
-      </nav>
+      <ul class="navbar-list">
+        <li><a href="Admin_view.html" class="navbar-link" data-nav-link>INICIO</a></li>
+        <li><a href="Admin_catalogo.html" class="navbar-link" data-nav-link>CATÁLOGO</a></li>
+        <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
+        <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
+      </ul>
     </div>
+    <div class="overlay" data-nav-toggler data-overlay></div>
   </div>
-</header>
-
-<!-- MOBILE NAVBAR -->
-<div class="sidebar">
-  <div class="mobile-navbar" data-navbar>
-    <div class="wrapper">
-      <a href="#" class="logo"><img src="../assets/logo.png" width="179" height="26" alt="Glowing"></a>
-      <button class="nav-close-btn" aria-label="close menu" data-nav-toggler><ion-icon name="close-outline" aria-hidden="true"></ion-icon></button>
-    </div>
-    <ul class="navbar-list">
-      <li><a href="Admin_view.html" class="navbar-link" data-nav-link>INICIO</a></li>
-      <li><a href="Admin_catalogo.html" class="navbar-link" data-nav-link>CATÁLOGO</a></li>
-      <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
-      <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS/a></li>
-    </ul>
-  </div>
-  <div class="overlay" data-nav-toggler data-overlay></div>
-
-</div>
 
   <!-- CONTENIDO PRINCIPAL -->
   <main>
@@ -119,6 +123,8 @@
 
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
   <script src="../js/Admin_order.js" defer></script>
   <script src="../js/Admin_view.js" defer></script>
   <script src="../js/logout.js" defer></script>

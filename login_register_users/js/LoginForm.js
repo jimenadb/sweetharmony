@@ -22,21 +22,18 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
 
     // ✅ Aquí va el if principal
     if (response.ok) {
-      // Usa la URL que el backend envía
-      if (result.username) {
-        sessionStorage.setItem('username', result.username);
-      }
-
-      // ✅ 👇 NUEVO: guardar también el ID del usuario
-      if (result.user_id) {
-        sessionStorage.setItem('user_id', result.user_id);
-      }
-
-      if (result.redirect) {
-        window.location.href = result.redirect;
+      const role = result.role; // Asegúrate de que PHP devuelva también el rol
+      sessionStorage.setItem('username', result.username);
+      sessionStorage.setItem('user_id', result.user_id);
+  
+      // Redirección según rol directamente en JS
+      if (role === 'admin') {
+          window.location.href = "http://localhost/sweetharmony/sweetharmony/admin_dashboard/html/Admin_catalogo.html";
+      } else if (role === 'user') {
+          window.location.href = "http://localhost/sweetharmony/sweetharmony/dashboard/html/Dashboard.html";
       } else {
-        // Fallback por si no viene el campo redirect
-        window.location.href = "../../dashboard/html/Dashboard.html";
+          // Fallback por si no hay rol
+          window.location.href = "http://localhost/sweetharmony/sweetharmony/dashboard/html/Dashboard.html";
       }
     } else {
       alert("Credenciales incorrectas");

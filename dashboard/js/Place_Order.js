@@ -12,7 +12,7 @@ document.getElementById('place-order').addEventListener('click', async () => {
     try {
       const formData = new FormData();
       formData.append('delivery_address_id', delivery_address_id);
-      if (file) formData.append('yape_proof', file);
+      if (file) formData.append('yape-proof', file);
   
       const res = await fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/place_order.php', {
         method: 'POST',
@@ -21,11 +21,15 @@ document.getElementById('place-order').addEventListener('click', async () => {
   
       const data = await res.json();
       if (data.success) {
+
+        
         alert(`✅ Pedido realizado correctamente.\nNúmero de seguimiento: ${data.order_id}`);
         location.reload();
       } else {
         alert(`⚠️ Error: ${data.message}`);
       }
+
+
   
     } catch (err) {
       console.error("Error al realizar pedido:", err);

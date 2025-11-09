@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function closeModal() {
     modal.classList.remove("active");
   }
-
   closeModalBtn.addEventListener("click", closeModal);
   modal.addEventListener("click", e => {
     if (e.target === modal) closeModal();
@@ -39,84 +38,105 @@ document.addEventListener("DOMContentLoaded", () => {
         <span class="order-number">Pedido #${order.id}</span>
         <span class="order-status">${order.status}</span>
       </div>
-      <div class="order-footer">
-        <span>Total: $${order.total}</span>
-        <span class="tracking-number">Seguimiento: N/A</span>
-      </div>
+<div class="order-actions">
+  <button class="view-btn" data-id="${order.id}"> Ver detalles</button>
+  <button class="delete-btn" data-id="${order.id}"> Eliminar</button>
+</div>
+
     `;
 
     // Abrir modal al hacer clic
     orderCard.addEventListener("click", () => showModal(order));
-
     ordersContainer.appendChild(orderCard);
+
+
+    // Evento eliminar pedido
+orderCard.querySelector(".delete-btn").addEventListener("click", (e) => {
+  e.stopPropagation(); // evita abrir el modal
+
+  if (confirm(`¿Seguro que deseas eliminar el pedido #${order.id}?`)) {
+    fetch(`http://localhost/sweetharmony/sweetharmony/dashboard/php/delete_order.php?id=${order.id}`, {
+      method: "DELETE"
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert("✅ Pedido eliminado correctamente");
+        orderCard.remove();
+      } else {
+        alert("❌ Error al eliminar: " + (data.error || "desconocido"));
+      }
+    })
+    .catch(err => {
+      console.error("Error:", err);
+      alert("No se pudo conectar con el servidor.");
+    });
+  }
+});
   }
 
-  // Función para mostrar el modal con detalles del pedido
   function showModal(order) {
     let itemsHTML = '';
+    
+    // 🔹 Mostrar los productos
     if (order.items && order.items.length > 0) {
       itemsHTML = '<h4>Productos:</h4><ul>';
       order.items.forEach(item => {
-        itemsHTML += `<li>${item.quantity} x ${item.product_name} ($${item.price})</li>`;
+        itemsHTML += `
+          <li style="margin-bottom: 8px;">
+            ${item.image_url ? `<img src="${item.image_url}" style="width:40px; height:40px; object-fit:cover; vertical-align:middle; margin-right:8px; border-radius:4px;">` : ""}
+            ${item.quantity} × <strong>${item.product_name}</strong> — $${item.price}
+          </li>
+        `;
       });
       itemsHTML += '</ul>';
     } else {
       itemsHTML = '<p>No hay productos registrados</p>';
     }
-
+  
+    // 🔹 Mostrar comprobante (si existe)
+    let receiptHTML = '';
+    if (order.receipt) {
+      receiptHTML = `
+        <div style="margin-top: 1rem;">
+          <h4>Comprobante de pago:</h4>
+          <img src="${order.receipt}" 
+               alt="Comprobante" 
+               style="width: 100%; max-width: 150px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); margin-top: 0.5rem;">
+        </div>
+      `;
+    } else {
+      receiptHTML = '<p><em>No se ha subido comprobante de pago.</em></p>';
+    }
+  
+    // 🔹 Insertar todo en el modal
     modalBody.innerHTML = `
       <p><strong>Pedido #:</strong> ${order.id}</p>
       <p><strong>Estado:</strong> ${order.status}</p>
+      <p><strong>Fecha:</strong> ${order.created_at}</p>
       <p><strong>Total:</strong> $${order.total}</p>
-      <p><strong>Cliente:</strong> ${order.cliente || "N/A"}</p>
+  
+      <hr style="margin: 1rem 0;">
+  
+      <h4>Datos del cliente:</h4>
+      <p><strong>Nombre:</strong> ${order.cliente || "N/A"}</p>
+      <p><strong>DNI:</strong> ${order.dni || "N/A"}</p>
+      <p><strong>Email:</strong> ${order.email || "N/A"}</p>
       <p><strong>Dirección:</strong> ${order.direccion || "N/A"}</p>
+      <p><strong>Referencia:</strong> ${order.reference || "N/A"}</p>
+  
+      <hr style="margin: 1rem 0;">
+  
       ${itemsHTML}
+      ${receiptHTML}
     `;
-
+  
+    // 🔹 Mostrar modal
     modal.classList.add("active");
   }
+  
 
   // Llamada inicial para cargar los pedidos
   fetchOrders();
 });
 
-
-
-function renderOrder(order) {
-  // Revisar si el pedido está oculto
-  const hiddenOrders = JSON.parse(localStorage.getItem("hiddenOrders") || "[]");
-  if (hiddenOrders.includes(order.id)) return; // no renderiza
-
-  const orderCard = document.createElement("div");
-  orderCard.className = "order-card";
-
-  orderCard.innerHTML = `
-    <div class="order-header">
-      <span class="order-number">Pedido #${order.id}</span>
-      <span class="order-status">${order.status}</span>
-    </div>
-    <div class="order-footer">
-      <span>Total: $${order.total}</span>
-      <span class="tracking-number">Seguimiento: N/A</span>
-      <button class="delete-btn">Eliminar</button>
-    </div>
-  `;
-
-  // Abrir modal al hacer clic
-  orderCard.addEventListener("click", e => {
-    if (e.target.classList.contains("delete-btn")) return;
-    showModal(order);
-  });
-
-  // Botón eliminar
-  const deleteBtn = orderCard.querySelector(".delete-btn");
-  deleteBtn.addEventListener("click", () => {
-    orderCard.style.display = "none"; // oculta la tarjeta
-
-    // Guardar ID en LocalStorage para mantener oculto
-    hiddenOrders.push(order.id);
-    localStorage.setItem("hiddenOrders", JSON.stringify(hiddenOrders));
-  });
-
-  ordersContainer.appendChild(orderCard);
-}

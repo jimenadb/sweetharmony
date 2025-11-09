@@ -120,20 +120,24 @@
             <label for="product_type">Tipo de producto</label>
             <select id="product_type" name="product_type">
               <option value="">-- Selecciona --</option>
-              <option value="terrario">Terrario</option>
-              <option value="maceta">Maceta</option>
-              <option value="planta">Planta</option>
             </select>
           </div>
-
+          
           <div class="form-group">
             <label for="plant_type">Tipo de planta</label>
             <select id="plant_type" name="plant_type">
               <option value="">-- Selecciona --</option>
-              <option value="interior">Interior</option>
-              <option value="sombra">Sombra</option>
-              <option value="exterior">Exterior</option>
             </select>
+          </div>
+
+          <div class="form-group">
+            <label for="price">Precio</label>
+            <input type="number" id="price" name="price" step="0.01">
+          </div>
+
+          <div class="form-group">
+            <label for="discount">Descuento (%)</label>
+            <input type="number" id="discount" name="discount" step="0.01" value="0.00">
           </div>
 
           <fieldset>
@@ -175,6 +179,12 @@
             <label for="description">Descripción</label>
             <textarea id="description" name="description" rows="3"></textarea>
           </div>
+
+          <div class="form-group">
+            <button type="button" id="generate_description">Descripción con IA</button>
+            <span id="status_desc"></span>
+          </div>
+          
 
           <button type="submit">Guardar producto</button>
           <!-- <button type="button" id="btn-generar">Generar descripción con IA</button> -->
@@ -276,6 +286,8 @@
   <script src="../js/show_products.js" defer></script>
   <script src="../js/update_products.js" defer></script>
   <script src="../js/Admin_catalogo_tipos.js" defer></script>
+  <script src="../js/get_tipos_catalogo.js" defer></script>
+  <script src="../IAdescripcion/descripcion.js" defer></script>
 
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

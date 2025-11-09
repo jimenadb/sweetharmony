@@ -1,6 +1,6 @@
 <?php
 header("Content-Type: application/json; charset=UTF-8");
-require_once "../../conexion.php"; // sube un nivel desde php/ al root del dashboard
+require_once "../../conexion.php";
 require '../PHPMailer-master/PHPMailer-master/src/Exception.php';
 require '../PHPMailer-master/PHPMailer-master/src/PHPMailer.php';
 require '../PHPMailer-master/PHPMailer-master/src/SMTP.php';
@@ -8,40 +8,17 @@ require '../PHPMailer-master/PHPMailer-master/src/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Recibir datos vía POST
-$data = json_decode(file_get_contents('php://input'), true);
-$order_id = intval($data['order_id'] ?? 0);
-$new_status = $data['new_status'] ?? '';
-
-if (!$order_id || !$new_status) {
-    echo json_encode(["error" => "Datos incompletos"]);
+// Recibir order_id vía POST o GET
+$order_id = intval($_POST['order_id'] ?? $_GET['order_id'] ?? 0);
+if (!$order_id) {
+    echo json_encode(["error" => "Falta order_id"]);
     exit;
 }
 
-// 1️⃣ Obtener email del usuario y nombre
-$sql = "SELECT o.id, u.email, u.first_name 
-        FROM orders o
-        INNER JOIN users u ON o.user_id = u.id
-        WHERE o.id = ?";
-$stmt = $conexion->prepare($sql);
-$stmt->bind_param("i", $order_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$order = $result->fetch_assoc();
-
-if (!$order) {
-    echo json_encode(["error" => "Pedido no encontrado"]);
-    exit;
-}
-
-// 2️⃣ Actualizar el estado del pedido
-$update = "UPDATE orders SET status = ? WHERE id = ?";
-$stmt2 = $conexion->prepare($update);
-$stmt2->bind_param("si", $new_status, $order_id);
-$stmt2->execute();
-
+// --- PHPMailer ---
 $mail = new PHPMailer(true);
-$mail->CharSet = 'UTF-8'; // importante
+$mail->CharSet = 'UTF-8';
+
 try {
     $mail->isSMTP();
     $mail->Host = 'smtp.office365.com';
@@ -52,22 +29,13 @@ try {
     $mail->Port = 587;
 
     $mail->setFrom('1524431@senati.pe', 'Sweet Harmony');
-    $mail->addAddress('velardeximena28@gmail.com', 'Ximena'); // tu prueba
+
+    // Correo de prueba: usuario + admin
+    $mail->addAddress('velardeximena28@gmail.com', 'Usuario Prueba'); // Usuario
+    $mail->addAddress('velardeximena28@gmail.com', 'Admin Prueba');   // Admin
 
     $mail->isHTML(true);
-    $mail->Subject = "Actualización de tu pedido #{$order_id}";
-
-    $estadoMap = [
-        'pending' => 'Pendiente',
-        'paid' => 'Pagado',
-        'processing' => 'En proceso',
-        'shipped' => 'Enviado',
-        'delivered' => 'Entregado',
-        'completed' => 'Completado',
-        'cancelled' => 'Cancelado'
-    ];
-    $estadoMostrar = $estadoMap[$new_status] ?? $new_status;
-
+    $mail->Subject = "Confirmación de tu pedido #{$order_id}";
     $mail->Body = "
     <html>
     <head>
@@ -80,20 +48,21 @@ try {
     </style>
     </head>
     <body>
-    <div class='container'>
-        <h2>Hola {$order['first_name']} 👋</h2>
-        <p>Tu pedido <strong>#{$order_id}</strong> ahora tiene el estado: <strong>{$estadoMostrar}</strong>.</p>
-        <p>Gracias por comprar con nosotros, esperamos que disfrutes tus productos 🌸.</p>
-        <div class='footer'>
-        Sweet Harmony - Tu tienda de plantas y decoración
+        <div class='container'>
+            <h2>Hola 👋</h2>
+            <p>Tu pedido <strong>#{$order_id}</strong> se ha recibido correctamente.</p>
+            <p>Gracias por comprar con nosotros 🌸.</p>
+            <div class='footer'>
+            Sweet Harmony - Tu tienda de plantas y decoración
+            </div>
         </div>
-    </div>
     </body>
     </html>
     ";
 
     $mail->send();
-    echo json_encode(["success" => true, "message" => "Estado actualizado y correo enviado."]);
+    echo json_encode(["success" => true, "message" => "Correo enviado correctamente."]);
+
 } catch (Exception $e) {
-    echo json_encode(["error" => "Estado actualizado pero no se pudo enviar el correo: {$mail->ErrorInfo}"]);
+    echo json_encode(["error" => "No se pudo enviar el correo: {$mail->ErrorInfo}"]);
 }

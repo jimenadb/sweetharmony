@@ -1,23 +1,27 @@
 <?php
 require_once "../../conexion.php";
 
+
 $sql = "SELECT 
-    id, 
-    product_name, 
-    product_type,
-    plant_type,
-    price, 
-    discount, 
-    plant_height, 
-    plant_width, 
-    pot_height, 
-    pot_width, 
-    pot_color, 
-    units,
-    description,
-    weight, 
-    image_url
-FROM products";
+    p.id,
+    p.product_name,
+    pt.name AS product_type_name,
+    plt.name AS plant_type_name,
+    p.price,
+    p.discount,
+    p.plant_height,
+    p.plant_width,
+    p.pot_height,
+    p.pot_width,
+    p.pot_color,
+    p.units,
+    p.description,
+    p.weight,
+    p.image_url
+FROM products p
+LEFT JOIN product_types pt ON p.product_types = pt.id
+LEFT JOIN plant_types plt ON p.plant_types = plt.id";
+
 
 $result = $conexion->query($sql);
 
