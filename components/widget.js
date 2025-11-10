@@ -1,126 +1,146 @@
-// ===== WIDGET FLOTANTE HORIZONTAL =====
+// ===== WIDGET FLOTANTE RECOMENDACIONES =====
+
+// ✅ Estilos del widget
 const style = document.createElement("style");
 style.textContent = `
-#floating-widget{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:white;
-  border-radius:10px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.2);
-  padding:10px;
-  z-index:9999;
-  font-family:sans-serif;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+#floating-widget {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  padding: 10px;
+  z-index: 9999;
+  font-family: 'Urbanist', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-#floating-widget .close-btn{
-  position:absolute;
-  top:5px;
-  right:8px;
-  cursor:pointer;
-  font-weight:bold;
-  font-size:18px;
+#floating-widget .close-btn {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;
 }
-#floating-widget .bee-icon{
-  width:170px;
-  height:140px;
-  margin-bottom:5px;
+#floating-widget .bee-icon {
+  width: 140px;
+  height: 120px;
 }
-#floating-widget .product-list{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding:5px;
-  width:100%;
-  justify-content:center;
+#floating-widget .product-list {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 6px;
+  width: 100%;
+  justify-content: center;
 }
-#floating-widget .product-list li{
-  list-style:none;
-  flex:0 0 auto;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:4px;
+#floating-widget .product-list li {
+  list-style: none;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
 }
-#floating-widget .product-list li img{
-  width:100px;
-  height:100px;
-  object-fit:cover;
-  border-radius:4px;
+#floating-widget .product-list li img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+#floating-widget .product-list li span {
+  font-size: 12px;
+  color: #333;
+  max-width: 100px;
+  word-wrap: break-word;
 }
 `;
 document.head.appendChild(style);
 
+// ✅ Crear widget
 const widget = document.createElement("div");
 widget.id = "floating-widget";
 widget.innerHTML = `
   <span class="close-btn">×</span>
   <div style="display:flex; align-items:center; gap:10px;">
-  <ul class="product-list" id="recommendations-list"></ul>
-  <img src="../../components/assets/abejitarecomend.png" class="bee-icon">
-</div>
+    <ul class="product-list" id="recommendations-list"></ul>
+    <img src="../../components/assets/abejitarecomend.png" class="bee-icon" alt="Abejita">
+  </div>
 `;
 document.body.appendChild(widget);
 
 // Cerrar widget
-widget.querySelector(".close-btn").onclick = () => widget.style.display="none";
+widget.querySelector(".close-btn").onclick = () => widget.style.display = "none";
 
 const list = widget.querySelector("#recommendations-list");
-let clickedProducts = JSON.parse(localStorage.getItem('clickedProducts')||'[]');
+let clickedProducts = JSON.parse(localStorage.getItem('clickedProducts') || '[]');
 
-// Función para renderizar productos en fila
+// ✅ Función para mostrar productos recomendados
 function updateWidget(products) {
   list.innerHTML = "";
+  if (!products || !products.length) {
+    list.innerHTML = `<li><span>Sin recomendaciones</span></li>`;
+    return;
+  }
+
   products.forEach(p => {
     const li = document.createElement("li");
     li.innerHTML = `
-      ${p.image_url ? `<img src="../../uploads/${p.image_url}" alt="${p.product || p.name}">` : ""}
-      <span style="font-size:12px;">${p.product || p.name} (Score: ${p.score?.toFixed(3) || 0})</span>
+      ${p.image_url ? `<img src="../../uploads/${p.image_url}" alt="${p.product}">` : ""}
+        <span style="font-size:12px;">
+    ${p.product || "Producto"} (Score: ${(p.score || 0).toFixed(3)})
+  </span>
     `;
     list.appendChild(li);
   });
 }
 
-// Mostrar último clic o top por vistas
-if(clickedProducts.length){
-  const lastClicked = clickedProducts[clickedProducts.length - 1];
-  fetchRecommendations(lastClicked.name);
-} else {
-  fetch('http://localhost/sweetharmony/sweetharmony/components/widget.php')
-    .then(res => res.json())
-    .then(data => {
-      if(data.recommendations.length){
-        updateWidget(data.recommendations);
-      }
-    });
-}
+// ✅ Obtener recomendaciones desde PHP
+async function fetchRecommendations(productName = null) {
+  const url = productName
+    ? `http://localhost/sweetharmony/sweetharmony/components/widget.php?product=${encodeURIComponent(productName)}`
+    : `http://localhost/sweetharmony/sweetharmony/components/widget.php`;
 
-// Registrar clic y actualizar widget
-window.productClicked = (id,name,image_url)=>{
-  clickedProducts.push({id,name,image_url});
-  localStorage.setItem('clickedProducts',JSON.stringify(clickedProducts));
-  updateWidget(clickedProducts);
-  fetchRecommendations(name);
-};
-
-// Obtener recomendaciones IA
-async function fetchRecommendations(productName){
-  const res = await fetch(`http://localhost/sweetharmony/sweetharmony/components/widget.php?product=${encodeURIComponent(productName)}`);
-  const data = await res.json();
-  if(data.recommendations.length){
-    updateWidget(data.recommendations);
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.recommendations && data.recommendations.length) {
+      updateWidget(data.recommendations);
+    }
+  } catch (e) {
+    console.error("Error al obtener recomendaciones:", e);
   }
 }
 
-// Asignar clics a productos en la página
-document.querySelectorAll('.product-card').forEach(card=>{
-  card.onclick = ()=>{
+// ✅ Guardar clic y pedir recomendaciones
+window.productClicked = (id, name, image_url) => {
+  clickedProducts = clickedProducts.filter(p => p.id !== id); // evita duplicados
+  clickedProducts.push({ id, name, image_url });
+  localStorage.setItem('clickedProducts', JSON.stringify(clickedProducts));
+
+  fetchRecommendations(name);
+};
+
+// ✅ Detectar clics en los productos del catálogo
+document.querySelectorAll('.product-card').forEach(card => {
+  card.addEventListener('click', () => {
     const id = card.dataset.id;
-    const name = card.querySelector('h3').textContent;
-    const image = card.querySelector('img')?.src || '';
-    window.productClicked(id,name,image);
-  };
+    const name = card.querySelector('h3')?.textContent?.trim() || '';
+    const image = card.querySelector('img')?.getAttribute('src')?.split('/').pop() || '';
+    window.productClicked(id, name, image);
+  });
 });
+
+// ✅ Cargar al iniciar
+if (clickedProducts.length) {
+  const lastClicked = clickedProducts[clickedProducts.length - 1];
+  fetchRecommendations(lastClicked.name);
+} else {
+  fetchRecommendations();
+}

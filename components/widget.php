@@ -2,46 +2,34 @@
 require_once "../conexion.php";
 header("Content-Type: application/json; charset=UTF-8");
 
-// 1️⃣ Producto clicado (puede venir por GET)
-$clickedProduct = $_GET['product'] ?? null;
+// 🔹 1️⃣ Obtener el último producto clickeado (por fecha más reciente)
+$sqlLast = "SELECT product_name, image_url FROM products ORDER BY last_viewed_at DESC LIMIT 1";
+$resultLast = $conexion->query($sqlLast);
 
-// 2️⃣ Si no hay producto clicado, devolver top por vistas
-if (!$clickedProduct) {
-    $sql = "SELECT id, product_name, views, image_url FROM products ORDER BY views DESC LIMIT 3";
-    $result = $conexion->query($sql);
-
-    $top = [];
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $top[] = [
-                "product" => $row['product_name'],
-                "score" => (float)$row['views'], // usamos views como “score”
-                "image_url" => $row['image_url']
-            ];
-        }
-    }
-
-    echo json_encode([
-        "clicked" => null,
-        "recommendations" => $top
-    ]);
+if (!$resultLast || $resultLast->num_rows === 0) {
+    echo json_encode(["error" => "No hay productos con last_viewed_at registrado"]);
     exit;
 }
 
-// 3️⃣ Si hay producto clicado, obtener todos los productos con su image_url
+$lastProduct = $resultLast->fetch_assoc();
+$clickedProduct = $lastProduct['product_name'];
+
+// 🔹 2️⃣ Obtener todos los productos (para comparar similitudes)
 $sql = "SELECT product_name, image_url FROM products";
 $result = $conexion->query($sql);
 
 $products = [];
-$imageMap = []; // Mapa product_name => image_url
-if ($result->num_rows > 0) {
+$imageMap = [];
+
+if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $products[] = $row['product_name'];
         $imageMap[$row['product_name']] = $row['image_url'];
     }
 }
 
-// 4️⃣ Llamada a Hugging Face
+// 🔹 3️⃣ Preparar la solicitud al modelo de similitud
+
 
 $payload = [
     "inputs" => [
@@ -60,25 +48,31 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
 
 $response = curl_exec($ch);
+if (curl_errno($ch)) {
+    echo json_encode(["error" => curl_error($ch)]);
+    curl_close($ch);
+    exit;
+}
 curl_close($ch);
 
 $scores = json_decode($response, true);
 
-// 5️⃣ Combinar productos con scores y agregar image_url
+// 🔹 4️⃣ Combinar productos con sus puntuaciones
 $combined = [];
 foreach ($products as $i => $p) {
     $combined[] = [
-        'product' => $p,
-        'score' => $scores[$i],
-        'image_url' => $imageMap[$p] ?? null
+        "product" => $p,
+        "score" => $scores[$i] ?? 0,
+        "image_url" => $imageMap[$p] ?? null
     ];
 }
 
-// 6️⃣ Ordenar y top 3
-usort($combined, fn($a,$b) => $b['score'] <=> $a['score']);
+// 🔹 5️⃣ Excluir el mismo producto clickeado y tomar los 3 más similares
+$combined = array_filter($combined, fn($x) => $x['product'] !== $clickedProduct);
+usort($combined, fn($a, $b) => $b['score'] <=> $a['score']);
 $top = array_slice($combined, 0, 3);
 
-// 7️⃣ Devolver JSON
+// 🔹 6️⃣ Respuesta final
 echo json_encode([
     "clicked" => $clickedProduct,
     "recommendations" => $top

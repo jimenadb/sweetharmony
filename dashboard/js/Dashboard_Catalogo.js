@@ -147,13 +147,6 @@ fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_catalo
         window.location.href = `Dashboard_Catalogo.html?id=${productId}`;
       });
       
-      document.querySelectorAll('.product-card').forEach(card => {
-        card.onclick = () => {
-          const id = card.dataset.id;
-          const name = card.querySelector('h3').textContent;
-          window.productClicked(id, name);
-        };
-      });
 
       cardActions.append(btnWhatsapp, btnWishlist, btnCart, btnViewDetails);
       cardBanner.appendChild(cardActions);
@@ -342,5 +335,4 @@ enlace.addEventListener('click', (e) => {
   e.preventDefault(); // si no quieres navegar inmediatamente
   productClicked(producto.id, producto.product_name);
 });
-
 

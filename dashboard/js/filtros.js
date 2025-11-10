@@ -1,6 +1,6 @@
 // ===== CARGAR TIPOS DE PRODUCTO Y PLANTA =====
 async function loadFilters() {
-    const res = await fetch("'http://localhost/sweetharmony/sweetharmony/dashboard/php/filtros.php"); // PHP que devuelve product_types y plant_types
+    const res = await fetch("http://localhost/sweetharmony/sweetharmony/dashboard/php/filtros.php"); // PHP que devuelve product_types y plant_types
     const data = await res.json();
 
     if (!data.success) return;
@@ -28,27 +28,32 @@ async function loadFilters() {
 
 // ===== APLICAR FILTROS =====
 document.getElementById("filterBtn").onclick = () => {
-    const productId = document.getElementById("filter_product_type").value;
-    const plantId   = document.getElementById("filter_plant_type").value;
-    const priceOrder = document.getElementById("filter_price_order").value;
+    const productType = document.getElementById("filter_product_type").value;
+    const plantType   = document.getElementById("filter_plant_type").value;
+    const priceOrder  = document.getElementById("filter_price_order").value;
 
-    fetch(`catalogo.php?product_type=${productId}&plant_type=${plantId}&price_order=${priceOrder}`)
+    fetch(`http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_catalogo.php?product_type=${productType}&plant_type=${plantType}&price_order=${priceOrder}`)
         .then(res => res.json())
         .then(data => {
-            renderProducts(data); // función que dibuja los productos en el HTML
+            if (data.products.length === 0) {
+                document.getElementById('catalogo').innerHTML = '<p>No hay productos disponibles.</p>';
+            } else {
+                renderProducts(data.products); // Llama a tu función larga que ya genera todo el catálogo
+            }
         });
 };
 
 // ===== LIMPIAR FILTROS =====
 document.getElementById("clearFilterBtn").onclick = () => {
-    document.getElementById("filter_product_type").value = "";
-    document.getElementById("filter_plant_type").value = "";
-    document.getElementById("filter_price_order").value = "";
+    document.getElementById("filter_product_type").value = '';
+    document.getElementById("filter_plant_type").value = '';
+    document.getElementById("filter_price_order").value = '';
 
-    fetch(`catalogo.php`)
+    fetch(`http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_catalogo.php`)
         .then(res => res.json())
-        .then(data => renderProducts(data));
+        .then(data => renderProducts(data.products));
 };
+
 
 // ===== LLAMAR LA FUNCION AL CARGAR LA PÁGINA =====
 loadFilters();
