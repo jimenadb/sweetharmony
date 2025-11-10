@@ -130,8 +130,34 @@ fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_catalo
         window.location.href = `Dashboard_Catalogo.html?id=${productId}`;
       });
 
+      // Función para registrar vistas
+      btnViewDetails.addEventListener('click', (e) => {
+        e.stopPropagation();
+      
+        const productId = producto.id;
+      
+        fetch(`http://localhost/sweetharmony/sweetharmony/dashboard/php/register_view.php?id=${productId}`, {
+          method: 'GET',
+          credentials: 'include'
+        })
+        .then(res => res.json())
+        .then(data => console.log('Vista registrada:', data))
+        .catch(err => console.error('Error registrando vista:', err));
+
+        window.location.href = `Dashboard_Catalogo.html?id=${productId}`;
+      });
+      
+      document.querySelectorAll('.product-card').forEach(card => {
+        card.onclick = () => {
+          const id = card.dataset.id;
+          const name = card.querySelector('h3').textContent;
+          window.productClicked(id, name);
+        };
+      });
+
       cardActions.append(btnWhatsapp, btnWishlist, btnCart, btnViewDetails);
       cardBanner.appendChild(cardActions);
+      
 
 
       // --- Card Content ---
@@ -296,3 +322,25 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(err => console.error('Error al cargar el producto:', err));
   }
 });
+
+// =============================
+// CAPTURA DE CLICKS
+// =============================
+btnViewDetails.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const productId = producto.id;
+  const productName = producto.product_name;
+
+  // 🚀 Registrar para recomendaciones
+  productClicked(productId, productName);
+
+  window.location.href = `Dashboard_Catalogo.html?id=${productId}`;
+});
+
+// Captura clics en el título
+enlace.addEventListener('click', (e) => {
+  e.preventDefault(); // si no quieres navegar inmediatamente
+  productClicked(producto.id, producto.product_name);
+});
+
+

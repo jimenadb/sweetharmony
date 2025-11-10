@@ -5,7 +5,7 @@ require_once "../../conexion.php";
 // Consulta todos los posts
 $sql = "
     SELECT 
-        id, user_id, title, content, image_url, status, created_at, updated_at
+        id, user_id, title, content, image_url, created_at, updated_at
     FROM blog_posts
     ORDER BY created_at DESC
 ";
@@ -22,7 +22,7 @@ if ($result && $result->num_rows > 0) {
             "title" => $row["title"],
             "content" => $row["content"],
             "image_url" => $row["image_url"],
-            "status" => $row["status"],
+
             "created_at" => $row["created_at"],
             "updated_at" => $row["updated_at"]
         ];
