@@ -109,7 +109,6 @@ echo json_encode([
 // }
 
 // // 🔹 3️⃣ Preparar la solicitud al modelo de similitud
-// $HF_TOKEN = "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";
 
 // $payload = [
 //     "inputs" => [
