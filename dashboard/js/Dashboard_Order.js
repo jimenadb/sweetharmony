@@ -108,29 +108,42 @@ orderCard.querySelector(".delete-btn").addEventListener("click", (e) => {
     } else {
       receiptHTML = '<p><em>No se ha subido comprobante de pago.</em></p>';
     }
+
+    
+// 🔹 Aquí agregas envioHTML
+const envioHTML = `
+<h4>Envío:</h4>
+<p><strong>Courier:</strong> ${order.courier || '-'}</p>
+<p><strong>Tracking:</strong> ${order.tracking_number || '-'}</p>
+<p><strong>Notas:</strong> ${order.shipping_notes || '-'}</p>
+<h4>Comprobante de envío:</h4>
+${order.shipping_receipt 
+  ? `<img src="../../uploads/shipping_receipts/${order.shipping_receipt}" style="max-width:200px; display:block; margin-bottom:1rem;">`
+  : `<p>No hay comprobante de envío</p>`}
+<hr>
+`;
+ 
   
-    // 🔹 Insertar todo en el modal
-    modalBody.innerHTML = `
-      <p><strong>Pedido #:</strong> ${order.id}</p>
-      <p><strong>Estado:</strong> ${order.status}</p>
-      <p><strong>Fecha:</strong> ${order.created_at}</p>
-      <p><strong>Total:</strong> $${order.total}</p>
-  
-      <hr style="margin: 1rem 0;">
-  
-      <h4>Datos del cliente:</h4>
-      <p><strong>Nombre:</strong> ${order.cliente || "N/A"}</p>
-      <p><strong>DNI:</strong> ${order.dni || "N/A"}</p>
-      <p><strong>Email:</strong> ${order.email || "N/A"}</p>
-      <p><strong>Dirección:</strong> ${order.direccion || "N/A"}</p>
-      <p><strong>Referencia:</strong> ${order.reference || "N/A"}</p>
-  
-      <hr style="margin: 1rem 0;">
-  
-      ${itemsHTML}
-      ${receiptHTML}
-    `;
-  
+    // 🔹 Finalmente se asigna todo al modal
+modalBody.innerHTML = `
+<p><strong>Pedido #:</strong> ${order.id}</p>
+<p><strong>Estado:</strong> ${order.status}</p>
+<p><strong>Fecha:</strong> ${order.created_at}</p>
+<p><strong>Total:</strong> $${order.total}</p>
+
+<hr style="margin: 1rem 0;">
+
+<h4>Datos del cliente:</h4>
+<p><strong>Nombre:</strong> ${order.cliente || "N/A"}</p>
+<p><strong>DNI:</strong> ${order.dni || "N/A"}</p>
+<p><strong>Email:</strong> ${order.email || "N/A"}</p>
+<p><strong>Dirección:</strong> ${order.direccion || "N/A"}</p>
+<p><strong>Referencia:</strong> ${order.reference || "N/A"}</p>
+
+${envioHTML}   <!-- <- Aquí se muestra la info de envío -->
+${itemsHTML}
+${receiptHTML}
+`;
     // 🔹 Mostrar modal
     modal.classList.add("active");
   }

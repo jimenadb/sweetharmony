@@ -2,7 +2,6 @@
 header('Content-Type: application/json'); // muy importante
 
 
-
 // Recibir datos desde JS
 $input = json_decode(file_get_contents('php://input'), true);
 $nombre = $input['nombre'] ?? '';

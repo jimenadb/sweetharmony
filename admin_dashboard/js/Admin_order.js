@@ -4,10 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================
   const tabla = document.getElementById("tablaPedidos");
   const modal = document.getElementById("modalEstado");
+  const modalenvio = document.getElementById("modalDatosEnvio");
   const cerrarModal = document.getElementById("cerrarModalEstado");
   const formEstado = document.getElementById("formActualizarEstado");
   const pedidoSeleccionado = document.getElementById("pedidoSeleccionado");
   const btnVerDetalles = document.getElementById("btnVerDetalles");
+
 
   // Mapa de estados traducidos
   const estadoMap = {
@@ -42,10 +44,22 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${order.direccion}</td>
             <td>${order.created_at}</td>
             <td>
-              <button class="btnEditarEstado" data-id="${order.id}" data-status="${order.status}">
-                Editar
-              </button>
-            </td>
+            <button class="btnEditarEstado" data-id="${order.id}" data-status="${order.status}">
+              Editar Estado
+            </button>
+          </td>
+           <td>
+            <button class="btnEditarEnvio" 
+        data-id="${order.id}" 
+        data-courier="${order.courier || ''}" 
+        data-tracking="${order.tracking_number || ''}" 
+        data-notes="${order.shipping_notes || ''}">
+  Editar Envío
+</button>
+          </td>
+
+          
+            
           `;
           tabla.appendChild(fila);
         });
@@ -73,6 +87,37 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("status").value = e.target.dataset.status;
             modal.classList.add("active");
           });
+        });
+
+
+        // ==============================
+        // EVENTO: ABRIR MODAL EDITAR ENVÍO
+        // ==============================
+        document.querySelectorAll(".btnEditarEnvio").forEach(btn => {
+          btn.addEventListener("click", (e) => {
+            const button = e.currentTarget; // Esto asegura que es el botón
+            const orderId = button.dataset.id;
+            const courier = button.dataset.courier || "";
+            const tracking = button.dataset.tracking || "";
+            const notes = button.dataset.notes || "";
+        
+            // Asignar valores al modal
+            document.getElementById("order_id_envio").value = orderId;
+            document.getElementById("courier").value = courier;
+            document.getElementById("tracking_number").value = tracking;
+            document.getElementById("shipping_notes").value = notes;
+        
+            // Mostrar el modal
+            modalenvio.classList.add("active");
+          });
+        });
+        
+
+        // ==============================
+        // EVENTO: CERRAR MODAL ENVÍO
+        // ==============================
+        document.getElementById("cerrarModalEnvio").addEventListener("click", () => {
+          modalenvio.classList.remove("active");
         });
       })
       .catch(err => console.error("Error cargando pedidos:", err));
@@ -126,6 +171,48 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarPedidos();
   });
 
+  // ==============================
+// EVENTO: ACTUALIZAR DATOS DE ENVÍO
+// ==============================
+const formActualizarEnvio = document.getElementById("formActualizarEnvio");
+
+formActualizarEnvio.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const orderId = document.getElementById("order_id_envio").value;
+  const courier = document.getElementById("courier").value;
+  const trackingNumber = document.getElementById("tracking_number").value;
+  const shippingNotes = document.getElementById("shipping_notes").value;
+  const shippingReceiptFile = document.getElementById("shipping_receipt").files[0];
+
+  try {
+    const formData = new FormData();
+    formData.append("order_id", orderId);
+    formData.append("courier", courier);
+    formData.append("tracking_number", trackingNumber);
+    formData.append("shipping_notes", shippingNotes);
+    if (shippingReceiptFile) formData.append("shipping_receipt", shippingReceiptFile);
+
+    // 🔹 Enviar al backend
+    const res = await fetch("http://localhost/sweetharmony/sweetharmony/admin_dashboard/php/update_shipping.php", {
+      method: "POST",
+      body: formData
+    });
+    const result = await res.json();
+
+    if (result.success) {
+      alert("✅ Envío actualizado correctamente");
+      modalenvio.classList.remove("active");
+      cargarPedidos(); // refresca la tabla
+    } else {
+      alert("⚠️ Error al actualizar el envío: " + result.message);
+    }
+
+  } catch (error) {
+    console.error("Error al actualizar el envío:", error);
+    alert("❌ Ocurrió un error al guardar los datos de envío");
+  }
+});
 
 // ==============================
 // EVENTO: VER DETALLES DEL PEDIDO
@@ -167,6 +254,15 @@ btnVerDetalles.addEventListener("click", () => {
           <h4>Comprobante de pago:</h4>
           ${data.receipt ? `<img src="../../${data.receipt}" style="max-width:200px; display:block; margin-bottom:1rem;">` : `<p>No hay comprobante</p>`}
 
+          <h4>Envío:</h4>
+          <p><strong>Courier:</strong> ${data.courier || '-'}</p>
+          <p><strong>Tracking:</strong> ${data.tracking_number || '-'}</p>
+          <p><strong>Notas:</strong> ${data.shipping_notes || '-'}</p>
+          <h4>Comprobante de envío:</h4>
+          ${data.shipping_receipt 
+            ? `<img src="../../uploads/shipping_receipts/${data.shipping_receipt}" style="max-width:200px; display:block; margin-bottom:1rem;">`
+            : `<p>No hay comprobante de envío</p>`}
+          <hr>
           <hr>
           <h4>Productos:</h4>
           <ul>

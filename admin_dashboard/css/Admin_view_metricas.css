@@ -8,7 +8,7 @@
 h1 {
   text-align: center;
   margin-bottom: 2rem;
-  color: var(--primary, #149874);
+  color: hsl(148, 20%, 38%);
 }
 
 .dashboard-grid {
@@ -32,7 +32,7 @@ h1 {
 .card h2 {
   margin-bottom: 1rem;
   font-size: 1.1rem;
-  color: var(--primary, #149874);
+  color:  hsl(148, 20%, 38%);
   text-align: center;
 }
 
@@ -58,3 +58,105 @@ li:last-child {
 .card.alert h2 {
   color: #e74c3c;
 }
+
+/* --- Totales principales minimalistas --- */
+/* --- Totales principales minimalistas --- */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  background: linear-gradient(135deg, hsl(148, 40%, 85%), hsl(148, 30%, 95%));
+  color: var(--dark-gray);
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* sombra muy clara */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  font-family: var(--font-family);
+  font-weight: 600;
+}
+
+/* Títulos y números */
+.metric-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.metric-card p {
+  font-size: 2.2rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+/* Emoji encima del título */
+.metric-card .emoji {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Diferentes degradados suaves para cada cuadro */
+.metric-card:nth-child(1) {
+  background: linear-gradient(135deg, hsl(148, 40%, 85%), hsl(148, 35%, 90%));
+}
+
+.metric-card:nth-child(2) {
+  background: linear-gradient(135deg, hsl(148, 35%, 88%), hsl(148, 30%, 95%));
+}
+
+.metric-card:nth-child(3) {
+  background: linear-gradient(135deg, hsl(148, 30%, 90%), hsl(148, 25%, 96%));
+}
+
+/* Todas las listas dentro de las cards */
+.card ul {
+  max-height: 200px; /* altura máxima, ajusta según necesites para mostrar ~5 elementos */
+  overflow-y: auto;
+  padding-right: 0.5rem; /* espacio para el scroll */
+  margin: 0;
+  list-style: none;
+}
+
+/* Opcional: estilo minimalista para la barra de scroll en Webkit (Chrome, Edge, Safari) */
+.card ul::-webkit-scrollbar {
+  width: 8px;
+}
+
+.card ul::-webkit-scrollbar-track {
+  background: var(--accent);
+  border-radius: 8px;
+}
+
+.card ul::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 8px;
+  border: 2px solid var(--accent);
+}
+
+/* Firefox */
+.card ul {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--accent);
+}
+
+/* Estilo de los elementos de la lista */
+.card li {
+  padding: 0.4rem 0.5rem;
+  border-bottom: 1px solid var(--light-gray);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.card li:last-child {
+  border-bottom: none;
+}
+

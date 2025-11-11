@@ -9,9 +9,10 @@ if (!$order_id) {
 }
 
 // ==============================
-// 1️⃣ Datos del pedido + dirección + comprobante
+// 1️⃣ Datos del pedido + dirección + comprobantes + envío
 // ==============================
 $sql = "SELECT o.id, o.user_id, o.total, o.status, o.receipt,
+               o.tracking_number, o.courier, o.shipping_notes, o.shipping_receipt,
                ua.full_name, ua.email, ua.dni, ua.address, ua.district, ua.city, ua.postal_code, ua.reference
         FROM orders o
         LEFT JOIN user_addresses ua ON o.delivery_address_id = ua.id

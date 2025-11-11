@@ -1,11 +1,11 @@
 // =============================
 // FETCH CATALOGO COMPLETO
 // =============================
-fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_catalogo.php')
-  .then(response => response.json())
-  .then(data => {
-    const contenedor = document.getElementById('catalogo');
-    contenedor.innerHTML = '';
+function renderCatalogo(data) {
+  const contenedor = document.getElementById('catalogo');
+  contenedor.innerHTML = '';
+    
+
 
     data.forEach(producto => {
       const li = document.createElement('li');
@@ -182,9 +182,8 @@ fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_catalo
       shopCard.append(cardBanner, cardContent);
       li.appendChild(shopCard);
       contenedor.appendChild(li);
-    });
-  })
-  .catch(error => console.error("Error al cargar", error));
+    }); // fin del forEach
+  } // fin de renderCatalogo
 
 // =============================
 // FETCH WISHLIST
@@ -243,10 +242,11 @@ function openProductDetail(product) {
       <p>Dimensiones de la maceta: ${product.pot_height || '-'} x ${product.pot_width || '-'}</p>
       <p>Peso: ${product.weight || '-'}</p>
       <p>Unidades: ${product.units != null ? product.units : '-'}</p>
+      <p>Descripción: ${product.description || '-'}</p>
 
       <div class="product-detail-quantity">
         <button id="detail-qty-decrease">-</button>
-        <input type="number" id="detail-quantity" value="1" min="1">
+        <input type="number" id="detail-quantity" value="1" min="1" max="${product.units || 1}">
         <button id="detail-qty-increase">+</button>
       </div>
 
@@ -262,12 +262,17 @@ function openProductDetail(product) {
     detailEl.style.display = 'none';
     catalogoEl.style.display = 'grid';
   });
-  const qtyInput = document.getElementById('detail-quantity');
-  document.getElementById('detail-qty-increase').onclick = () => { qtyInput.value = parseInt(qtyInput.value) + 1; };
-  document.getElementById('detail-qty-decrease').onclick = () => { if(qtyInput.value > 1) qtyInput.value--; };
-  document.getElementById('detail-add-to-cart').onclick = async () => {
-    const quantity = parseInt(qtyInput.value);
-    try {
+      const qtyInput = document.getElementById('detail-quantity');
+    document.getElementById('detail-qty-increase').onclick = () => { 
+      if (parseInt(qtyInput.value) < (product.units || 1)) qtyInput.value++; 
+      else alert(`Solo hay ${product.units || 1} unidades disponibles`);
+    };
+    document.getElementById('detail-qty-decrease').onclick = () => { 
+      if (qtyInput.value > 1) qtyInput.value--; 
+    };
+    document.getElementById('detail-add-to-cart').onclick = async () => {
+      const quantity = parseInt(qtyInput.value);
+        try { ' '
       const res = await fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/show_product_catalogo.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -316,23 +321,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+
+
+
 // =============================
-// CAPTURA DE CLICKS
+// FETCH DEL CATALOGO
 // =============================
-btnViewDetails.addEventListener('click', (e) => {
-  e.stopPropagation();
-  const productId = producto.id;
-  const productName = producto.product_name;
-
-  // 🚀 Registrar para recomendaciones
-  productClicked(productId, productName);
-
-  window.location.href = `Dashboard_Catalogo.html?id=${productId}`;
-});
-
-// Captura clics en el título
-enlace.addEventListener('click', (e) => {
-  e.preventDefault(); // si no quieres navegar inmediatamente
-  productClicked(producto.id, producto.product_name);
-});
-
+fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_catalogo.php')
+  .then(res => res.json())
+  .then(data => renderCatalogo(data))
+  .catch(err => console.error("Error al cargar catálogo:", err));

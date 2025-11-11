@@ -18,6 +18,10 @@ $sql = "
     o.status,
     o.created_at,
     o.receipt,
+    o.courier,
+    o.tracking_number,
+    o.shipping_notes,
+    o.shipping_receipt,
     ua.full_name AS cliente,
     ua.email,
     ua.dni,
@@ -26,7 +30,7 @@ $sql = "
   FROM orders o
   LEFT JOIN user_addresses ua ON o.delivery_address_id = ua.id
   WHERE o.user_id = ? 
-    AND o.visible = 1        -- <--- 🔸 Solo mostrar pedidos no eliminados
+    AND o.visible = 1
   ORDER BY o.created_at DESC
 ";
 
@@ -60,6 +64,7 @@ while ($row = $result->fetch_assoc()) {
 
     $row['items'] = $items;      // agregamos productos al pedido
     $row['receipt'] = $row['receipt'] ? '../../' . $row['receipt'] : null; // agregamos comprobante
+    $row['shipping_receipt'] = $row['shipping_receipt'] ? '../../uploads/shipping_receipts/' . $row['shipping_receipt'] : null; // agregamos comprobante de envío
     $orders[] = $row;
 }
 

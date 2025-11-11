@@ -35,12 +35,12 @@ document.getElementById("filterBtn").onclick = () => {
     fetch(`http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_catalogo.php?product_type=${productType}&plant_type=${plantType}&price_order=${priceOrder}`)
         .then(res => res.json())
         .then(data => {
-            if (data.products.length === 0) {
+            if (!data || data.length === 0) {
                 document.getElementById('catalogo').innerHTML = '<p>No hay productos disponibles.</p>';
             } else {
-                renderProducts(data.products); // Llama a tu función larga que ya genera todo el catálogo
+                renderCatalogo(data); // data ya es el array de productos
             }
-        });
+        })
 };
 
 // ===== LIMPIAR FILTROS =====
@@ -50,8 +50,8 @@ document.getElementById("clearFilterBtn").onclick = () => {
     document.getElementById("filter_price_order").value = '';
 
     fetch(`http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_catalogo.php`)
-        .then(res => res.json())
-        .then(data => renderProducts(data.products));
+    .then(res => res.json())
+    .then(data => renderCatalogo(data)); // ya no data.products
 };
 
 

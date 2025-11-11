@@ -18,7 +18,8 @@ SELECT
   c.quantity,
   p.product_name,
   p.price,
-  p.image_url
+  p.image_url,
+  p.units
 FROM cart AS c
 INNER JOIN products AS p ON c.product_id = p.id
 WHERE c.user_id = $user_id
@@ -40,7 +41,8 @@ while ($row = $result->fetch_assoc()) {
         "name" => $row['product_name'],
         "price" => (float)$row['price'],
         "image" => $row['image_url'],
-        "quantity" => (int)$row['quantity']
+        "quantity" => (int)$row['quantity'],
+        "units" => (int)$row['units'] 
     ];
 }
 

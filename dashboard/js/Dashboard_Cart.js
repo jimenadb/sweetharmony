@@ -40,7 +40,11 @@ document.addEventListener("DOMContentLoaded", async () => {
           <span>${item.name}</span>
         </td>
         <td class="price-unit">$${item.price.toFixed(2)}</td>
-        <td><input type="number" class="quantity" value="${item.quantity}" min="1"></td>
+        <td><input type="number" class="quantity-input" 
+            value="${item.quantity}" 
+            min="1" 
+            max="${item.units}"></td>
+
         <td class="total-price">$${total.toFixed(2)}</td>
       `;
       cartTableBody.appendChild(row);
@@ -54,6 +58,48 @@ document.addEventListener("DOMContentLoaded", async () => {
     cartTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:red;">Error al cargar el carrito</td></tr>`;
   }
 });
+
+
+document.addEventListener("input", async (e) => {
+  if (!e.target.classList.contains("quantity-input")) return;
+
+  const input = e.target;
+  const row = input.closest("tr");
+  const productId = parseInt(row.querySelector(".select-item").dataset.productId);
+  const newQuantity = parseInt(input.value);
+  const maxUnits = parseInt(input.getAttribute("max"));
+  if (newQuantity > maxUnits) {
+    input.value = maxUnits;
+    alert(`Solo hay ${maxUnits} unidades disponibles`);
+    return;
+  }
+
+  if (newQuantity < 1) return; // mínimo 1
+
+  try {
+    const res = await fetch("http://localhost/sweetharmony/sweetharmony/dashboard/php/update_cart_quantity.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ product_id: productId, quantity: newQuantity })
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.message || "No se pudo actualizar");
+
+    // Actualizar total de la fila y total general
+    const price = parseFloat(row.querySelector(".price-unit").textContent.replace("$", ""));
+    row.querySelector(".total-price").textContent = `$${(price * newQuantity).toFixed(2)}`;
+
+    // Recalcular total general
+    grandTotal = Array.from(document.querySelectorAll(".total-price"))
+                     .reduce((sum, td) => sum + parseFloat(td.textContent.replace("$", "")), 0);
+    document.getElementById("grand-total").textContent = `$${grandTotal.toFixed(2)}`;
+
+  } catch (err) {
+    console.error(err);
+    alert("Error al actualizar cantidad");
+  }
+});
+
 
 // ----------------------
 // 🛒 Checkout y Totales

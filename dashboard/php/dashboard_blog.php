@@ -22,7 +22,6 @@ if ($result && $result->num_rows > 0) {
             "title" => $row["title"],
             "content" => $row["content"],
             "image_url" => $row["image_url"],
-
             "created_at" => $row["created_at"],
             "updated_at" => $row["updated_at"]
         ];

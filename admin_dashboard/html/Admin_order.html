@@ -89,6 +89,7 @@
             <th>Dirección</th>
             <th>Fecha de Pedido</th>
             <th>Actualizar Estado</th>
+            <th>Actualizar Envío</th> 
           </tr>
         </thead>
         <tbody id="tablaPedidos"></tbody>
@@ -119,7 +120,51 @@
         </form>
       </div>
     </div>
+
+
+
+     <!-- Modal para actualizar datos de envío -->
+<!-- Modal para actualizar datos de envío -->
+<div id="modalDatosEnvio" class="modal">
+  <div class="modal-content">
+    <span id="cerrarModalEnvio" class="close-btn">&times;</span>
+
+    <!-- 🔹 Asegúrate de tener este id EXACTO -->
+    <form id="formActualizarEnvio" enctype="multipart/form-data">
+
+      <h3>Actualizar Datos de Envío</h3>
+
+      <!-- 🔹 Este id y name deben coincidir con lo que el JS y PHP usan -->
+      <input type="hidden" id="order_id_envio" name="order_id">
+
+      <label for="courier">Courier:</label>
+      <input type="text" id="courier" name="courier" placeholder="Nombre del courier">
+
+      <label for="tracking_number">Número de tracking:</label>
+      <input type="text" id="tracking_number" name="tracking_number" placeholder="Número de seguimiento">
+
+      <label for="shipping_notes">Notas del envío:</label>
+      <textarea id="shipping_notes" name="shipping_notes" rows="3" placeholder="Notas o instrucciones de envío"></textarea>
+
+      <label for="shipping_receipt">Comprobante de envío (foto/PDF):</label>
+      <input type="file" id="shipping_receipt" name="shipping_receipt" accept="image/*,.pdf">
+
+      <!-- 🔹 No cambies el texto, pero asegúrate que este botón esté dentro del form -->
+      <button type="submit" class="btn btn-primary">Actualizar Envío</button>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
+
   </main>
+
+
+ 
 
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>

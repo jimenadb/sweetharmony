@@ -1,8 +1,10 @@
 <?php
+
+
 require_once "../conexion.php";
 header("Content-Type: application/json; charset=UTF-8");
 
-// 🔹 1️⃣ Obtener el último producto clickeado (por fecha más reciente)
+// Obtener el último producto clickeado
 $sqlLast = "SELECT product_name, image_url FROM products ORDER BY last_viewed_at DESC LIMIT 1";
 $resultLast = $conexion->query($sqlLast);
 
@@ -14,7 +16,7 @@ if (!$resultLast || $resultLast->num_rows === 0) {
 $lastProduct = $resultLast->fetch_assoc();
 $clickedProduct = $lastProduct['product_name'];
 
-// 🔹 2️⃣ Obtener todos los productos (para comparar similitudes)
+// Obtener todos los productos
 $sql = "SELECT product_name, image_url FROM products";
 $result = $conexion->query($sql);
 
@@ -28,8 +30,7 @@ if ($result && $result->num_rows > 0) {
     }
 }
 
-// 🔹 3️⃣ Preparar la solicitud al modelo de similitud
-
+// Preparar solicitud al modelo de similitud
 
 $payload = [
     "inputs" => [
@@ -57,7 +58,7 @@ curl_close($ch);
 
 $scores = json_decode($response, true);
 
-// 🔹 4️⃣ Combinar productos con sus puntuaciones
+// Combinar productos con puntuaciones
 $combined = [];
 foreach ($products as $i => $p) {
     $combined[] = [
@@ -67,13 +68,92 @@ foreach ($products as $i => $p) {
     ];
 }
 
-// 🔹 5️⃣ Excluir el mismo producto clickeado y tomar los 3 más similares
+// Excluir el mismo producto clickeado y tomar los 3 más similares
 $combined = array_filter($combined, fn($x) => $x['product'] !== $clickedProduct);
 usort($combined, fn($a, $b) => $b['score'] <=> $a['score']);
 $top = array_slice($combined, 0, 3);
 
-// 🔹 6️⃣ Respuesta final
+// Respuesta final
 echo json_encode([
     "clicked" => $clickedProduct,
     "recommendations" => $top
 ]);
+
+// require_once "../conexion.php";
+// header("Content-Type: application/json; charset=UTF-8");
+
+// // 🔹 1️⃣ Obtener el último producto clickeado (por fecha más reciente)
+// $sqlLast = "SELECT product_name, image_url FROM products ORDER BY last_viewed_at DESC LIMIT 1";
+// $resultLast = $conexion->query($sqlLast);
+
+// if (!$resultLast || $resultLast->num_rows === 0) {
+//     echo json_encode(["error" => "No hay productos con last_viewed_at registrado"]);
+//     exit;
+// }
+
+// $lastProduct = $resultLast->fetch_assoc();
+// $clickedProduct = $lastProduct['product_name'];
+
+// // 🔹 2️⃣ Obtener todos los productos (para comparar similitudes)
+// $sql = "SELECT product_name, image_url FROM products";
+// $result = $conexion->query($sql);
+
+// $products = [];
+// $imageMap = [];
+
+// if ($result && $result->num_rows > 0) {
+//     while ($row = $result->fetch_assoc()) {
+//         $products[] = $row['product_name'];
+//         $imageMap[$row['product_name']] = $row['image_url'];
+//     }
+// }
+
+// // 🔹 3️⃣ Preparar la solicitud al modelo de similitud
+// $HF_TOKEN = "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";
+
+// $payload = [
+//     "inputs" => [
+//         "source_sentence" => $clickedProduct,
+//         "sentences" => $products
+//     ]
+// ];
+
+// $ch = curl_init("https://router.huggingface.co/hf-inference/models/BAAI/bge-m3/pipeline/sentence-similarity");
+// curl_setopt($ch, CURLOPT_POST, true);
+// curl_setopt($ch, CURLOPT_HTTPHEADER, [
+//     "Authorization: Bearer $HF_TOKEN",
+//     "Content-Type: application/json"
+// ]);
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+// curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+
+// $response = curl_exec($ch);
+// if (curl_errno($ch)) {
+//     echo json_encode(["error" => curl_error($ch)]);
+//     curl_close($ch);
+//     exit;
+// }
+// curl_close($ch);
+
+// $scores = json_decode($response, true);
+
+// // 🔹 4️⃣ Combinar productos con sus puntuaciones
+// $combined = [];
+// foreach ($products as $i => $p) {
+//     $combined[] = [
+//         "product" => $p,
+//         "score" => $scores[$i] ?? 0,
+//         "image_url" => $imageMap[$p] ?? null
+//     ];
+// }
+
+// // 🔹 5️⃣ Excluir el mismo producto clickeado y tomar los 3 más similares
+// $combined = array_filter($combined, fn($x) => $x['product'] !== $clickedProduct);
+// usort($combined, fn($a, $b) => $b['score'] <=> $a['score']);
+// $top = array_slice($combined, 0, 3);
+
+// // 🔹 6️⃣ Respuesta final
+// echo json_encode([
+//     "clicked" => $clickedProduct,
+//     "recommendations" => $top
+// ]);

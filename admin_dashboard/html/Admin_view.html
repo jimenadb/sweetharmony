@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -84,6 +87,28 @@
 <main class="container">
   <h1>Panel de Métricas</h1>
 
+  <!-- ✨ Totales principales -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="emoji">👤</div>
+      <h3>Total Usuarios</h3>
+      <p id="totalUsers">0</p>
+    </div>
+    <div class="metric-card">
+      <div class="emoji">🎁</div>
+      <h3>Total Productos</h3>
+      <p id="totalProducts">0</p>
+    </div>
+    <div class="metric-card">
+      <div class="emoji">🛒</div>
+      <h3>Total Pedidos</h3>
+      <p id="totalOrders">0</p>
+    </div>
+  </div>
+
+  
+  
+  <!-- ✨ Panel detallado -->
   <div class="dashboard-grid">
     <!-- Productos más vistos -->
     <div class="card">
@@ -105,8 +130,7 @@
       </ul>
     </div>
 
-
-    <!-- Alertas productos agotados -->
+    <!-- Productos agotados -->
     <div class="card alert">
       <h2>Productos agotados</h2>
       <ul id="outOfStock">
@@ -115,7 +139,7 @@
       </ul>
     </div>
 
-    <!-- Alertas de notificaciones -->
+    <!-- Notificaciones -->
     <div class="card alert">
       <h2>Notificaciones pendientes</h2>
       <ul id="notifications">
@@ -125,11 +149,11 @@
     </div>
   </div>
 </main>
-
   <!-- 
     - custom js link
   -->
   <script src="../js/Admin_view.js" defer></script>
+  <script src="../js/Get_Metricas.js" defer></script>
   <!-- 
     - ionicon link
   -->
@@ -137,3 +161,4 @@
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
+

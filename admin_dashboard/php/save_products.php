@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pot_width     = isset($_POST['pot_width']) && $_POST['pot_width'] !== '' ? floatval($_POST['pot_width']) : null;
     $pot_color     = $_POST['pot_color'] ?? null;
     $weight        = isset($_POST['weight']) && $_POST['weight'] !== '' ? floatval($_POST['weight']) : null;
+    $units = $_POST['units'] ?? null;
     $description = $_POST['description'] ?? null;
 
     // Imagen opcional
@@ -42,10 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // SQL con nombres de columna correctos
     $sql = "INSERT INTO products (
-                product_name, product_types, plant_types, price, discount,
-                plant_height, plant_width, pot_height, pot_width, pot_color,
-                weight, image_url, description
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        product_name, product_types, plant_types, price, discount,
+        plant_height, plant_width, pot_height, pot_width, pot_color,
+        weight, units, image_url, description
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Preparamos el statement
     $stmt = $conexion->prepare($sql);
@@ -56,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // i = int, d = double, s = string
     $stmt->bind_param(
-        "siidddddsdsss",
+        "siiddddddsidss",
         $product_name,   // s
         $product_type,   // i
         $plant_type,     // i
@@ -68,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $pot_width,      // d
         $pot_color,      // s
         $weight,         // d
+        $units,          // i <-- agregado
         $image_url,       // s
         $description
     );
