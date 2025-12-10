@@ -5,22 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mantenimiento del Blog — Sweet Harmony</title>
 
-  <!-- Fuente -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- CSS -->
   <link rel="stylesheet" href="../css/Admin_view.css">
   <link rel="stylesheet" href="../css/Admin_blog.css">
 
-  <!-- Iconos -->
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-
-  <!-- HEADER -->
   <header class="header">
     <div class="header-top" data-header>
       <div class="container">
@@ -33,10 +28,9 @@
         <div class="header-actions">
           <a href="Edit_Admin.html">
             <button id="adminBtn" class="header-action-btn" aria-label="editar admin">
-              <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+              <!-- <ion-icon name="person-outline" aria-hidden="true"></ion-icon> -->
             </button>
           </a>
-        
           <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión">
             <ion-icon name="log-out-outline" aria-hidden="true"></ion-icon>
           </button>
@@ -57,70 +51,61 @@
   <div class="sidebar">
     <div class="mobile-navbar" data-navbar>
       <div class="wrapper">
-        <a href="#" class="logo"><img src="../assets/logo.png" width="179" height="26" alt="Glowing"></a>
-        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
-          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
-        </button>
+        <a href="#" class="logo">SWEET HARMONY</a>
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler><ion-icon name="close-outline" aria-hidden="true"></ion-icon></button>
       </div>
       <ul class="navbar-list">
+        <li><a href="Edit_Admin.html" class="navbar-link has-after">EDITAR DATOS</a></li>
         <li><a href="Admin_view.html" class="navbar-link" data-nav-link>INICIO</a></li>
         <li><a href="Admin_catalogo.html" class="navbar-link" data-nav-link>CATÁLOGO</a></li>
         <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
         <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
+        <li><a href="Admin_order.html" class="navbar-link has-after">CERRAR SESION</a></li>
       </ul>
     </div>
     <div class="overlay" data-nav-toggler data-overlay></div>
   </div>
 
-  <!-- MAIN CONTENT -->
+  <!-- CONTENIDO PRINCIPAL -->
   <main class="container">
     <h1>Mantenimiento del Blog</h1>
-
-    <!-- Botón Agregar Entrada -->
+    <!-- AGREGAR ENTRADA BOTON -->
     <div class="btn-wrapper">
       <button class="add-entry-btn" id="toggleFormBtn">
         <ion-icon name="add-circle-outline"></ion-icon> Agregar entrada
       </button>
     </div>
-
-<!-- Formulario del modal -->
+<!-- FORMULARIO MODAL -->
 <section class="modal" id="newPostSection">
   <div class="modal-content">
     <div class="modal-header">
       <h2>Nuevo Post</h2>
       <button class="close-btn" id="closeNewPostModal">&times;</button>
     </div>
-
     <form id="newPostForm" enctype="multipart/form-data">
-      <!-- ID oculto para edición -->
       <input type="hidden" id="postId" name="id">
-
       <div class="form-group">
         <label for="title">Título</label>
         <input type="text" id="title" name="title" required>
       </div>
-
       <div class="form-group">
         <label for="content">Descripción</label>
         <textarea id="content" name="content" rows="4" required></textarea>
       </div>
-
       <div class="form-group">
         <label for="image">Imagen</label>
         <input type="file" id="image" name="image" accept="image/*">
-        <!-- Preview de imagen -->
         <div id="imagePreview" style="margin-top: 0.5rem;">
           <img id="previewImg" src="" alt="Preview" style="display:none; width:100px; height:100px; object-fit:cover; border:1px solid #ccc; border-radius:4px;">
         </div>
       </div>
-
       <button type="submit">Guardar</button>
     </form>
   </div>
 </section>
 
 
-    <!-- Entradas Publicadas -->
+    <!-- ENTRADAS DEL BLOG PUBLICADAS  -->
     <section>
       <h1>Entradas publicadas</h1>
       <div class="table-container">
@@ -140,9 +125,7 @@
     </section>
   </main>
 
- 
 
-  <!-- Scripts -->
   <script src="../js/save_blog.js" defer></script>
   <script src="../js/Admin_blog.js" defer></script>
   <script src="../js/show_blog.js" defer></script>

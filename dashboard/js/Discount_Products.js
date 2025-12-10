@@ -9,7 +9,7 @@ function crearProductoHTMLDiscount(product) {
         <div class="shop-card" data-id="${product.id}" style="cursor: pointer;">
             <div class="card-banner img-holder" style="--width:540; --height:720;">
                 <img src="${product.image_url ? '../../uploads/' + product.image_url : '../assets/placeholder.png'}" 
-                     class="img-cover" alt="${product.product_name}">
+                    class="img-cover" alt="${product.product_name}">
                 ${discount > 0 ? `<span class="badge" aria-label="${discount}% off">-${discount}%</span>` : ''}
             </div>
             <div class="card-content">
@@ -29,7 +29,7 @@ fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/discount_product
     .then(res => res.json())
     .then(data => {
         const lista = document.getElementById('discount-products');
-        lista.innerHTML = data.map(crearProductoHTMLDiscount).join('');
+        lista.innerHTML =  data.slice(0, 5).map(crearProductoHTMLDiscount).join('');
 
         // Añadir click a cada card para redirigir al catálogo con ID
         lista.querySelectorAll('.shop-card').forEach(card => {

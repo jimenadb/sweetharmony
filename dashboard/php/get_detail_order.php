@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// 🔹 Filtramos solo los pedidos visibles
+// Filtramos solo los pedidos visibles
 $sql = "
   SELECT 
     o.id,
@@ -19,6 +19,7 @@ $sql = "
     o.created_at,
     o.receipt,
     o.courier,
+    o.delivery_type,
     o.tracking_number,
     o.shipping_notes,
     o.shipping_receipt,
@@ -46,7 +47,7 @@ while ($row = $result->fetch_assoc()) {
 
     // Obtenemos los productos de cada pedido
     $sql_items = "
-      SELECT p.product_name, p.image_url, oi.quantity, oi.price
+      SELECT p.product_name, p.image_url, oi.quantity, oi.price, oi.discount
       FROM order_items oi
       LEFT JOIN products p ON oi.product_id = p.id
       WHERE oi.order_id = ?

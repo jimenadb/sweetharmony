@@ -1,6 +1,5 @@
-
 <?php
-// consulta para la vista de direcicon apra la tabla
+// consulta para la vista de direccion para la tabla
 header("Content-Type: application/json; charset=UTF-8");
 require "../../conexion.php";
 session_start();
@@ -16,7 +15,7 @@ if (empty($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Preparar consulta para traer todas las direcciones
+// Preparar consulta para traer SOLO las direcciones activas
 $sql = "SELECT 
             id,
             full_name,
@@ -31,7 +30,7 @@ $sql = "SELECT
             created_at,
             updated_at
         FROM user_addresses
-        WHERE user_id = ?
+        WHERE user_id = ? AND active = 1
         ORDER BY is_default DESC, created_at DESC";
 
 $stmt = $conexion->prepare($sql);

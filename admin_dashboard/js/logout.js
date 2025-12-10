@@ -8,7 +8,7 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
         const data = await res.json();
         if (data.success) {
             // Redirigir al login
-            window.location.href = "../../dashboard/html/Dashboard.html";
+            window.location.href = "../../login_register_user/html/LoginForm.html";
         } else {
             alert("Error al cerrar sesión");
         }

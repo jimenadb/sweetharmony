@@ -1,0 +1,118 @@
+:root {
+  --hoockers-green: hsl(148, 20%, 38%);
+  --white: hsl(0, 0%, 100%);
+  --black: hsl(0, 0%, 0%);
+  --gray: hsl(0, 0%, 70%);
+  --light-gray: hsl(0, 0%, 85%);
+  --light: hsl(0, 0%, 97%); /* ✅ faltaba */
+  --radius: 12px;
+  --max-width: 600px;
+  --shadow: 0 4px 12px rgba(0,0,0,0.1); /* opcional si quieres igual que el otro */
+}
+
+/* Fondo general */
+body {
+  font-family: 'Urbanist', sans-serif;
+  background-color: var(--light);
+  margin: 0;
+  padding: 20px;
+}
+
+/* Contenedor centrado */
+.profile-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 10px 0;
+}
+
+/* Título */
+h1 {
+  text-align: center;
+  color: var(--hoockers-green);
+  margin-bottom: 30px;
+}
+
+/* Formulario */
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Labels */
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--hoockers-green);
+}
+
+/* Inputs */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 12px;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  background-color: var(--white);
+  color: var(--black);
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border: 2px solid var(--hoockers-green);
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 128, 0, 0.2);
+}
+
+/* Solo lectura */
+.form-group.readonly input {
+  background-color: #f7f7f7;
+  cursor: not-allowed;
+  color: var(--gray);
+}
+
+/* Botón guardar */
+.save-btn {
+  background-color: var(--hoockers-green);
+  color: var(--white);
+  padding: 14px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.save-btn:hover {
+  background-color: hsl(148, 20%, 28%);
+}
+
+/* Toggle contraseña */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 40px;
+}
+
+.password-wrapper ion-icon.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--hoockers-green);
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  body {
+    padding: 15px;
+  }
+}

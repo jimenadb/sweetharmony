@@ -4,18 +4,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeModal = document.getElementById("closeNewPostModal");
   const postIdInput = document.getElementById("postId");
 
-  // 🔹 Cargar entradas del blog
+  //  Cargar entradas del blog
   async function cargarEntradas() {
     try {
       const res = await fetch("http://localhost/sweetharmony/sweetharmony/admin_dashboard/php/show_blog.php");
       const posts = await res.json();
-      console.log(posts); // ✅ Verifica datos recibidos
+      console.log(posts); // Verifica datos recibidos
 
       tableBody.innerHTML = ""; // limpiar tabla
 
       posts.forEach(post => {
         const tr = document.createElement("tr");
-        tr.dataset.id = post.id; // 👈 importante para editar/eliminar
+        tr.dataset.id = post.id; // importante para editar/eliminar
 
           // --- Columna título ---
         const tdTitle = document.createElement("td");

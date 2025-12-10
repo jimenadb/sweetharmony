@@ -5,23 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pedidos — Sweet Harmony</title>
 
-  <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Ionicons -->
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-  <!-- Estilos -->
   <link rel="stylesheet" href="../css/Admin_view.css">
   <link rel="stylesheet" href="../css/Admin_order.css">
 </head>
 
 <body id="top">
-
-  <!-- HEADER -->
   <header class="header">
     <div class="header-top" data-header>
       <div class="container">
@@ -34,7 +29,7 @@
         <div class="header-actions">
           <a href="Edit_Admin.html">
             <button id="adminBtn" class="header-action-btn" aria-label="editar admin">
-              <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+              <!-- <ion-icon name="person-outline" aria-hidden="true"></ion-icon> -->
             </button>
           </a>
         
@@ -58,30 +53,29 @@
   <div class="sidebar">
     <div class="mobile-navbar" data-navbar>
       <div class="wrapper">
-        <a href="#" class="logo"><img src="../assets/logo.png" width="179" height="26" alt="Glowing"></a>
-        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
-          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
-        </button>
+        <a href="#" class="logo">SWEET HARMONY</a>
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler><ion-icon name="close-outline" aria-hidden="true"></ion-icon></button>
       </div>
       <ul class="navbar-list">
+        <li><a href="Edit_Admin.html" class="navbar-link has-after">EDITAR DATOS</a></li>
         <li><a href="Admin_view.html" class="navbar-link" data-nav-link>INICIO</a></li>
         <li><a href="Admin_catalogo.html" class="navbar-link" data-nav-link>CATÁLOGO</a></li>
         <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
         <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
+        <li><a href="Admin_order.html" class="navbar-link has-after">CERRAR SESION</a></li>
       </ul>
     </div>
     <div class="overlay" data-nav-toggler data-overlay></div>
   </div>
 
-  <!-- CONTENIDO PRINCIPAL -->
+  <!-- CONTENIDO PRINCIPAL DE LA TABLA -->
   <main>
-    <h1 style="text-align:center; margin:2rem 0;">Gestión de Pedidos</h1>
-
+    <h1>Gestión de Pedidos</h1>
     <div class="table-responsive">
+      
       <table>
         <thead>
           <tr>
-            <th></th>
             <th>ID Pedido</th>
             <th>Cliente</th>
             <th>Total</th>
@@ -90,17 +84,14 @@
             <th>Fecha de Pedido</th>
             <th>Actualizar Estado</th>
             <th>Actualizar Envío</th> 
+            <th>Ver Detalle</th> 
           </tr>
         </thead>
         <tbody id="tablaPedidos"></tbody>
       </table>
     </div>
 
-    <div id="accionesPedido" style="text-align:center; margin-bottom:2rem;">
-      <button id="btnVerDetalles" class="btn btn-primary">Ver Detalles</button>
-    </div>
-
-    <!-- Modal para actualizar estado -->
+    <!-- MODAL PARA ACTUALZIAR EL ESTADO DEL PEDIDO -->
     <div id="modalEstado" class="modal">
       <div class="modal-content">
         <span id="cerrarModalEstado" class="close-btn">&times;</span>
@@ -109,9 +100,10 @@
           <input type="hidden" id="order_id" name="order_id">
           <label for="status">Nuevo estado:</label>
           <select id="status" name="status" required>
-            <option value="processing">En proceso</option>
+            <option value="pending">Pendiente</option>
             <option value="paid">Pagado</option>
             <option value="shipped">Enviado</option>
+            <option value="processing">En proceso</option>
             <option value="delivered">Entregado</option>
             <option value="completed">Completado</option>
             <option value="cancelled">Cancelado</option>
@@ -121,35 +113,29 @@
       </div>
     </div>
 
-
-
-     <!-- Modal para actualizar datos de envío -->
-<!-- Modal para actualizar datos de envío -->
+<!-- MODAL PARA ACTUALZIAR DATOS DEL ENVIO -->
 <div id="modalDatosEnvio" class="modal">
   <div class="modal-content">
     <span id="cerrarModalEnvio" class="close-btn">&times;</span>
 
-    <!-- 🔹 Asegúrate de tener este id EXACTO -->
     <form id="formActualizarEnvio" enctype="multipart/form-data">
 
       <h3>Actualizar Datos de Envío</h3>
 
-      <!-- 🔹 Este id y name deben coincidir con lo que el JS y PHP usan -->
       <input type="hidden" id="order_id_envio" name="order_id">
 
       <label for="courier">Courier:</label>
-      <input type="text" id="courier" name="courier" placeholder="Nombre del courier">
+      <input type="text" id="courier" name="courier" placeholder="Nombre del courier" required>
 
       <label for="tracking_number">Número de tracking:</label>
-      <input type="text" id="tracking_number" name="tracking_number" placeholder="Número de seguimiento">
+      <input type="text" id="tracking_number" name="tracking_number" placeholder="Número de seguimiento" required>
 
       <label for="shipping_notes">Notas del envío:</label>
-      <textarea id="shipping_notes" name="shipping_notes" rows="3" placeholder="Notas o instrucciones de envío"></textarea>
+      <textarea id="shipping_notes" name="shipping_notes" rows="3" placeholder="Notas o instrucciones de envío" required></textarea>
 
-      <label for="shipping_receipt">Comprobante de envío (foto/PDF):</label>
-      <input type="file" id="shipping_receipt" name="shipping_receipt" accept="image/*,.pdf">
+      <label for="shipping_receipt">Comprobante de envío:</label>
+      <input type="file" id="shipping_receipt" name="shipping_receipt" accept="image/*,.pdf" required>
 
-      <!-- 🔹 No cambies el texto, pero asegúrate que este botón esté dentro del form -->
       <button type="submit" class="btn btn-primary">Actualizar Envío</button>
     </form>
   </div>

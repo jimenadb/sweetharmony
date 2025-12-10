@@ -75,6 +75,16 @@
     background-color: var(--hoockers-green_20);
   }
 
+
+/* ----------------------------
+   precio final
+   ---------------------------- */
+   .price-total {
+    font-size: 4rem !important;
+    font-weight: 700;
+    color: hsl(148, 20%, 38%)  !important;
+  }
+  
 /* ----------------------------
    catalogo productos
    ---------------------------- */

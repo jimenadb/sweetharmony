@@ -6,10 +6,10 @@ $product_type = $_GET['product_type'] ?? '';
 $plant_type   = $_GET['plant_type'] ?? '';
 $price_order  = $_GET['price_order'] ?? '';
 
-// 🟢 Base de la consulta (empieza con WHERE 1 para poder concatenar fácilmente)
-$sql = "SELECT id, product_name, price, discount, image_url FROM products WHERE units > 0";
+// Base de la consulta (empieza con WHERE 1 para poder concatenar fácilmente)
+$sql = "SELECT id, product_name, price, discount, image_url FROM products WHERE units > 0 AND active = 1";
 
-// 🟢 Agregar filtros dinámicos
+// Agregar filtros dinámicos
 if ($product_type !== '') {
     $sql .= " AND product_types = " . intval($product_type);
 }
@@ -18,7 +18,7 @@ if ($plant_type !== '') {
     $sql .= " AND plant_types = " . intval($plant_type);
 }
 
-// 🟢 Ordenar por precio si corresponde
+// Ordenar por precio si corresponde
 if ($price_order === 'asc') {
     $sql .= " ORDER BY price ASC";
 } elseif ($price_order === 'desc') {

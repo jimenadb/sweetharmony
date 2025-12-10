@@ -22,7 +22,7 @@ fetch("http://localhost/sweetharmony/sweetharmony/admin_dashboard/php/get_metric
     if (data.newOrders && data.newOrders.length > 0) {
       data.newOrders.forEach(order => {
           const li = document.createElement('li');
-          li.textContent = `📝 Nuevo pedido #${order.id} - Estado: ${order.status}`;
+          li.textContent = ` Nuevo pedido #${order.id} `;
           notificationsUl.appendChild(li);
   
         
@@ -34,7 +34,7 @@ fetch("http://localhost/sweetharmony/sweetharmony/admin_dashboard/php/get_metric
 if (data.outOfStock && data.outOfStock.length > 0) {
   data.outOfStock.forEach(product => {
     const li = document.createElement('li');
-    li.textContent = `❌ Producto agotado: ${product.name}`;
+    li.textContent = `Producto agotado: ${product.name}`;
     notificationsUl.appendChild(li);
 
   });
@@ -83,7 +83,7 @@ if (data.outOfStock && data.outOfStock.length > 0) {
       const li = document.createElement('li');
 
       const img = document.createElement('img');
-      img.src = product.image_url || '../assets/default.jpg';
+      img.src = product.image || '../assets/default.jpg';
       img.alt = product.name;
       img.style.width = '50px';
       img.style.height = '50px';

@@ -28,7 +28,6 @@ $result = $conexion->query($sql_check);
 
 if ($result->num_rows > 0) {
     if ($action === 'remove') {
-        // ❌ Eliminar del carrito
         $sql_delete = "DELETE FROM cart WHERE user_id = $user_id AND product_id = $product_id";
         if ($conexion->query($sql_delete)) {
             echo json_encode([
@@ -40,7 +39,7 @@ if ($result->num_rows > 0) {
             echo json_encode(["message" => "Error al eliminar: " . $conexion->error]);
         }
     } else {
-        // ✅ Si ya existe y acción es "add", simplemente no duplicamos
+
         echo json_encode([
             "message" => "El producto ya está en el carrito",
             "action" => "exists"

@@ -3,13 +3,14 @@ function crearProductoHTMLMostView(product) {
     const price = Number(product.price) || 0;
     const discount = Number(product.discount) || 0;
     const precioFinal = discount > 0 ? (price * (1 - discount / 100)).toFixed(2) : price.toFixed(2);
+   
   
     return `
       <li class="scrollbar-item">
         <div class="shop-card" data-id="${product.id}" style="cursor: pointer;">
           <div class="card-banner img-holder" style="--width:540; --height:720;">
             <img src="${product.image_url ? '../../uploads/' + product.image_url : '../assets/placeholder.png'}"
-                 class="img-cover" alt="${product.product_name}">
+                class="img-cover" alt="${product.product_name}">
             ${discount > 0 ? `<span class="badge" aria-label="${discount}% off">-${discount}%</span>` : ''}
           </div>
           <div class="card-content">
@@ -26,10 +27,13 @@ function crearProductoHTMLMostView(product) {
   
   // Cargar productos desde PHP
   fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/most_view_products.php')
+
+  
     .then(res => res.json())
     .then(data => {
+      const limit = window.matchMedia("(max-width: 768px)").matches ? 2 : 5;
       const lista = document.getElementById('most-view-products');
-      lista.innerHTML = data.map(crearProductoHTMLMostView).join('');
+      lista.innerHTML = data.slice(0, limit).map(crearProductoHTMLMostView).join('');
 
       lista.querySelectorAll('.shop-card').forEach(card => {
         card.addEventListener('click', () => {
@@ -39,3 +43,5 @@ function crearProductoHTMLMostView(product) {
       });
     })
     .catch(err => console.error('Error cargando productos más vistos:', err));
+
+    

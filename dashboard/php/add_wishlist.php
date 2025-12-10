@@ -25,7 +25,6 @@ $sql_check = "SELECT id FROM wishlist WHERE user_id = $user_id AND product_id = 
 $result = $conexion->query($sql_check);
 
 if ($result->num_rows > 0) {
-    // ❌ Ya existe → eliminar
     $sql_delete = "DELETE FROM wishlist WHERE user_id = $user_id AND product_id = $product_id";
     if ($conexion->query($sql_delete)) {
         echo json_encode([
@@ -37,7 +36,7 @@ if ($result->num_rows > 0) {
         echo json_encode(["message" => "Error al eliminar: " . $conexion->error]);
     }
 } else {
-    // ✅ No existe → agregar
+
     $sql_insert = "INSERT INTO wishlist (user_id, product_id) VALUES ($user_id, $product_id)";
     if ($conexion->query($sql_insert)) {
         echo json_encode([

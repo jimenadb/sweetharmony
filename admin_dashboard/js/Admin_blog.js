@@ -5,9 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("newPostForm");
   const postIdInput = document.getElementById("postId");
 
-  // --- ABRIR MODAL NUEVO ---
+  // --- ABRIR MODAL ---
   openBtn?.addEventListener("click", () => {
-    postIdInput.value = ""; // limpiar ID → modo "nuevo"
+    postIdInput.value = ""; 
     form.reset();
     modal.classList.add("active");
   });
@@ -34,8 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  
-
   // --- ENVIAR FORMULARIO ---
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -59,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.success) {
         form.reset();
         modal.classList.remove("active");
-        // Puedes recargar o actualizar la tabla aquí si lo deseas
       }
     } catch (err) {
       console.error("Error al guardar:", err);

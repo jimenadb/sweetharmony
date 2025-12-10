@@ -6,38 +6,60 @@ fetch("http://localhost/sweetharmony/sweetharmony/dashboard/php/get_wishlist_det
     if (!productos || productos.length === 0) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="4" style="text-align:center;">No tienes productos en tu lista de deseos.</td>
+          <td colspan="6" style="text-align:center;">No tienes productos en tu lista de deseos.</td>
         </tr>
       `;
       return;
     }
 
-    // Construye toda la tabla de una vez
+    // Construye toda la tabla
     tbody.innerHTML = productos.map(p => `
-      <tr>
-        <td><input type="checkbox" class="select-item"></td>
+      <tr class="wishlist-row" data-id="${p.id}">
+
         <td class="product-info">
           <img src="../../uploads/${p.image_url}" alt="${p.product_name}">
+        </td>
+        <td class="product-name">
           <span>${p.product_name}</span>
         </td>
         <td class="price">$${p.price}</td>
+        <td>
+          ${p.discount > 0 ? p.discount + '%' : '-'}
+        </td>
+        <td class="price-total">
+          ${p.price 
+            ? '$' + (p.discount > 0 
+                      ? (p.price * (1 - p.discount / 100)).toFixed(2) 
+                      : p.price.toFixed(2))
+            : '-'}
+        </td>
         <td>
           <button class="btn btn-secondary remove-btn" data-id="${p.id}">Eliminar</button>
           <button class="btn btn-primary add-cart-btn" data-id="${p.id}">Agregar al carrito</button>
         </td>
       </tr>
     `).join("");
+
+    // 🔹 Agregar clic a cada fila para redirigir
+    document.querySelectorAll(".wishlist-row").forEach(row => {
+      row.style.cursor = "pointer"; // que se note clickeable
+      row.addEventListener("click", () => {
+        const productId = row.dataset.id;
+        window.location.href = `Dashboard_Catalogo.html?id=${productId}`;
+      });
+    });
   })
   .catch(err => {
     console.error("Error al cargar wishlist:", err);
     tbody.innerHTML = `
       <tr>
-        <td colspan="4" style="text-align:center;color:red;">
+        <td colspan="6" style="text-align:center;color:red;">
           Error al cargar la lista de deseos.
         </td>
       </tr>
     `;
   });
+
 
 
 

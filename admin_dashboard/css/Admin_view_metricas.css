@@ -1,162 +1,127 @@
-
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 1rem;
+/* ================= VARIABLES GLOBALES ================= */
+:root {
+  --primary: hsl(148, 20%, 38%);          /* hoockers-green */
+  --primary-light: hsl(148, 35%, 85%);
+  --black-70: hsla(0, 0%, 0%, 0.7);
+  --radius: 12px;
+  --shadow: 0 4px 14px rgba(0,0,0,0.10);
+  --font: 'Urbanist', sans-serif;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 2rem;
-  color: hsl(148, 20%, 38%);
-}
-
-.dashboard-grid {
+/* ================= TARJETAS DE MÉTRICAS ================= */
+/* Contenedor de las cards */
+.metrics-cards {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  margin: 2rem 0;
+  padding: 0 1rem; /* más pegado a los bordes */
 }
 
-.card {
-  background-color: var(--white, #fff);
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
-}
-
-.card:hover {
-  transform: translateY(-3px);
-}
-
-.card h2 {
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-  color:  hsl(148, 20%, 38%);
-  text-align: center;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  padding: 0.3rem 0;
-  border-bottom: 1px solid var(--light-gray, #ddd);
-  font-size: 0.95rem;
-}
-
-li:last-child {
-  border-bottom: none;
-}
-
-.card.alert {
-  border: 2px solid #e74c3c;
-}
-
-.card.alert h2 {
-  color: #e74c3c;
-}
-
-/* --- Totales principales minimalistas --- */
-/* --- Totales principales minimalistas --- */
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
+/* Estilo general de cada card */
 .metric-card {
-  background: linear-gradient(135deg, hsl(148, 40%, 85%), hsl(148, 30%, 95%));
-  color: var(--dark-gray);
+  background: #ffffff;
+  border-radius: 18px;
   padding: 2rem 1.5rem;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* sombra muy clara */
-  text-align: center;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 140px;
-  font-family: var(--font-family);
-  font-weight: 600;
 }
 
-/* Títulos y números */
-.metric-card h3 {
+/* Animación suave al pasar el mouse */
+.metric-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+/* Título pequeño */
+.metric-title {
   font-size: 1rem;
-  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.metric-card p {
-  font-size: 2.2rem;
-  margin: 0;
+/* 📌 Número grande */
+.metric-number {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #222;
+  line-height: 1;
+}
+
+/* Icono decorativo opcional */
+.metric-icon {
+  font-size: 2rem;
+  margin-bottom: 0.6rem;
+  color: #387EF5;
+}
+
+
+/* ================= PANEL DETALLADO ================= */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 22px;
+  margin-top: 25px;
+}
+
+.card {
+  background: #fff;
+  padding: 18px 20px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card h2 {
+  margin-bottom: 12px;
+  color: var(--primary);
+  font-size: 1.3rem;
   font-weight: 700;
 }
 
-/* Emoji encima del título */
-.metric-card .emoji {
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
-}
-
-/* Diferentes degradados suaves para cada cuadro */
-.metric-card:nth-child(1) {
-  background: linear-gradient(135deg, hsl(148, 40%, 85%), hsl(148, 35%, 90%));
-}
-
-.metric-card:nth-child(2) {
-  background: linear-gradient(135deg, hsl(148, 35%, 88%), hsl(148, 30%, 95%));
-}
-
-.metric-card:nth-child(3) {
-  background: linear-gradient(135deg, hsl(148, 30%, 90%), hsl(148, 25%, 96%));
-}
-
-/* Todas las listas dentro de las cards */
+/* ===== Scroll interno ===== */
 .card ul {
-  max-height: 200px; /* altura máxima, ajusta según necesites para mostrar ~5 elementos */
-  overflow-y: auto;
-  padding-right: 0.5rem; /* espacio para el scroll */
-  margin: 0;
   list-style: none;
-}
-
-/* Opcional: estilo minimalista para la barra de scroll en Webkit (Chrome, Edge, Safari) */
-.card ul::-webkit-scrollbar {
-  width: 8px;
-}
-
-.card ul::-webkit-scrollbar-track {
-  background: var(--accent);
-  border-radius: 8px;
-}
-
-.card ul::-webkit-scrollbar-thumb {
-  background-color: var(--primary);
-  border-radius: 8px;
-  border: 2px solid var(--accent);
-}
-
-/* Firefox */
-.card ul {
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  flex-grow: 1;
   scrollbar-width: thin;
-  scrollbar-color: var(--primary) var(--accent);
+  scrollbar-color: var(--primary) #ddd;
 }
 
-/* Estilo de los elementos de la lista */
-.card li {
-  padding: 0.4rem 0.5rem;
-  border-bottom: 1px solid var(--light-gray);
+/* ===== Estilo de ítems ===== */
+.card ul li {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.95rem;
+  align-items: center;       /* 🔥 texto al costado de la imagen */
+  font-size: 1.1rem;
+  color: #444;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  gap: 10px;
 }
 
-.card li:last-child {
-  border-bottom: none;
+.card ul li img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
+/* ===== ALERTAS ===== */
+.alert {
+  background: #fff5f5;
+  border-left: 4px solid #ff6b6b;
+}
+
+.alert h2 {
+  color: #e74c3c;
+}

@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
   
-        const productSelect = document.getElementById("product_type");
-        const plantSelect = document.getElementById("plant_type");
+        const productSelect = document.getElementById("product_types");
+        const plantSelect = document.getElementById("plant_types");
   
         // Limpiar selects
         productSelect.innerHTML = '<option value="">-- Selecciona --</option>';

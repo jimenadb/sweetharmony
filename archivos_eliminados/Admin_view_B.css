@@ -1,0 +1,64 @@
+
+/* Estilos extra para sidebar colapsable */
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: -250px;
+}
+
+#sidebar-wrapper {
+  width: 250px;
+  transition: all 0.3s;
+}
+
+#page-content-wrapper {
+  flex: 1;
+}
+
+body {
+  font-family: 'Urbanist', sans-serif;
+}
+
+
+/* Botones navbar */
+#adminBtn, #logoutBtn {
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  transition: all 0.3s ease;
+}
+
+#adminBtn {
+  border: 2px solid hsl(148, 20%, 38%);
+  color: hsl(148, 20%, 38%);
+}
+
+#adminBtn:hover {
+  background-color: hsl(148, 20%, 38%);
+  color: #fff;
+}
+
+#logoutBtn {
+  border: 2px solid hsl(0, 70%, 50%);
+  color: hsl(0, 70%, 50%);
+}
+
+#logoutBtn:hover {
+  background-color: hsl(0, 70%, 50%);
+  color: #fff;
+}
+
+/* Sidebar */
+#sidebar-wrapper {
+  background-color: hsl(148, 30%, 90%);
+}
+
+#sidebar-wrapper .list-group-item {
+  border: none;
+  color: hsl(148, 20%, 38%);
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+#sidebar-wrapper .list-group-item:hover {
+  background-color: hsl(148, 20%, 38%);
+  color: #fff;
+  border-radius: 0.5rem;
+}

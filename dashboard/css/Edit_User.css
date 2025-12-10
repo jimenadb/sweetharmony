@@ -31,11 +31,25 @@ h1 {
   margin-bottom: 30px;
 }
 
+/* Contenedor general del perfil */
+.profile-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 /* Formulario */
 .profile-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
 /* Grupos de input */
@@ -51,7 +65,7 @@ h1 {
   color: var(--hoockers-green);
 }
 
-/* Inputs con leve transparencia */
+/* Inputs */
 .form-group input {
   padding: 10px 12px;
   border: 1px solid var(--light-gray);
@@ -59,7 +73,7 @@ h1 {
   font-size: 1rem;
   outline: none;
   transition: border-color 0.2s;
-  background-color: rgba(255,255,255,0.9); /* mismo blanco leve transparente que el contenedor */
+  background-color: rgba(255,255,255,0.95);
   color: var(--hoockers-green);
 }
 
@@ -73,8 +87,9 @@ h1 {
   color: var(--hoockers-green);
 }
 
-/* Botón guardar */
-.save-btn {
+/* Botones */
+.save-btn,
+.delete-btn {
   background-color: var(--hoockers-green);
   color: var(--white);
   padding: 12px 0;
@@ -84,9 +99,11 @@ h1 {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s;
+  width: 100%;
 }
 
-.save-btn:hover {
+.save-btn:hover,
+.delete-btn:hover {
   background-color: hsl(148,20%,28%);
 }
 
@@ -110,6 +127,13 @@ h1 {
   color: var(--hoockers-green);
 }
 
+/* Formulario oculto de eliminar cuenta */
+#formEliminarCuenta {
+  display: none;
+  margin-top: 1rem;
+}
+
+/* Responsive */
 @media (max-width: 500px) {
   .profile-container {
     padding: 20px;

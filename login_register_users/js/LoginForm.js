@@ -20,7 +20,7 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
 
     const result = await response.json();
 
-    // ✅ Aquí va el if principal
+
     if (response.ok) {
       const role = result.role; // Asegúrate de que PHP devuelva también el rol
       sessionStorage.setItem('username', result.username);
@@ -28,7 +28,7 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
   
       // Redirección según rol directamente en JS
       if (role === 'admin') {
-          window.location.href = "http://localhost/sweetharmony/sweetharmony/admin_dashboard/html/Admin_catalogo.html";
+          window.location.href = "http://localhost/sweetharmony/sweetharmony/admin_dashboard/html/Admin_view.html";
       } else if (role === 'user') {
           window.location.href = "http://localhost/sweetharmony/sweetharmony/dashboard/html/Dashboard.html";
       } else {

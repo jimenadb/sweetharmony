@@ -138,22 +138,27 @@ document.addEventListener('DOMContentLoaded', () => {
   LOG OUT BUTTON
 -----------------------------------*/
 document.addEventListener('DOMContentLoaded', () => {
-  
-  const logoutBtn = document.getElementById('logoutBtn');
 
-  // Solo si el usuario está logueado mostramos el botón
+  const logoutBtn = document.getElementById('logoutBtn');
+  const mobileLogout = document.getElementById('mobileLogout');
+
   const username = sessionStorage.getItem('username');
+
   if(username){
     logoutBtn.style.display = 'inline-block';
   }
 
-  // Función de logout
-  logoutBtn.addEventListener('click', () => {
+  function logout(e){
+    e.preventDefault(); // evita recarga en el mobile
     sessionStorage.clear();
-    sessionStorage.removeItem('username'); // limpia la sesión
-    window.location.href = "../../index.html"; // redirige al login
-  });
+    window.location.href = "../../index.html";
+  }
+
+  if(logoutBtn) logoutBtn.addEventListener('click', logout);
+  if(mobileLogout) mobileLogout.addEventListener('click', logout);
+
 });
+
 
 /*-----------------------------------
   MOSTRAR BOTON DE PEDIDOS y direccion
@@ -165,11 +170,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const addressesBtn = document.getElementById("addressesBtn");
 
   if (username) {
-    // ✅ Usuario logueado → mostrar botones
+ 
     if (ordersBtn) ordersBtn.style.display = "inline-block";
     if (addressesBtn) addressesBtn.style.display = "inline-block";
   } else {
-    // ❌ No logueado → ocultar botones
+
     if (ordersBtn) ordersBtn.style.display = "none";
     if (addressesBtn) addressesBtn.style.display = "none";
   }
@@ -215,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
   MODAL 
 -----------------------------------*/
 document.addEventListener('DOMContentLoaded', () => {
-  const userId = sessionStorage.getItem('user_id'); // ✅ corregido
+  const userId = sessionStorage.getItem('user_id'); 
   const wishlistBtn = document.getElementById('wishlistBtn');
   const cartLink = document.getElementById('cartLink');
   const modal = document.getElementById('loginModal');
@@ -226,11 +231,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (!userId) {
-    // ❌ No logueado → muestra el modal
     wishlistBtn.addEventListener('click', showModal);
     cartLink.addEventListener('click', showModal);
   } else {
-    // ✅ Logueado → redirige normalmente
+
     wishlistBtn.addEventListener('click', () => window.location.href = "Dashboard_Wishlist.html");
     cartLink.addEventListener('click', () => window.location.href = "Dashboard_Cart.html");
   }
@@ -242,6 +246,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-
-
 

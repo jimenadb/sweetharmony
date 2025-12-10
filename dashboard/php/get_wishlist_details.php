@@ -11,12 +11,13 @@ if (!$user_id) {
     exit;
 }
 
-// Consulta con JOIN para traer detalles del producto
+// Consulta con JOIN para traer detalles del producto y descuento
 $sql = "
     SELECT 
         p.id AS product_id,
         p.product_name,
         p.price,
+        p.discount,      -- <-- agregamos descuento
         p.image_url,
         w.created_at
     FROM wishlist w
@@ -38,6 +39,7 @@ while ($row = $result->fetch_assoc()) {
         "id" => intval($row['product_id']),
         "product_name" => $row['product_name'],
         "price" => floatval($row['price']),
+        "discount" => floatval($row['discount']), // <-- agregamos descuento
         "image_url" => $row['image_url'],
         "created_at" => $row['created_at']
     ];

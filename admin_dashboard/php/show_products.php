@@ -5,7 +5,9 @@ require_once "../../conexion.php";
 $sql = "SELECT 
     p.id,
     p.product_name,
+    p.product_types AS product_type_id,
     pt.name AS product_type_name,
+    p.plant_types AS plant_type_id,
     plt.name AS plant_type_name,
     p.price,
     p.discount,
@@ -17,7 +19,8 @@ $sql = "SELECT
     p.units,
     p.description,
     p.weight,
-    p.image_url
+    p.image_url,
+    p.active
 FROM products p
 LEFT JOIN product_types pt ON p.product_types = pt.id
 LEFT JOIN plant_types plt ON p.plant_types = plt.id";

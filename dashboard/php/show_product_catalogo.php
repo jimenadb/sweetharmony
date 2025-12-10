@@ -1,5 +1,5 @@
 <?php
-session_start(); // 🔥 Importante: inicia la sesión
+session_start(); 
 header("Content-Type: application/json; charset=UTF-8");
 require_once "../../conexion.php";
 
@@ -41,5 +41,4 @@ if ($result->num_rows > 0) {
     echo json_encode(["status" => "success", "message" => "Producto agregado al carrito"]);
 }
 
-$conexion->close();
 ?>

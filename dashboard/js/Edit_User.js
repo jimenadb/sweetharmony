@@ -54,3 +54,16 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  //ELIMINAR
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('btnEliminarCuenta');
+    const form = document.getElementById('formEliminarCuenta');
+
+    btn.addEventListener('click', () => {
+        if(form.style.display === 'none'){
+            form.style.display = 'block';
+            btn.style.display = 'none';
+        }
+    });
+});

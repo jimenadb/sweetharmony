@@ -28,6 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
         productos.forEach(p => {
           const tr = document.createElement("tr");
           tr.dataset.id = p.id; 
+          tr.dataset.active = p.active; 
+          if (p.active == 0) tr.classList.add("inactive");
           tr.innerHTML = `
             <td><img src="${p.image_url}" alt="${p.product_name}" style="width:50px;height:50px;object-fit:cover;"></td>
             <td>${p.product_name || '-'}</td>
@@ -41,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${p.pot_width != null ? p.pot_width + 'cm' : '-'}</td>
             <td>${p.pot_color || '-'}</td>
             <td>${p.weight != null ? p.weight + 'kg' : '-'}</td>
-            <td><input type="number" class="unidades-input" value="${p.units != null ? p.units : 0}" min="0" style="width:60px;text-align:center;"></td>
+            <td style="text-align:center;">${p.units != null ? p.units : 0}</td>
             <td>${truncarTexto(p.description, 20)}</td>
           `;
           tr.addEventListener("click", () => {
@@ -53,6 +55,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
   }
+
+
+
+
 //------------------------------------
 // BOTON EDITAR PRODUCTO
 //------------------------------------
@@ -67,8 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // Rellenar campos del formulario
     document.getElementById("product_name").value = productoSeleccionado.product_name || '';
-    document.getElementById("product_type").value = productoSeleccionado.product_type || '';
-    document.getElementById("plant_type").value = productoSeleccionado.plant_type || '';
+    document.getElementById("product_types").value = productoSeleccionado.product_type_id || '';
+    document.getElementById("plant_types").value = productoSeleccionado.plant_type_id || '';
     document.getElementById("price").value = productoSeleccionado.price || '';
     document.getElementById("discount").value = productoSeleccionado.discount || '0.00';
     document.getElementById("plant_height").value = productoSeleccionado.plant_height || '';
@@ -104,30 +110,35 @@ document.addEventListener("DOMContentLoaded", () => {
 //------------------------------------
 // BOTON ELIMINAR PRODUCTO
 //------------------------------------
-  document.getElementById("btnEliminar").addEventListener("click", async () => {
-    if (!productoSeleccionado) return alert("Selecciona un producto");
-  
-    const confirmDelete = confirm(`¿Seguro que deseas eliminar: ${productoSeleccionado.product_name}?`);
-    if (!confirmDelete) return;
-  
-    try {
-      const res = await fetch(`http://localhost/sweetharmony/sweetharmony/admin_dashboard/php/delete_products.php?id=${productoSeleccionado.id}`, {
-        method: "GET"
-      });
-      const data = await res.json();
-  
-      if (data.success) {
-        alert("Producto eliminado correctamente");
-        productoSeleccionado = null;
-        cargarProductos(); // recarga la tabla
-      } else {
-        alert("Error al eliminar producto: " + data.message);
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Error de conexión al eliminar");
+document.getElementById("btnEliminar").addEventListener("click", async () => {
+  if (!productoSeleccionado) return alert("Selecciona un producto");
+
+  // Calcular nuevo estado según el estado actual
+  const nuevoEstado = productoSeleccionado.active == 1 ? 0 : 1;
+  const accion = nuevoEstado == 1 ? "activar" : "desactivar";
+
+  const confirmAction = confirm(`¿Seguro que deseas ${accion} el producto: ${productoSeleccionado.product_name}?`);
+  if (!confirmAction) return;
+
+  try {
+    const res = await fetch(`http://localhost/sweetharmony/sweetharmony/admin_dashboard/php/delete_products.php?id=${productoSeleccionado.id}&active=${nuevoEstado}`, {
+      method: "GET"
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      alert(data.message); // ya tu PHP devuelve "activado/desactivado correctamente"
+      productoSeleccionado = null;
+      cargarProductos(); // recarga la tabla para reflejar cambios
+    } else {
+      alert("Error al cambiar estado: " + data.message);
     }
-  });
+  } catch (err) {
+    console.error(err);
+    alert("Error de conexión al cambiar estado");
+  }
+});
+
 
 
   cargarProductos();

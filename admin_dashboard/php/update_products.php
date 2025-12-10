@@ -6,8 +6,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$id) exit(json_encode(['success' => false, 'message' => 'ID no enviado']));
 
     $product_name = $_POST['product_name'] ?? '';
-    $product_type = $_POST['product_type'] ?: null;
-    $plant_type = $_POST['plant_type'] ?: null;
+    $product_types = $_POST['product_types'] ?: null;
+    $plant_types = $_POST['plant_types'] ?: null;
     $price = $_POST['price'] !== '' ? floatval($_POST['price']) : null;
     $discount = $_POST['discount'] !== '' ? floatval($_POST['discount']) : 0;
     $description = $_POST['description'] ?? '';
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // SQL base
     $sql = "UPDATE products SET 
-            product_name=?, product_type=?, plant_type=?, price=?, discount=?,
+            product_name=?, product_types=?, plant_types=?, price=?, discount=?,
             description=?, plant_height=?, plant_width=?, pot_height=?, pot_width=?, pot_color=?,
             weight=?, units=?";
 
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Con imagen
         $stmt->bind_param(
             "sssddsddddsdssi",
-            $product_name, $product_type, $plant_type, $price, $discount,
+            $product_name, $product_types, $plant_types, $price, $discount,
             $description, $plant_height, $plant_width, $pot_height, $pot_width, $pot_color,
             $weight, $units, $image_url, $id
         );
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Sin imagen
         $stmt->bind_param(
             "sssddsddddsdis",
-            $product_name, $product_type, $plant_type, $price, $discount,
+            $product_name, $product_types, $plant_types, $price, $discount,
             $description, $plant_height, $plant_width, $pot_height, $pot_width, $pot_color,
             $weight, $units, $id
         );

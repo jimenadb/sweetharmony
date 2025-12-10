@@ -18,7 +18,7 @@ $email = $conexion->real_escape_string($input['email']);
 $password = $input['password'];
 
 // $sql = "SELECT password FROM users WHERE email='$email' LIMIT 1";
-$sql = "SELECT id, password, role, first_name FROM users WHERE email='$email' LIMIT 1";
+$sql = "SELECT id, password, role, first_name FROM users WHERE email='$email' AND deleted_at IS NULL LIMIT 1";
 $result = $conexion->query($sql);
 
 if ($result->num_rows === 0) {
@@ -35,7 +35,7 @@ if (password_verify($password, $user['password'])) {
     $_SESSION['role'] = $user['role'];           // rol del usuario
 	//CAMBIO EN LA REDIRECCION 
     $redirect = ($user['role'] === 'admin')
-        ? "http://localhost/sweetharmony/sweetharmony/admin_dashboard/html/Admin_catalogo.html"
+        ? "http://localhost/sweetharmony/sweetharmony/admin_dashboard/html/Admin_view.html"
         : "http://localhost/sweetharmony/sweetharmony/dashboard/html/Dashboard.html";
 
 	echo json_encode([

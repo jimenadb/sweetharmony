@@ -5,15 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mis Pedidos</title>
   <link rel="stylesheet" href="../css/Dashboard_Order.css">
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
   
   <div class="orders-container">
     <h1>Mis Pedidos</h1>
-    <!-- Los pedidos se cargarán dinámicamente con JS -->
+    <!-- <a href="Dashboard_Cart.html">
+      <button class="btn btn-primary">Ver mi carrito</button>
+    </a>
+    <a href="Dashboard.html">
+      <button class="btn btn-primary">Volver al incio</button>
+    </a> -->
+
+    
   </div>
-
-
+  
   <div class="modal" id="orderModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -23,11 +31,13 @@
       <div class="modal-body" id="modalBody"></div>
     </div>
   </div>
-
-
+  
 
 
   <script src="../js/Dashboard_Order.js"></script>
   <script src="../../components/back_button.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
 </body>
 </html>

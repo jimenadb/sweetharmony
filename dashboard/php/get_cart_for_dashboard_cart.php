@@ -11,7 +11,7 @@ if (!$user_id) {
     exit;
 }
 
-// Consulta con JOIN para obtener los productos del carrito
+// Consulta con JOIN para obtener los productos del carrito, incluyendo discount
 $sql = "
 SELECT 
   c.product_id,
@@ -19,7 +19,8 @@ SELECT
   p.product_name,
   p.price,
   p.image_url,
-  p.units
+  p.units,
+  p.discount
 FROM cart AS c
 INNER JOIN products AS p ON c.product_id = p.id
 WHERE c.user_id = $user_id
@@ -42,12 +43,10 @@ while ($row = $result->fetch_assoc()) {
         "price" => (float)$row['price'],
         "image" => $row['image_url'],
         "quantity" => (int)$row['quantity'],
-        "units" => (int)$row['units'] 
+        "units" => (int)$row['units'],
+        "discount" => (float)$row['discount'] // agregado
     ];
 }
 
-// Si solo quieres los IDs, puedes devolverlos así:
-// echo json_encode(array_column($cart, "id"));
-// Pero para mostrar en catálogo, es mejor todo el objeto:
 echo json_encode($cart, JSON_UNESCAPED_UNICODE);
 ?>

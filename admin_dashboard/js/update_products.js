@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
   
-      window.modoEditar = true; // ✅ global para que agregar.js lo sepa
+      window.modoEditar = true;
       modal.style.display = "block";
   
       // Rellenar los campos del formulario
@@ -49,9 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (data.success) {
           alert("Producto actualizado correctamente");
           modal.style.display = "none";
-          window.modoEditar = false; // ✅ resetea modo editar
+          window.modoEditar = false; 
           form.reset();
-          window.cargarProductos(); // función global desde show_products.js
+          window.cargarProductos(); 
         } else {
           alert("Error: " + data.message);
         }

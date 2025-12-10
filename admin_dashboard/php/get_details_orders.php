@@ -9,10 +9,10 @@ if (!$order_id) {
 }
 
 // ==============================
-// 1️⃣ Datos del pedido + dirección + comprobantes + envío
+//  Datos del pedido + dirección + comprobantes + envío
 // ==============================
 $sql = "SELECT o.id, o.user_id, o.total, o.status, o.receipt,
-               o.tracking_number, o.courier, o.shipping_notes, o.shipping_receipt,
+               o.tracking_number, o.courier, o.shipping_notes, o.delivery_type, o.shipping_receipt, o.created_at,
                ua.full_name, ua.email, ua.dni, ua.address, ua.district, ua.city, ua.postal_code, ua.reference
         FROM orders o
         LEFT JOIN user_addresses ua ON o.delivery_address_id = ua.id
@@ -28,7 +28,7 @@ if (!$order) {
 }
 
 // ==============================
-// 2️⃣ Traer productos del pedido
+// Traer productos del pedido
 // ==============================
 $sql_products = "SELECT p.product_name, p.image_url, oi.quantity, oi.price
                  FROM order_items oi
@@ -44,11 +44,11 @@ while ($row = $result_products->fetch_assoc()) {
 }
 
 // ==============================
-// 3️⃣ Combinar todo
+// 3Combinar todo
 // ==============================
 $order['productos'] = $productos;
 
 // ==============================
-// 4️⃣ Devolver JSON completo
+// Devolver JSON completo
 // ==============================
 echo json_encode($order, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);

@@ -1,0 +1,134 @@
+
+body {
+  font-family: 'Urbanist', sans-serif;
+  background-color: hsl(148, 30%, 95%);
+}
+
+main h1 {
+  color: hsl(148, 20%, 38%);
+}
+
+.table {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+table th,
+table td {
+  vertical-align: middle !important;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: hsl(148, 20%, 38%);
+  border-color: hsl(148, 20%, 38%);
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: hsl(148, 20%, 28%);
+  border-color: hsl(148, 20%, 28%);
+}
+
+/* Modales */
+.modal .modal-content {
+  border-radius: 12px;
+  padding: 1.5rem;
+  background-color: #fff;
+  max-width: 500px;
+  margin: 1.5rem auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+  float: right;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: hsl(148, 20%, 38%);
+}
+
+select,
+input,
+textarea {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+select:focus,
+input:focus,
+textarea:focus {
+  border-color: hsl(148, 20%, 38%);
+  box-shadow: 0 0 5px rgba(20, 138, 56, 0.2);
+  outline: none;
+}
+
+@media (max-width: 576px) {
+  .modal .modal-content {
+    width: 90%;
+    padding: 1rem;
+  }
+}
+
+/* Wrapper flex para sidebar y page content */
+#wrapper {
+  display: flex;
+  width: 100%;
+}
+
+/* Sidebar */
+#sidebar-wrapper {
+  width: 250px;
+  transition: all 0.3s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: -250px;
+}
+
+/* Page content */
+#page-content-wrapper {
+  flex: 1;
+  transition: all 0.3s ease;
+  padding: 1rem;
+}
+
+/* Navbar botones */
+#adminBtn, #logoutBtn {
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+#adminBtn:hover {
+  background-color: hsl(148, 20%, 38%);
+  color: #fff;
+}
+
+#logoutBtn:hover {
+  background-color: hsl(0, 70%, 50%);
+  color: #fff;
+}
+
+/* Sidebar links */
+#sidebar-wrapper .list-group-item {
+  border: none;
+  color: hsl(148, 20%, 38%);
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+#sidebar-wrapper .list-group-item:hover {
+  background-color: hsl(148, 20%, 38%);
+  color: #fff;
+  border-radius: 0.5rem;
+}

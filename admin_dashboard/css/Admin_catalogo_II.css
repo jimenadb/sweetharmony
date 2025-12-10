@@ -1,131 +1,205 @@
-/* === MODAL LATERAL DE TIPOS === */
+/* =================== MODAL TIPOS =================== */
 #modalTipos {
-    display: none;
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 350px;
-    height: 100%;
-    background-color: var(--white);
-    box-shadow: -4px 0 12px rgba(0,0,0,0.15);
-    z-index: 9999;
-    overflow-y: auto;
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-    padding: 1.5rem;
-  }
-  
-  #modalTipos.active {
-    display: block;
-    transform: translateX(0);
-  }
-  
-  /* === CABECERA DEL MODAL === */
-  #modalTipos .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-  
-  #modalTipos h3 {
-    color: var(--primary);
-    font-size: 1.4rem;
-    margin: 0;
-  }
-  
-  #modalTipos .close-btn {
-    background: none;
-    border: none;
-    font-size: 1.6rem;
-    color: var(--dark-gray);
-    cursor: pointer;
-    transition: var(--transition);
-  }
-  
-  #modalTipos .close-btn:hover {
-    color: var(--black);
-  }
-  
-  /* === FORMULARIOS === */
-  #modalTipos .form-group {
-    margin-bottom: 1rem;
-  }
-  
-  #modalTipos label {
-    font-weight: 600;
-    display: block;
-    margin-bottom: 0.4rem;
-    color: var(--dark-gray);
-  }
-  
-  #modalTipos input[type="text"] {
-    width: calc(100% - 90px);
-    padding: 0.4rem 0.6rem;
-    border: 1px solid var(--light-gray);
-    border-radius: var(--radius);
-    font-family: var(--font-family);
-    font-size: 0.95rem;
-  }
-  
-  #modalTipos button {
-    background-color: hsl(148, 20%, 28%);
-    color: hsl(0, 0%, 100%);
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 0.9rem;
-  }
-  
-  #modalTipos button:hover {
-    background-color: hsl(148, 19%, 51%);
-  }
-  
-  /* === LISTAS DE TIPOS === */
-  #modalTipos ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 0.5rem;
-  }
-  
-  #modalTipos ul li {
-    background: var(--accent);
-    margin-bottom: 0.4rem;
-    padding: 0.5rem 0.8rem;
-    border-radius: var(--radius);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.95rem;
-    color: var(--black);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
-  
-  #modalTipos ul li:hover {
-    background-color: var(--secondary);
-    color: var(--white);
-  }
-  
-  /* === BOTÓN BORRAR === */
-  #modalTipos .btn-borrar {
-    background: none;
-    border: none;
-    color: var(--dark-gray);
-    font-size: 1rem;
-    cursor: pointer;
-    transition: var(--transition);
-  }
-  
-  #modalTipos .btn-borrar:hover {
-    color: crimson;
-  }
-  
-  /* === SEPARADOR === */
-  #modalTipos hr {
-    margin: 1.5rem 0;
-    border: 0;
-    border-top: 1px solid var(--light-gray);
-  }
-  
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+#modalTipos.active {
+  display: flex;
+}
+
+#modalTipos .modal-content {
+  position: relative;
+  background-color: #ffffff; /* white */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 450px;
+  padding: 2rem;
+  text-align: left;
+  color: #000000; /* black */
+  font-family: 'Urbanist', sans-serif;
+  animation: modalFadeIn 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Botón cerrar X */
+#modalTipos .close-btn {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: hsl(148, 20%, 38%); /* hookers-green */
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+#modalTipos .close-btn:hover {
+  color: hsl(0, 0%, 30%); /* dark gray */
+}
+
+/* Título centrado con línea divisoria */
+#modalTipos h3 {
+  text-align: center;
+  color: hsl(148, 20%, 38%);
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+#modalTipos hr.divider {
+  border: 0;
+  border-top: 2px solid hsl(148, 20%, 38%);
+  margin-bottom: 1rem;
+}
+
+/* =================== SECCIÓN TIPOS =================== */
+#modalTipos .tipo-section h4 {
+  text-align: center;
+  color: hsl(148, 20%, 38%);
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+#modalTipos .form-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+#modalTipos .form-group input {
+  flex: 1;
+  padding: 0.6rem;
+  border: 2px solid hsl(148, 20%, 38%);
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #000000;
+  outline: none;
+  transition: border 0.2s ease;
+}
+#modalTipos .form-group input:focus {
+  border-color: hsl(148, 30%, 78%); /* pale-spring-bud */
+}
+
+#modalTipos .form-group .small-btn {
+  background-color: hsl(148, 20%, 38%);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  align-self: center;
+}
+#modalTipos .form-group .small-btn:hover {
+  background-color: hsl(148, 20%, 28%);
+}
+
+/* Lista de tipos con scroll */
+#modalTipos .tipo-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 180px;
+  overflow-y: auto;
+  border: 1px solid hsl(0,0%,80%); /* light-gray */
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+#modalTipos .tipo-lista li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.8rem;
+  border-bottom: 1px solid hsl(0,0%,80%);
+  align-items: center;
+}
+
+#modalTipos .tipo-lista li button.borrar {
+  background-color: hsl(148, 20%, 38%);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+#modalTipos .tipo-lista li button.borrar:hover {
+  background-color: hsl(148, 20%, 28%);
+}
+
+/* =================== POPUP NOTIFICACIÓN =================== */
+#popupNotificacion {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+#popupNotificacion.active {
+  display: flex;
+}
+
+#popupNotificacion .popup-content {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  max-width: 400px;
+  width: 90%;
+  padding: 1.5rem;
+  text-align: center;
+  color: #000000;
+  font-family: 'Urbanist', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: modalFadeIn 0.3s ease;
+}
+
+#popupNotificacion h3 {
+  color: hsl(148, 20%, 38%);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+#popupNotificacion hr.divider {
+  border: 0;
+  border-top: 2px solid hsl(148, 20%, 38%);
+  margin: 0.5rem 0;
+}
+
+#popupNotificacion p {
+  color: #000000;
+  font-size: 1rem;
+}
+
+#popupNotificacion button {
+  background-color: hsl(148, 20%, 38%);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: center;
+}
+#popupNotificacion button:hover {
+  background-color: hsl(148, 20%, 28%);
+}
+
+/* =================== ANIMACIÓN =================== */
+@keyframes modalFadeIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

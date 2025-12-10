@@ -8,7 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="cart-container">
+
+
+  <div class="cart-container">
   <h1 class="cart-title">Mi Carrito</h1>
   <table class="cart-table">
     <thead>
@@ -16,6 +18,7 @@
         <th><input type="checkbox" id="select-all"></th>
         <th>Producto</th>
         <th>Precio Unitario</th>
+        <th>Descuento</th>
         <th>Cantidad</th>
         <th>Total</th>
       </tr>
@@ -26,44 +29,118 @@
     <button class="btn btn-secondary" id="delete-selected">Eliminar seleccionados</button>
   </div>
   <div class="cart-summary">
-    <p>Total General: <span id="grand-total">$85.00</span></p>
+    <p>Total: <span id="grand-total">$85.00</span></p>
     <button class="btn btn-primary" id="checkout-btn">Realizar Compra</button>
   </div>
+
+  <!-- <a href="Dashboard_Order.html">
+    <button class="btn btn-primary">Ver mis pedidos</button>
+  </a>
+  <a href="Dashboard.html">
+    <button class="btn btn-primary">Volver al incio</button>
+  </a> -->
 
   <section class="checkout-section">
     <h2 class="checkout-title">Resumen de Compra</h2>
     <div class="invoice-preview">
       <h3>Factura Previa</h3>
-      <p><strong>Subtotal:</strong> <span id="subtotal">$0.00</span></p>
-      <p><strong>Envío:</strong> <span id="shipping">$5.00</span></p>
+      <!-- <p><strong>Total:</strong> <span id="subtotal">$0.00</span></p>
+      <p><strong>Costo de Envío:</strong> <span id="shipping">$5.00</span></p> -->
+      <!-- Tabla de productos -->
+      <table id="factura" border="1" cellspacing="0" cellpadding="5">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio unitario</th>
+            <th>Descuento</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="invoice-body">
+          <!-- Se llenará dinámicamente con JS -->
+        </tbody>
+      </table>
+      <!-- Costos -->
       <p><strong>Total a Pagar:</strong> <span id="total-payable">$0.00</span></p>
     </div>
-    <div class="delivery-address">
+
+    <div class="shipping-selection">
+      <h3>Seleccione tipo de envío</h3>
+      <div class="shipping-options">
+        <label class="shipping-btn">
+          <input type="radio" name="shipping" value="domicilio" required>
+          <ion-icon name="home-outline"></ion-icon>
+          Entrega a domicilio
+        </label>
+        <label class="shipping-btn">
+          <input type="radio" name="shipping" value="local" required>
+          <ion-icon name="storefront-outline"></ion-icon>
+          Recojo en tienda
+        </label>
+      </div>
+    
+      <div id="shipping-info" style="margin-top:1rem;"></div>
+    
+      <!-- Link de WhatsApp predefinido vacío -->
+      <a id="whatsapp-link" href="#" target="_blank" style="display:none; margin-top:0.5rem;">
+        <ion-icon name="logo-whatsapp"></ion-icon>
+        Cotiza tu entrega por WhatsApp
+      </a>
+    </div>
+    
+    <div class="delivery-address" style="display:none;">
       <h3>Dirección de Entrega</h3>
       <select id="select-address">
-        <option value="">Cargando direcciones...</option>
+        <option value="">-- Seleccione una dirección --</option>
       </select>
       <p id="address-info"></p>
       <a href="User_Address.html"><button class="btn btn-secondary">Agregar nueva dirección</button></a>
     </div>
     <div class="yape-payment">
-      <h3>Pagar con Yape</h3>
-      <p>Escanea este QR con la app de Yape y luego sube la captura de pago:</p>
+      <h3 style="color: #6a0dad;">Pagar con Yape</h3>
+      <p style="color: #6a0dad;">Escanea este QR con la app de Yape y luego sube la captura de pago:</p>
       <img src="../assets/yaper_qr.jpeg" alt="QR Yape" class="yape-qr">
       <form id="yape-form">
         <input type="file" id="yape-proof" name="yape-proof" accept="image/*" required>
-        <img id="yape-preview" class="yape-preview">
+        <img id="yape-preview" class="yape-preview" style="display:none; max-width:120px; margin-top:10px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
       </form>
-      <div id="yape-msg"></div>
     </div>
+    <div class="payment-notice" style="border: 1px solid #f5c6cb; background-color: #f8d7da; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+      <p style="display: flex; align-items: flex-start; gap: 0.5rem; color: #721c24; font-weight: bold; font-size: 1.1rem;">
+        <span>⚠️</span>
+        <span>Atención: Si no sube su comprobante de pago, su pedido <strong>NO podrá ser procesado</strong>.</span>
+      </p>
+      <p style="display: flex; align-items: flex-start; gap: 0.5rem; color: #721c24;">
+        <span>💳</span>
+        <span>Asegúrese de subir el comprobante correcto para evitar retrasos.</span>
+      </p>
+      <p style="display: flex; align-items: flex-start; gap: 0.5rem; color: #856404; font-size: 0.9rem;">
+        <span>🔍</span>
+        <span>El comprobante está sujeto a comprobación posterior por nuestro equipo.</span>
+      </p>
+      <p style="display: flex; align-items: flex-start; gap: 0.5rem; color: #0c5460; font-size: 0.85rem;">
+        <span>🕒</span>
+        <span>Una vez verificado, su pedido será procesado normalmente.</span>
+      </p>
+    </div>
+
+    
     <div class="final-action">
       <button class="btn btn-primary" id="place-order">Realizar Pedido</button>
     </div>
+
+
+
   </section>
 </div>
+<script src="../js/Dashboard.js"></script>
 <script src="../../components/back_button.js"></script>
 <script defer src="../js/Dashboard_Cart.js"></script>
 <script defer src="../js/Place_Order.js"></script>
+<script defer src="../js/Dashboard_Cart_Shipping.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </body>
 </html>

@@ -16,29 +16,33 @@ if (!$user_id) {
     exit;
 }
 
-// ✅ Si llega por FormData, usamos $_POST en lugar de JSON
+// Recibir datos desde FormData
 $delivery_address_id = $_POST['delivery_address_id'] ?? null;
+$delivery_type = $_POST['delivery_type'] ?? 'retiro';
 
-if (!$delivery_address_id) {
+// Validar dirección solo si es delivery
+if ($delivery_type === 'delivery' && !$delivery_address_id) {
     http_response_code(400);
     echo json_encode(["success"=>false,"message"=>"Selecciona una dirección"]);
     exit;
 }
 
-// Verificar dirección del usuario
-$stmt_check = $conexion->prepare("SELECT id FROM user_addresses WHERE id=? AND user_id=?");
-$stmt_check->bind_param("ii", $delivery_address_id, $user_id);
-$stmt_check->execute();
-$result_check = $stmt_check->get_result();
-if ($result_check->num_rows === 0) {
-    echo json_encode(["success"=>false,"message"=>"Dirección no válida"]);
-    exit;
+// Verificar dirección solo si es delivery
+if ($delivery_type === 'delivery') {
+    $stmt_check = $conexion->prepare("SELECT id FROM user_addresses WHERE id=? AND user_id=?");
+    $stmt_check->bind_param("ii", $delivery_address_id, $user_id);
+    $stmt_check->execute();
+    $result_check = $stmt_check->get_result();
+    if ($result_check->num_rows === 0) {
+        echo json_encode(["success"=>false,"message"=>"Dirección no válida"]);
+        exit;
+    }
 }
 
 // Obtener carrito
-$sql_cart = "SELECT c.product_id, c.quantity, p.price 
-             FROM cart c 
-             INNER JOIN products p ON c.product_id = p.id 
+$sql_cart = "SELECT c.product_id, c.quantity, p.price, p.discount
+             FROM cart c
+             INNER JOIN products p ON c.product_id = p.id
              WHERE c.user_id = ?";
 $stmt_cart = $conexion->prepare($sql_cart);
 $stmt_cart->bind_param("i", $user_id);
@@ -56,22 +60,49 @@ while ($row = $result->fetch_assoc()) {
     $total += $row['price'] * $row['quantity'];
 }
 
+// Preparar delivery_address_id para el insert
+$delivery_address_param = $delivery_type === 'delivery' ? $delivery_address_id : null;
+
 // Crear orden
-$stmt_order = $conexion->prepare("INSERT INTO orders (user_id, total, status, delivery_address_id, created_at) VALUES (?, ?, 'pending', ?, NOW())");
-$stmt_order->bind_param("idi", $user_id, $total, $delivery_address_id);
+$stmt_order = $conexion->prepare("
+    INSERT INTO orders (user_id, total, status, delivery_type, delivery_address_id, created_at) 
+    VALUES (?, ?, 'pending', ?, ?, NOW())
+");
+$stmt_order->bind_param("idss", $user_id, $total, $delivery_type, $delivery_address_param);
 $stmt_order->execute();
 $order_id = $stmt_order->insert_id;
 
 // Insertar items
-$stmt_item = $conexion->prepare("INSERT INTO order_items (order_id, product_id, quantity, price, created_at) VALUES (?, ?, ?, ?, NOW())");
+$stmt_item = $conexion->prepare("
+  INSERT INTO order_items 
+(order_id, product_id, quantity, price, discount, total_price, price_final, created_at) 
+VALUES (?, ?, ?, ?, ?, ?, ?, NOW())
+");
+
 foreach ($cart_items as $item) {
-    $price = isset($item['price']) ? doubleval($item['price']) : 0.00; // aseguramos que no sea null
-    $stmt_item->bind_param("iiid", $order_id, $item['product_id'], $item['quantity'], $price);
+    $price = isset($item['price']) ? doubleval($item['price']) : 0.00;
+    $discount = isset($item['discount']) ? doubleval($item['discount']) : 0.00;
+    $quantity = isset($item['quantity']) ? intval($item['quantity']) : 1;
+
+    $total_price = $price * $quantity;                  // precio sin descuento por cantidad
+    $price_final = $total_price * (1 - $discount / 100); // total con descuento
+
+    $stmt_item->bind_param(
+        "iiidddd",
+        $order_id,
+        $item['product_id'],
+        $quantity,
+        $price,
+        $discount,
+        $total_price,
+        $price_final
+    );
+
     $stmt_item->execute();
 }
 
 
-// 🔹 Disminuir unidades de los productos
+//  Disminuir unidades de los productos
 foreach ($cart_items as $item) {
     $stmt_units = $conexion->prepare("UPDATE products SET units = units - ? WHERE id = ?");
     $stmt_units->bind_param("ii", $item['quantity'], $item['product_id']);
@@ -81,7 +112,7 @@ foreach ($cart_items as $item) {
 // Vaciar carrito
 $conexion->query("DELETE FROM cart WHERE user_id = $user_id");
 
-// ✅ Subir comprobante Yape si existe
+// Subir comprobante Yape si existe
 if (isset($_FILES['yape-proof']) && $_FILES['yape-proof']['error'] === UPLOAD_ERR_OK) {
     $upload_dir = "../../uploads/receipts/";
     if (!is_dir($upload_dir)) {
@@ -101,8 +132,12 @@ if (isset($_FILES['yape-proof']) && $_FILES['yape-proof']['error'] === UPLOAD_ER
         error_log("ERROR: Falló move_uploaded_file()");
     }
 }
-/* The code snippet you provided is responsible for sending a confirmation email to the user after a
-successful order placement. Here's a breakdown of what the code does: */
+
+
+
+
+
+
 
 // --- Enviar correo de confirmación ---
 require '../../admin_dashboard/PHPMailer-master/PHPMailer-master/src/Exception.php';
@@ -142,26 +177,26 @@ try {
     $mail->isHTML(true);
     $mail->Subject = "Confirmación de tu pedido #{$order_id}";
     $mail->Body = "
-<table style='width:100%; max-width:600px; margin:auto; border-collapse:collapse; font-family:Arial,sans-serif;'>
-    <tr>
-        <td style='background-color:#94C973; padding:20px; text-align:center; color:white; font-size:24px; font-weight:bold; border-radius:8px 8px 0 0;'>
-            Sweet Harmony 🌸
-        </td>
-    </tr>
-    <tr>
-        <td style='padding:20px; background-color:#ffffff; color:#333;'>
-    <h2 style='color:#148A38;'>¡Pedido recibido!</h2>
-    <p>Tu pedido <strong>N°-{$order_id}</strong> se ha recibido correctamente.</p>
-    <p>Recibirás un correo con la confirmación del pago.</p>
-    <p>Gracias por comprar con nosotros 💛</p>
-    <hr style='border:none; border-top:1px solid #eee; margin:20px 0;'/>
-    <p style='font-size:14px; color:#777;'>
-        Si tienes alguna duda, contáctanos en 
-        <a href='mailto:1524431@senati.pe' style='color:#148A38;'>1524431@senati.pe</a>
-        o por WhatsApp: 
-        <a href='https://wa.me/51987654321' target='_blank' style='color:#148A38; text-decoration:none;'>📱 Chatea con nosotros</a>
-    </p>
-</td>
+    <table style='width:100%; max-width:600px; margin:auto; border-collapse:collapse; font-family:Arial,sans-serif;'>
+        <tr>
+            <td style='background-color:#94C973; padding:20px; text-align:center; color:white; font-size:24px; font-weight:bold; border-radius:8px 8px 0 0;'>
+                Sweet Harmony 🌸
+            </td>
+        </tr>
+        <tr>
+            <td style='padding:20px; background-color:#ffffff; color:#333;'>
+        <h2 style='color:#148A38;'>¡Pedido recibido!</h2>
+        <p>Tu pedido <strong>N°-{$order_id}</strong> se ha recibido correctamente.</p>
+        <p>Recibirás un correo con la confirmación del pago.</p>
+        <p>Gracias por comprar con nosotros 💛</p>
+        <hr style='border:none; border-top:1px solid #eee; margin:20px 0;'/>
+        <p style='font-size:14px; color:#777;'>
+            Si tienes alguna duda, contáctanos en 
+            <a href='mailto:1524431@senati.pe' style='color:#148A38;'>1524431@senati.pe</a>
+            o por WhatsApp: 
+            <a href='https://wa.me/51987654321' target='_blank' style='color:#148A38; text-decoration:none;'>📱 Chatea con nosotros</a>
+        </p>
+    </td>
     </tr>
     <tr>
         <td style='background-color:#f0f0f0; text-align:center; padding:10px; font-size:12px; color:#777; border-radius:0 0 8px 8px;'>
@@ -172,61 +207,7 @@ try {
 ";
     $mail->send();
 
-    // --- Enviar también a los administradores ---
-    $admins_query = $conexion->query("SELECT email FROM users WHERE role = 'admin'");
-    while ($admin = $admins_query->fetch_assoc()) {
-        $mail->addBCC($admin['email']); // se usa BCC para no mostrar los correos entre sí
-    }
-
-    $mail->isHTML(true);
-    $mail->Subject = "Confirmación de tu pedido #{$order_id}";
-    $mail->Body = "
-        <table style='width:100%; max-width:600px; margin:auto; border-collapse:collapse; font-family:Arial,sans-serif;'>
-        <tr>
-            <td style='background-color:#148A38; padding:20px; text-align:center; color:white; font-size:22px; font-weight:bold; border-radius:8px 8px 0 0;'>
-            💬 Soporte Sweet Harmony
-            </td>
-        </tr>
-        <tr>
-            <td style='padding:25px; background-color:#ffffff; color:#333;'>
-            <h2 style='color:#148A38; margin-top:0;'>Nuevo pedido registrado 🛍️</h2>
-            <p>El usuario <strong>{$user_name}</strong> ha realizado un nuevo pedido con el ID <strong>#{$order_id}</strong>.</p>
-            <p>Por favor, revisa los detalles en el panel de administración para confirmar el pago o actualizar el estado del pedido.</p>
-            
-            <div style='margin:20px 0; padding:15px; background-color:#f7fdf8; border-left:4px solid #148A38; border-radius:6px;'>
-                <p style='margin:0; font-size:14px; color:#444;'>
-                🕓 <strong>Fecha:</strong> ".date('d/m/Y H:i')."<br/>
-                💌 <strong>Email del cliente:</strong> {$user_email}<br/>
-        
-                </p>
-            </div>
-
-            <p style='font-size:15px; color:#333;'>Si necesitas contactar al cliente o resolver un problema, puedes usar el soporte directo:</p>
-
-            <p style='text-align:center; margin:25px 0;'>
-                <a href='https://wa.me/51987654321?text=Hola%20equipo%20Sweet%20Harmony,%20tengo%20una%20consulta%20sobre%20el%20pedido%20#{$order_id}' 
-                target='_blank' 
-                style='background-color:#148A38; color:white; padding:12px 24px; text-decoration:none; border-radius:6px; font-weight:bold;'>
-                📱 Contactar Soporte Web
-                </a>
-            </p>
-
-            <hr style='border:none; border-top:1px solid #eee; margin:25px 0;'/>
-            <p style='font-size:13px; color:#777; text-align:center;'>
-                Este correo fue generado automáticamente por el sistema de Sweet Harmony.<br>
-                Solo para fines de notificación interna de soporte y seguimiento de pedidos.
-            </p>
-            </td>
-        </tr>
-        <tr>
-            <td style='background-color:#f0f0f0; text-align:center; padding:10px; font-size:12px; color:#777; border-radius:0 0 8px 8px;'>
-            © 2025 Sweet Harmony. Todos los derechos reservados.
-            </td>
-        </tr>
-        </table>
-        ";
-
-    $mail->send();
+    
     error_log("Correo enviado para pedido #$order_id");
 } catch (Exception $e) {
     error_log("No se pudo enviar correo para pedido #$order_id: {$mail->ErrorInfo}");
@@ -240,5 +221,5 @@ echo json_encode([
     "message" => "Pedido realizado correctamente"
 ]);
 
-error_log("DEBUG place_order.php: Fin exitoso");
+error_log("Pedido agregado");
 ?>

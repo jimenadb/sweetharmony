@@ -1,29 +1,120 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mi Perfil</title>
-<link rel="stylesheet" href="../css/Edit_Admin.css">
-<style>
-body{background:url("../assets/fondo1.jpg") no-repeat center center fixed;background-size:cover;}
-</style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>SWEET HARMONY</title>
+
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <link rel="stylesheet" href="../css/Edit_Admin.css">
+  <link rel="stylesheet" href="../css/Admin_view_metricas.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 </head>
-<body>
-<div class="profile-container">
-<h1>Mi Perfil</h1>
-<form class="profile-form" id="profileForm">
-<div class="form-group"><label for="first_name">Nombre</label><input type="text" id="first_name" name="first_name" placeholder="Tu nombre"></div>
-<div class="form-group"><label for="last_name">Apellido</label><input type="text" id="last_name" name="last_name" placeholder="Tu apellido"></div>
-<div class="form-group"><label for="email">Correo electrónico</label><input type="email" id="email" name="email" placeholder="tu@email.com"></div>
-<div class="form-group"><label for="current_password">Contraseña actual</label><div class="password-wrapper"><input type="password" id="current_password" name="current_password" placeholder="Tu contraseña actual"><ion-icon class="toggle-password" name="eye-outline"></ion-icon></div></div>
-<div class="form-group"><label for="new_password">Nueva contraseña</label><div class="password-wrapper"><input type="password" id="new_password" name="new_password" placeholder="Dejar en blanco si no cambias"><ion-icon class="toggle-password" name="eye-outline"></ion-icon></div></div>
-<button type="submit" class="save-btn">Guardar Cambios</button>
-</form>
+
+<body id="top">
+<header class="header">
+  <div class="header-top" data-header>
+    <div class="container">
+      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></button>
+
+      <a href="#" class="logo">SWEET- HARMONY - ADMINISTRADOR</a>
+      <div class="header-actions">
+        <a href="Edit_Admin.html">
+          <button id="adminBtn" class="header-action-btn" aria-label="editar admin">
+            <!-- <ion-icon name="person-outline" aria-hidden="true"></ion-icon> -->
+          </button>
+        </a>
+      
+        <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión">
+          <ion-icon name="log-out-outline" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li><a href="Admin_view.html" class="navbar-link has-after">INICIO</a></li>
+          <li><a href="Admin_catalogo.html" class="navbar-link has-after">CATÁLOGO</a></li>
+          <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
+          <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE NAVBAR -->
+<div class="sidebar">
+  <div class="mobile-navbar" data-navbar>
+    <div class="wrapper">
+      <a href="#" class="logo">SWEET HARMONY</a>
+      <button class="nav-close-btn" aria-label="close menu" data-nav-toggler><ion-icon name="close-outline" aria-hidden="true"></ion-icon></button>
+    </div>
+    <ul class="navbar-list">
+      <li><a href="Edit_Admin.html" class="navbar-link has-after">EDITAR DATOS</a></li>
+      <li><a href="Admin_view.html" class="navbar-link" data-nav-link>INICIO</a></li>
+      <li><a href="Admin_catalogo.html" class="navbar-link" data-nav-link>CATÁLOGO</a></li>
+      <li><a href="Admin_blog.html" class="navbar-link has-after">BLOG</a></li>
+      <li><a href="Admin_order.html" class="navbar-link has-after">PEDIDOS</a></li>
+      <li><a href="Admin_order.html" class="navbar-link has-after">CERRAR SESION</a></li>
+    </ul>
+  </div>
+  <div class="overlay" data-nav-toggler data-overlay></div>
 </div>
-<script src="../../components/back_button.js"></script>
-<script src="../js/Edit_Admin.js"></script>
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+<div class="profile-container">
+  <h1>Mi Perfil</h1>
+  <form class="profile-form" id="profileForm">
+    <div class="form-group">
+      <label for="first_name">Nombre</label>
+      <input type="text" id="first_name" name="first_name" placeholder="Tu nombre">
+    </div>
+
+    <div class="form-group">
+      <label for="last_name">Apellido</label>
+      <input type="text" id="last_name" name="last_name" placeholder="Tu apellido">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" name="email" placeholder="tu@email.com">
+    </div>
+
+    <div class="form-group">
+      <label for="current_password">Contraseña actual</label>
+      <div class="password-wrapper">
+        <input type="password" id="current_password" name="current_password" placeholder="Tu contraseña actual">
+        <ion-icon class="toggle-password" name="eye-outline"></ion-icon>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="new_password">Nueva contraseña</label>
+      <div class="password-wrapper">
+        <input type="password" id="new_password" name="new_password" placeholder="Dejar en blanco si no cambias">
+        <ion-icon class="toggle-password" name="eye-outline"></ion-icon>
+      </div>
+    </div>
+
+    <button type="submit" class="save-btn">Guardar Cambios</button>
+  </form>
+</div>
+  <script src="../js/Admin_view.js" defer></script>
+  <script src="../js/Get_Metricas.js" defer></script>
+  <script src="../js/Edit_Admin.js" defer></script>
+  <script src="../js/logout.js" defer></script>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  
 </body>
 </html>
+

@@ -19,11 +19,12 @@ const inputs = {
       .then(r => r.json())
       .then(() => {
         inputs[type].value = "";
-        abrirPopup("✅ Tipo agregado correctamente", "El nuevo tipo ha sido guardado en el sistema.");
+        abrirPopup(" Tipo agregado correctamente", "El nuevo tipo ha sido guardado en el sistema.");
+        cargarTipos();
       })
       .catch(err => {
         console.error(err);
-        abrirPopup("❌ Error", "Ocurrió un problema al agregar el tipo. Intenta nuevamente.");
+        abrirPopup(" Error", "Ocurrió un problema al agregar el tipo. Intenta nuevamente.");
       });
   }
   
@@ -123,24 +124,35 @@ function cargarTipos() {
       .catch(err => console.error("Error al cargar tipos:", err));
   }
   
+
   // ===============================
-  // BORRAR TIPO
-  // ===============================
-  document.addEventListener("click", e => {
-    if (e.target.classList.contains("borrar")) {
-      const id = e.target.dataset.id;
-      const tipo = e.target.dataset.tipo;
-  
-      fetch("http://localhost/sweetharmony/sweetharmony/admin_dashboard/php/get_tipos_catalogo.php", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `id=${id}&tipo=${tipo}`
+// BORRAR TIPO
+// ===============================
+document.addEventListener("click", e => {
+  if (e.target.classList.contains("borrar")) {
+    const id = e.target.dataset.id;
+    const tipo = e.target.dataset.tipo;
+
+    // 🔹 Confirmación al usuario
+    const seguro = confirm(
+      "⚠️⚠️⚠️ Esta acción eliminará este tipo de " + 
+      (tipo === "plant" ? "planta" : "producto") + 
+      " y todas las referencias relacionadas en el catalogo. ¿Deseas continuar?"
+    );
+    if (!seguro) return; // Si el usuario cancela, salir
+
+    // 🔹 Solo se ejecuta si confirma
+    fetch("http://localhost/sweetharmony/sweetharmony/admin_dashboard/php/get_tipos_catalogo.php", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `id=${id}&tipo=${tipo}`
+    })
+      .then(r => r.json())
+      .then(res => {
+        if (res.success) cargarTipos(); // recarga los selects o tabla
+        else alert("Error al eliminar: " + res.message);
       })
-        .then(r => r.json())
-        .then(res => {
-          if (res.success) cargarTipos();
-          else alert("Error al eliminar: " + res.message);
-        })
-        .catch(err => console.error("Error al eliminar tipo:", err));
-    }
-  });
+      .catch(err => console.error("Error al eliminar tipo:", err));
+  }
+});
+

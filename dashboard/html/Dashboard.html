@@ -33,20 +33,20 @@
           <span class="line line-3"></span>
         </button>
         <!-- SEARCH BAR -->
-        <!-- <div class="input-wrapper">
+        <div class="input-wrapper">
           <input type="search" id="search-input" name="search" placeholder="Buscar producto" class="search-field">
           <button type="button" id="search-button" class="search-submit" aria-label="search">
             <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
           </button>
-        </div> -->
-        <ul id="search-results" class="search-results"></ul>
+        </div>
         <!-- END SEARCH BAR -->
         <a href="#" class="logo">SWEET-HARMONY</a>
 
         <div class="header-actions">
           <div class="user-dropdown">
-            <button class="header-action-btn" id="userBtn">
+            <button class="header-action-btn tooltip-container" id="userBtn">
               <ion-icon name="person-outline"></ion-icon>
+              <span class="tooltip">usuario</span>
             </button>
             <div class="dropdown-menu" id="dropdownMenu">
               <a href="../../login_register_users/html/LoginForm.html">Iniciar sesión</a>
@@ -54,31 +54,36 @@
             </div>
           </div>
 
-          <a href="Dashboard_Wishlist.html" id="wishlistBtn" class="header-action-btn" aria-label="favourite item">
-            <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+          <a href="Dashboard_Wishlist.html" id="wishlistBtn" class="header-action-btn tooltip-container" aria-label="favourite item">
+            <ion-icon name="heart-outline"></ion-icon>
+            <span class="tooltip">ver favoritos</span>
           </a>
 
           <a href="Dashboard_Cart.html" id="cartLink">
-            <button id="cartBtn" class="header-action-btn" aria-label="cart item">
+            <button id="cartBtn" class="header-action-btn tooltip-container" aria-label="cart item">
               <data id="cartTotal" class="btn-text" value="0"></data>
-              <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+              <ion-icon name="cart-outline" aria-hidden="true"></ion-icon>
+              <span class="tooltip">ver carrito</span>
             </button>
           </a>
 
           <a href="Dashboard_Order.html">
-            <button id="ordersBtn" style="display:none;" class="header-action-btn" aria-label="view orders">
+            <button id="ordersBtn" style="display:none;" class="header-action-btn tooltip-container" aria-label="view orders">
               <ion-icon name="cube-outline" aria-hidden="true"></ion-icon>
+              <span class="tooltip">ver pedidos</span>
             </button>
           </a>
 
           <a href="User_Address.html">
-            <button id="addressesBtn" style="display:none;" class="header-action-btn" aria-label="ver direcciones">
+            <button id="addressesBtn" style="display:none;" class="header-action-btn tooltip-container" aria-label="ver direcciones">
               <ion-icon name="home-outline" aria-hidden="true"></ion-icon>
+              <span class="tooltip">ver direcciones</span>
             </button>
           </a>
 
-          <button class="header-action-btn" id="logoutBtn" aria-label="Cerrar sesión">
+          <button class="header-action-btn tooltip-container" id="logoutBtn" aria-label="Cerrar sesión">
             <ion-icon name="log-out-outline" aria-hidden="true"></ion-icon>
+            <span class="tooltip">cerrar sesion</span>
           </button>
         </div>
 
@@ -117,10 +122,12 @@
         </button>
       </div>
       <ul class="navbar-list">
-        <li><a href="Dashboard.html" class="navbar-link" data-nav-link>INICIO</a></li>
-        <li><a href="Dashboard_Catalogo.html" class="navbar-link" data-nav-link>CATÁLOGO</a></li>
-        <li><a href="Dashboard_Blog.html" class="navbar-link has-after">BLOG</a></li>
-        <li><a href="Dashboard_About.html" class="navbar-link has-after">NOSOTROS</a></li>
+        
+        <li><a href="Dashboard.html" class="navbar-link " data-nav-link>INICIO</a></li>
+        <li><a href="Dashboard_Catalogo.html" class="navbar-link " data-nav-link>CATÁLOGO</a></li>
+        <li><a href="Dashboard_Blog.html" class="navbar-link ">BLOG</a></li>
+        <li><a href="Dashboard_About.html" class="navbar-link ">NOSOTROS</a></li>
+
       </ul>
     </div>
     <div class="overlay" data-nav-toggler data-overlay></div>
@@ -147,7 +154,7 @@
     <div class="container">
       <div class="title-wrapper">
         <h2 class="h2 section-title">Blog</h2>
-        <a href="Dashboard_Blog.html"><span class="span">Ver todos los posts</span></a>
+        <a href="Dashboard_Blog.html"><span class="span">Ver Blogs</span></a>
       </div>
       <ul id="recent-posts" class="has-scrollbar"></ul>
     </div>
@@ -158,7 +165,7 @@
     <div class="container">
       <div class="title-wrapper">
         <h2 class="h2 section-title">Más Vistos</h2>
-        <a href="Dashboard_Catalogo.html"><span class="span">Shop All Products</span></a>
+        <a href="Dashboard_Catalogo.html"><span class="span">Ver Catalogo</span></a>
       </div>
       <ul id="most-view-products" class="has-scrollbar"></ul>
     </div>
@@ -169,7 +176,7 @@
     <div class="container">
       <div class="title-wrapper">
         <h2 class="h2 section-title">Ofertas</h2>
-        <a href="Dashboard_Catalogo.html"><span class="span">Shop All Products</span></a>
+        <a href="Dashboard_Catalogo.html"><span class="span">Ver Catalogo</span></a>
       </div>
       <ul id="discount-products" class="has-scrollbar"></ul>
     </div>
@@ -180,10 +187,10 @@
     <div class="container">
       <div class="footer-top">
         <ul class="footer-list">
-          <li><p class="footer-list-title">SweetHarmony</p></li>
-          <li><p class="footer-list-text">Find a location nearest you. See <a href="#" class="link">Our Stores</a></p></li>
+          <li><p class="footer-list-title">Contactanos</p></li>
+          <li><p class="footer-list-text">Ubicanos en Mercaderes 314 Arequipa</p></li>
           <li><p class="footer-list-text bold">+51 910405014</p></li>
-          <li><p class="footer-list-text">hello@domain.com</p></li>
+          <li><p class="footer-list-text">sweetharmony@gmail.com</p></li>
         </ul>
 
         <ul class="footer-list">
@@ -217,11 +224,14 @@
     <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
   </a>
 
+
   <!-- JS FILES -->
   <script src="../js/Dashboard.js" defer></script>
   <script src="../js/Most_View_Products.js" defer></script>
   <script src="../js/Discount_Products.js" defer></script>
   <script src="../../components/widget.js" defer></script>
+  <script src="../js/Search_Redireccion.js" defer></script>
+  
 
   <!-- IONICONS -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
