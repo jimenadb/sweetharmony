@@ -235,7 +235,16 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then(res => res.json())
     .then(data => {
-      if (data.success) selectedCheckboxes.forEach(cb => cb.closest('tr').remove());
+      if (data.success) {
+        selectedCheckboxes.forEach(cb => cb.closest('tr').remove());
+      
+        // 🔁 Recalcular total después de eliminar
+        grandTotal = Array.from(document.querySelectorAll(".total-price"))
+          .reduce((sum, td) => sum + parseFloat(td.textContent.replace("$", "")), 0);
+      
+        document.getElementById("grand-total").textContent = `$${grandTotal.toFixed(2)}`;
+      }
+      
       else alert(data.message || "Error al eliminar productos");
       selectAllCheckbox.checked = false;
     })
@@ -405,4 +414,21 @@ document.getElementById('place-order').addEventListener('click', () => {
   }
   const tipoEnvio = selected.value;
   alert(`Has seleccionado: ${tipoEnvio}`);
+});
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.get('payment') === 'success') {
+      alert("Pago realizado correctamente. ¡Gracias por tu compra!");
+
+      // Limpia la URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+  }
+
+  if (params.get('payment') === 'error') {
+      alert("El pago no pudo confirmarse");
+  }
 });

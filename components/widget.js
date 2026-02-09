@@ -1,195 +1,201 @@
-
-
-// Estilos del widget
-const style = document.createElement("style");
-style.textContent = `
-#floating-widget {
-  position: fixed;
-  bottom: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  padding: 8px 10px;
-  z-index: 9999;
-  font-family: 'Urbanist', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.3s;
-}
-
-#floating-widget:hover {
-  transform: translateX(-50%) translateY(-5px);
-}
-
-#floating-widget .close-btn {
-  position: absolute;
-  top: 6px;
-  right: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 20px;
-  color:rgb(56, 56, 56);
-  transition: color 0.2s;
-}
-
-#floating-widget .close-btn:hover {
-  color:rgb(0, 0, 0);
-}
-
-#floating-widget .bee-icon {
-  width: 170px;
-  height: 150px;
-  margin-left: 10px;
-  transition: transform 0.3s;
-}
-
-#floating-widget .bee-icon:hover {
-  transform: rotate(-10deg) scale(1.05);
-}
-
-#floating-widget .product-list {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding: 10px 6px;
-  width: 100%;
-  justify-content: flex-start;
-}
-
-
-#floating-widget .product-list li:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
-  border-radius: 8px;
-}
-
-#floating-widget .product-list li img {
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 8px;
-  background: transparente
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-#floating-widget .product-list li span {
-  font-size: 13px;
-  font-weight: 500;
-  color: rgb(0,0,0);
-  max-width: 120px;
-  word-wrap: break-word;
-  text-align: center
-}
-
-.loader-icon {
-  width: 80px !important;
-  height: 80px !important;
-  display: block;
-  margin: 0 auto;
-  object-fit: contain; /* asegura que la imagen no se deforme */
-}
-
-
-
-
-
-`;
-document.head.appendChild(style);
-
-//Crear widget
-const widget = document.createElement("div");
-widget.id = "floating-widget";
-widget.innerHTML = `
-  <span class="close-btn">×</span>
-  <div style="display:flex; align-items:center; gap:10px;">
-  <ul class="product-list" id="recommendations-list">
-      <li id="loader-item" style="list-style:none; text-align:center;">
-    <img id="loader" src="../../dashboard/assets/loader.svg" class="loader-icon" alt="Cargando">
-  </li>
-  </ul>
-      <img src="../../components/assets/abejitarecomend.png" class="bee-icon" alt="Abejita">
-  </div>
-`;
-document.body.appendChild(widget);
-
-// Cerrar widget
-widget.querySelector(".close-btn").onclick = () => widget.style.display = "none";
-
-const list = widget.querySelector("#recommendations-list");
-let clickedProducts = JSON.parse(localStorage.getItem('clickedProducts') || '[]');
-
-//Función para mostrar productos recomendados
-function updateWidget(products) {
-  list.innerHTML = "";
-  if (!products || !products.length) {
-    list.innerHTML = `<li><span>Sin recomendaciones</span></li>`;
-    return;
-  }
-
-  products.forEach(p => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      ${p.image_url ? `<img src="../../uploads/${p.image_url}" alt="${p.product}">` : ""}
-        <span style="font-size:12px;">
-    ${p.product || "Producto"}
-  </span>
-    `;
-
-//Redirigir al producto al hacer clic
-li.style.cursor = "pointer"; // que se note que es clickeable
-li.onclick = () => {
-  // Se asume que p.id viene del PHP
-  window.location.href = `Dashboard_Catalogo.html?id=${p.id}`;
-};
-
-    
-    list.appendChild(li);
-  });
-}
-
-//Obtener recomendaciones desde PHP
-async function fetchRecommendations(productName = null) {
-  const url = productName
-    ? `http://localhost/sweetharmony/sweetharmony/components/widget.php?product=${encodeURIComponent(productName)}`
-    : `http://localhost/sweetharmony/sweetharmony/components/widget.php`;
-
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    if (data.recommendations && data.recommendations.length) {
-      updateWidget(data.recommendations);
+// Widget con imágenes y nombres
+(function() {
+  // Estilos con nombres
+  const style = document.createElement("style");
+  style.textContent = `
+    #product-suggestions {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+      padding: 12px;
+      z-index: 10000;
+      font-family: 'Urbanist', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 2px solid #3B5849;
     }
-  } catch (e) {
-    console.error("Error al obtener recomendaciones:", e);
-  }
-}
+    
+    .suggestions-title {
+      color: #3B5849;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: normal;
+      line-height: 1.2;
+      padding-right: 8px;
+      border-right: 2px solid #eee;
+      text-align: center;
+      width: 60px;
+    }
+    
+    .suggestions-container {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    
+    .suggestion-item {
+      width: 110px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    .suggestion-item:hover {
+      transform: translateY(-5px);
+    }
+    
+    .suggestion-image {
+      width: 110px;
+      height: 110px;
+      border-radius: 8px;
+      object-fit: cover;
+      display: block;
+      margin-bottom: 6px;
+      border: 2px solid #eee;
+      transition: all 0.2s;
+    }
+    
+    .suggestion-item:hover .suggestion-image {
+      border-color: #3B5849;
+      box-shadow: 0 5px 15px rgba(59, 88, 73, 0.2);
+    }
+    
+    .suggestion-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: #333;
+      line-height: 1.3;
+      max-height: 28px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    
+    .close-suggestions-btn {
+      background: #ff5555;
+      border: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      color: white;
+      font-weight: bold;
+      transition: background 0.2s;
+      flex-shrink: 0;
+      margin-left: 5px;
+    }
+    
+    .close-suggestions-btn:hover {
+      background: #ff3333;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      #product-suggestions {
+        padding: 10px;
+      }
+      
+      .suggestion-item {
+        width: 95px;
+      }
+      
+      .suggestion-image {
+        width: 95px;
+        height: 95px;
+      }
+      
+      .suggestion-name {
+        font-size: 10px;
+      }
+    }
+  `;
+  document.head.appendChild(style);
 
-// Guardar clic y pedir recomendaciones
-window.productClicked = (id, name, image_url) => {
-  clickedProducts = clickedProducts.filter(p => p.id !== id); // evita duplicados
-  clickedProducts.push({ id, name, image_url });
-  localStorage.setItem('clickedProducts', JSON.stringify(clickedProducts));
+  // Crear widget
+  const widget = document.createElement("div");
+  widget.id = "product-suggestions";
+  widget.innerHTML = `
+    <div class="suggestions-title">También te<br>puede interesar</div>
+    <div class="suggestions-container" id="suggestions-container">
+      <div>Cargando...</div>
+    </div>
+    <button class="close-suggestions-btn" title="Cerrar">×</button>
+  `;
+  
+  document.body.appendChild(widget);
 
-  fetchRecommendations(name);
-};
+  // Elementos
+  const widgetEl = document.getElementById('product-suggestions');
+  const closeBtn = widget.querySelector('.close-suggestions-btn');
+  const container = widget.querySelector('#suggestions-container');
 
-// Detectar clics en los productos del catálogo
-document.querySelectorAll('.product-card').forEach(card => {
-  card.addEventListener('click', () => {
-    const id = card.dataset.id;
-    const name = card.querySelector('h3')?.textContent?.trim() || '';
-    const image = card.querySelector('img')?.getAttribute('src')?.split('/').pop() || '';
-    window.productClicked(id, name, image);
+  // Cerrar widget
+  closeBtn.addEventListener('click', () => {
+    widgetEl.remove();
   });
-});
 
-// Cargar al iniciar
-if (clickedProducts.length) {
-  const lastClicked = clickedProducts[clickedProducts.length - 1];
-  fetchRecommendations(lastClicked.name);
-} else {
-  fetchRecommendations();
-}
+  // Mostrar sugerencias con nombres
+  function showSuggestions(products) {
+    container.innerHTML = '';
+    
+    if (!products || products.length === 0) return;
+
+    // Tomar 3 productos (para que quepan mejor con los nombres)
+    const suggestions = products.slice(0, 3);
+    
+    suggestions.forEach(p => {
+      const item = document.createElement('a');
+      item.href = `Dashboard_Catalogo.html?id=${p.id}`;
+      item.className = 'suggestion-item';
+      
+      // Cortar nombre si es muy largo
+      const shortName = p.product.length > 30 
+        ? p.product.substring(0, 30) + '...' 
+        : p.product;
+      
+      item.innerHTML = `
+        <img src="../../uploads/${p.image_url || ''}" 
+             class="suggestion-image" 
+             alt="${p.product}"
+             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTEwIiBoZWlnaHQ9IjExMCIgdmlld0JveD0iMCAwIDExMCAxMTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjExMCIgaGVpZ2h0PSIxMTAiIHJ4PSI4IiBmaWxsPSIjZjBmNWY3Ii8+PHBhdGggZD0iTTU1IDQwQzUwLjAzIDQwIDQ2IDQ0LjAzIDQ2IDQ5QzQ2IDUzLjk3IDUwLjAzIDU4IDU1IDU4QzU5Ljk3IDU4IDY0IDUzLjk3IDY0IDQ5QzY0IDQ0LjAzIDU5Ljk3IDQwIDU1IDQwWiIgZmlsbD0iIzNiNTg0OSIvPjxwYXRoIGQ9Ik0zNSA4MEw1NSA1MEw3NSA4MCIgc3Ryb2tlPSIjM2I1ODQ5IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==';">
+        <div class="suggestion-name">${shortName}</div>
+      `;
+      
+      container.appendChild(item);
+    });
+  }
+
+  // Obtener sugerencias
+  async function fetchSuggestions() {
+    try {
+      const url = 'http://localhost/sweetharmony/sweetharmony/components/widget.php';
+      const res = await fetch(url);
+      const data = await res.json();
+      
+      if (data.recommendations && data.recommendations.length) {
+        showSuggestions(data.recommendations);
+      }
+    } catch (e) {
+      console.log("Widget de sugerencias cargado");
+    }
+  }
+
+  setTimeout(() => {
+    fetchSuggestions();
+  }, 1000);
+
+})();

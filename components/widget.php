@@ -3,7 +3,7 @@
 
 require_once "../conexion.php";
 header("Content-Type: application/json; charset=UTF-8");
-$HF_TOKEN = "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";
+
 
 // Obtener el último producto clickeado
 $sqlLast = "SELECT id, product_name, image_url FROM products ORDER BY last_viewed_at DESC LIMIT 1";

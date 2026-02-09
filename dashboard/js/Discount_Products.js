@@ -14,8 +14,8 @@ function crearProductoHTMLDiscount(product) {
             </div>
             <div class="card-content">
                 <div class="price">
-                    ${discount > 0 ? `<del class="del">$${price.toFixed(2)}</del>` : ''}
-                    <span class="span">$${precioFinal}</span>
+                    ${discount > 0 ? `<del class="del">s/.${price.toFixed(2)}</del>` : ''}
+                    <span class="span">s/.${precioFinal}</span>
                 </div>
                 <h3 class="card-title">${product.product_name}</h3>
             </div>

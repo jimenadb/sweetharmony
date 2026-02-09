@@ -6,7 +6,9 @@ fetch("http://localhost/sweetharmony/sweetharmony/dashboard/php/get_wishlist_det
     if (!productos || productos.length === 0) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="6" style="text-align:center;">No tienes productos en tu lista de deseos.</td>
+          <td colspan="6" style="text-align:center;">
+            No tienes productos en tu lista de deseos.
+          </td>
         </tr>
       `;
       return;
@@ -15,7 +17,6 @@ fetch("http://localhost/sweetharmony/sweetharmony/dashboard/php/get_wishlist_det
     // Construye toda la tabla
     tbody.innerHTML = productos.map(p => `
       <tr class="wishlist-row" data-id="${p.id}">
-
         <td class="product-info">
           <img src="../../uploads/${p.image_url}" alt="${p.product_name}">
         </td>
@@ -40,10 +41,12 @@ fetch("http://localhost/sweetharmony/sweetharmony/dashboard/php/get_wishlist_det
       </tr>
     `).join("");
 
-    // 🔹 Agregar clic a cada fila para redirigir
+    // ✅ Redirección SOLO si no se hace clic en un botón
     document.querySelectorAll(".wishlist-row").forEach(row => {
-      row.style.cursor = "pointer"; // que se note clickeable
-      row.addEventListener("click", () => {
+      row.style.cursor = "pointer";
+      row.addEventListener("click", (e) => {
+        if (e.target.closest("button")) return;
+
         const productId = row.dataset.id;
         window.location.href = `Dashboard_Catalogo.html?id=${productId}`;
       });
@@ -61,11 +64,10 @@ fetch("http://localhost/sweetharmony/sweetharmony/dashboard/php/get_wishlist_det
   });
 
 
-
-
-
+// ✅ ELIMINAR PRODUCTO
 tbody.addEventListener('click', e => {
   if (e.target.classList.contains('remove-btn')) {
+
     const btn = e.target;
     const productId = btn.dataset.id;
 
@@ -78,8 +80,19 @@ tbody.addEventListener('click', e => {
     .then(res => res.json())
     .then(data => {
       if (data.success) {
-        // Elimina la fila visualmente
+        alert("Producto eliminado de tu lista de deseos ✅");
         btn.closest("tr").remove();
+
+        // Si ya no quedan productos
+        if (tbody.children.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" style="text-align:center;">
+                No tienes productos en tu lista de deseos.
+              </td>
+            </tr>
+          `;
+        }
       } else {
         alert(data.message || "Error al eliminar el producto");
       }
@@ -92,10 +105,10 @@ tbody.addEventListener('click', e => {
 });
 
 
-
-
+// ✅ AGREGAR AL CARRITO
 tbody.addEventListener('click', e => {
   if (e.target.classList.contains('add-cart-btn')) {
+
     const btn = e.target;
     const productId = btn.dataset.id;
 
@@ -108,7 +121,7 @@ tbody.addEventListener('click', e => {
     .then(res => res.json())
     .then(data => {
       if (data.success) {
-        alert("Producto agregado al carrito");
+        alert("Producto agregado al carrito 🛒");
       } else {
         alert(data.message || "Error al agregar el producto");
       }

@@ -52,7 +52,7 @@ function renderCatalogo(data) {
       btnWishlist.classList.add('action-btn');
       btnWishlist.setAttribute('aria-label', 'add to wishlist');
       btnWishlist.setAttribute('data-product-id', producto.id);
-      btnWishlist.innerHTML = `<ion-icon name="heart-outline" aria-hidden="true"></ion-icon>`;
+      btnWishlist.innerHTML = `<ion-icon name="star-outline" aria-hidden="true"></ion-icon>`;
       btnWishlist.addEventListener('click', async (e) => {
         const button = e.currentTarget;
         const productId = button.getAttribute('data-product-id');
@@ -68,10 +68,10 @@ function renderCatalogo(data) {
           if (response.ok) {
             if (isFavorito) {
               button.classList.remove('favorito');
-              button.innerHTML = `<ion-icon name="heart-outline" aria-hidden="true"></ion-icon>`;
+              button.innerHTML = `<ion-icon name="star-outline" aria-hidden="true"></ion-icon>`;
             } else {
               button.classList.add('favorito');
-              button.innerHTML = `<ion-icon name="heart" aria-hidden="true"></ion-icon>`;
+              button.innerHTML = `<ion-icon name="star" aria-hidden="true"></ion-icon>`;
             }
           } else {
             console.error(data.message);
@@ -81,40 +81,6 @@ function renderCatalogo(data) {
         }
       });
 
-      // const btnCart = document.createElement('button');
-      // btnCart.classList.add('action-btn');
-      // btnCart.setAttribute('aria-label', 'add to cart');
-      // btnCart.setAttribute('data-type', 'cart');
-      // btnCart.setAttribute('data-product-id', producto.id);
-      // btnCart.innerHTML = `<ion-icon name="cart-outline" aria-hidden="true"></ion-icon>`;
-      // btnCart.addEventListener('click', async (e) => {
-      //   const button = e.currentTarget;
-      //   const productId = button.getAttribute('data-product-id');
-      //   const isInCart = button.classList.contains('in-cart');
-      //   try {
-      //     const response = await fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/add_to_cart.php', {
-      //       method: 'POST',
-      //       headers: { 'Content-Type': 'application/json' },
-      //       body: JSON.stringify({ product_id: productId, action: isInCart ? 'remove' : 'add' }),
-      //       credentials: 'include'
-      //     });
-      //     const data = await response.json();
-      //     if (response.ok) {
-      //       if (isInCart) {
-      //         button.classList.remove('in-cart');
-      //         button.innerHTML = `<ion-icon name="cart-outline" aria-hidden="true"></ion-icon>`;
-      //       } else {
-      //         button.classList.add('in-cart');
-      //         button.innerHTML = `<ion-icon name="cart" aria-hidden="true"></ion-icon>`;
-      //       }
-      //       console.log(data.message);
-      //     } else {
-      //       console.error(data.message);
-      //     }
-      //   } catch (err) {
-      //     console.error('Error al actualizar carrito:', err);
-      //   }
-      // });
 
       const btnViewDetails = document.createElement('button');
       btnViewDetails.classList.add('action-btn','view-details-btn');
@@ -161,12 +127,12 @@ function renderCatalogo(data) {
       if (producto.old_price) {
         const del = document.createElement('del');
         del.classList.add('del');
-        del.textContent = `$${producto.old_price}`;
+        del.textContent = `s/.${producto.old_price}`;
         priceDiv.appendChild(del);
       }
       const spanPrice = document.createElement('span');
       spanPrice.classList.add('span');
-      spanPrice.textContent = `$${producto.price}`;
+      spanPrice.textContent = `s/.${producto.price}`;
       priceDiv.appendChild(spanPrice);
 
       const h3 = document.createElement('h3');
@@ -181,8 +147,9 @@ function renderCatalogo(data) {
       shopCard.append(cardBanner, cardContent);
       li.appendChild(shopCard);
       contenedor.appendChild(li);
-    }); // fin del forEach
-  } // fin de renderCatalogo
+    }); 
+  } 
+  window.renderCatalogo = renderCatalogo; 
 
 // =============================
 // FETCH WISHLIST
@@ -202,22 +169,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error al obtener favoritos:', err);
   }
 });
-
-// =============================
-// FETCH CARRITO
-// =============================
-// document.addEventListener('DOMContentLoaded', async () => {
-//   try {
-//     const res = await fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/get_cart_for_catalogo.php', { credentials: 'include' });
-//     const carrito = await res.json();
-//     carrito.forEach(id => {
-//       const btn = document.querySelector(`[data-type='cart'][data-product-id='${id}']`);
-//       if (btn) btn.innerHTML = `<ion-icon name="bag-handle" aria-hidden="true"></ion-icon>`;
-//     });
-//   } catch (err) {
-//     console.error('Error al obtener carrito:', err);
-//   }
-// });
 
 // =============================
 // FUNCION DETALLE DEL PRODUCTO
@@ -242,12 +193,12 @@ function openProductDetail(product) {
       <p>Dimensiones de la maceta: ${product.pot_height || '-'} x ${product.pot_width || '-'}</p>
       <p>Peso: ${product.weight || '-'}</p>
       <p>Unidades: ${product.units != null ? product.units : '-'}</p>
-      <p>Precio: ${product.price ? '$' + product.price : '-'}</p>
+      <p>Precio: ${product.price ? 's/.' + product.price : '-'}</p>
       <p>${Number(product.discount) > 0 ? 'Descuento: ' + (Number(product.discount) % 1 === 0 ? Number(product.discount) : Number(product.discount).toFixed(2)) + '%' : ''}</p>
       <p class="price-total">
         ${
           product.price 
-            ? '$' + (
+            ? 's/.' + (
                 product.discount > 0 
                   ? (product.price * (1 - product.discount / 100)).toFixed(2) 
                   : product.price
@@ -309,7 +260,6 @@ fetch(`http://localhost/sweetharmony/sweetharmony/dashboard/php/register_view.ph
 .catch(err => console.error('Error registrando vista:', err));
 
 
-
   document.getElementById('back-to-catalog').addEventListener('click', () => {
     detailEl.style.display = 'none';
     catalogoEl.style.display = 'grid';
@@ -336,12 +286,7 @@ fetch(`http://localhost/sweetharmony/sweetharmony/dashboard/php/register_view.ph
     } catch {
       alert('Error de conexión con el servidor.');
     }
-    
-
-
-
-    
-    
+  
   };
 }
 
@@ -379,13 +324,47 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-
-
-
 // =============================
-// FETCH DEL CATALOGO
+// FETCH DEL CATALOGO (MODIFICADO)
 // =============================
 fetch('http://localhost/sweetharmony/sweetharmony/dashboard/php/dashboard_catalogo.php')
   .then(res => res.json())
-  .then(data => renderCatalogo(data))
-  .catch(err => console.error("Error al cargar catálogo:", err));
+  .then(data => {
+    // 1. Guardar productos
+    window.allProducts = data;
+    
+    // 2. Verificar si hay búsqueda en URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search');
+    
+    if (searchQuery) {
+      // 🔥 CAMBIA ESTO: Usar executeSearch en lugar de buscarEnCatalogo
+      setTimeout(() => {
+        if (window.executeSearch) {
+          // Decodificar el query
+          const decodedQuery = decodeURIComponent(searchQuery);
+          
+          // Rellenar el campo de búsqueda
+          const searchInput = document.getElementById('search-input');
+          if (searchInput) {
+            searchInput.value = decodedQuery;
+          }
+          
+          // Ejecutar la búsqueda
+          window.executeSearch(decodedQuery);
+        } else if (typeof buscarEnCatalogo === 'function') {
+          buscarEnCatalogo(searchQuery);
+        }
+      }, 300);
+    } else {
+      // 3. Renderizar normalmente
+      renderCatalogo(data);
+    }
+    
+    // 4. Inicializar búsqueda
+    if (typeof initSearch === 'function') {
+      initSearch(data);
+    }
+  })
+  .catch(err => console.error("Error:", err));
+  

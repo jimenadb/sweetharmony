@@ -23,8 +23,8 @@ h1 {
 /* ====================================================== */
 
 .table-responsive {
-  max-height: 75vh;                 /* Altura máxima antes del scroll */
-  overflow-y: auto;                 /* Scroll vertical */
+  max-height: 75vh;                
+  overflow-y: auto;                
   overflow-x: auto;                 /* Scroll horizontal */
   border-radius: var(--radius);
   margin: 0 auto 2rem auto;

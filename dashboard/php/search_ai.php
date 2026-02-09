@@ -1,10 +1,9 @@
 <?php
-
 require_once "../../conexion.php";
 header("Content-Type: application/json; charset=UTF-8");
-$HF_TOKEN = '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'; 
 
-//  Obtener la query enviada desde el buscador
+
+// Obtener la query enviada desde el buscador
 $searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
 
 if (!$searchTerm) {
@@ -12,7 +11,21 @@ if (!$searchTerm) {
     exit;
 }
 
-// Obtener todos los productos
+// 1. PALABRAS CLARAMENTE IRRELEVANTES - DEVOLVER VACÍO INMEDIATAMENTE
+$irrelevantWords = ['perro', 'gato', 'auto', 'coche', 'mascota', 'animal', 
+                   'casa', 'computadora', 'teléfono', 'ropa', 'comida'];
+
+$searchLower = strtolower($searchTerm);
+if (in_array($searchLower, $irrelevantWords)) {
+    echo json_encode([
+        "query" => $searchTerm,
+        "results" => [],
+        "message" => "Búsqueda no relacionada"
+    ]);
+    exit;
+}
+
+// 2. Obtener todos los productos
 $sql = "SELECT id, product_name, image_url, price, discount FROM products";
 $result = $conexion->query($sql);
 
@@ -32,7 +45,7 @@ if ($result && $result->num_rows > 0) {
     }
 }
 
-// Preparar solicitud al modelo de similitud usando la query del buscador
+// 3. Solicitar a Hugging Face
 $payload = [
     "inputs" => [
         "source_sentence" => $searchTerm,
@@ -59,25 +72,57 @@ curl_close($ch);
 
 $scores = json_decode($response, true);
 
-// Combinar productos con puntuaciones, IDs, precio y descuento
+// 4. Combinar y filtrar resultados
 $combined = [];
 foreach ($products as $i => $p) {
+    $score = $scores[$i] ?? 0;
+    
+    // FILTROS ESTRICTOS:
+    // a. Eliminar productos con nombre vacío
+    if (empty(trim($p))) {
+        continue;
+    }
+    
+    // b. Solo incluir si la puntuación es razonable
+    if ($score < 0.6) { // Ajusta este valor según necesites
+        continue;
+    }
+    
+    // c. Si la búsqueda es corta (<4 chars) y no hay coincidencia parcial, filtrar
+    if (strlen($searchTerm) < 4 && stripos($p, $searchTerm) === false) {
+        continue;
+    }
+    
     $combined[] = [
         "id" => $idMap[$p] ?? null,
         "product" => $p,
-        "score" => $scores[$i] ?? 0,
+        "score" => $score,
         "image_url" => $imageMap[$p] ?? null,
         "price" => isset($priceMap[$p]) ? (float)$priceMap[$p] : 0,
         "discount" => isset($discountMap[$p]) ? (float)$discountMap[$p] : 0
     ];
 }
 
-// Ordenar por score descendente y tomar los top 5
+// 5. Ordenar y eliminar duplicados
 usort($combined, fn($a, $b) => $b['score'] <=> $a['score']);
-$top = $combined;
 
-// Respuesta final
+// Eliminar duplicados por ID
+$uniqueResults = [];
+$seenIds = [];
+foreach ($combined as $item) {
+    if (!in_array($item['id'], $seenIds)) {
+        $seenIds[] = $item['id'];
+        $uniqueResults[] = $item;
+    }
+}
+
+// Tomar solo los top 5 después de filtrar
+$top = array_slice($uniqueResults, 0, 5);
+
+// 6. Respuesta final
 echo json_encode([
     "query" => $searchTerm,
-    "results" => $top
+    "results" => $top,
+    "count" => count($top)
 ]);
+?>

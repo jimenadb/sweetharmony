@@ -9,7 +9,6 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// Leer datos enviados
 $data = json_decode(file_get_contents('php://input'), true);
 
 $user_id = $_SESSION['user_id'];
@@ -19,7 +18,6 @@ $email = $data['email'] ?? '';
 $current_password = $data['current_password'] ?? '';
 $new_password = $data['new_password'] ?? '';
 
-// Obtener usuario de la base
 $sql = "SELECT password FROM users WHERE id = ?";
 $stmt = $conexion->prepare($sql);
 $stmt->bind_param('i', $user_id);

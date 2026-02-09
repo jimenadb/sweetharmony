@@ -97,29 +97,37 @@ document.querySelectorAll(".delete-btn").forEach(btn => {
     // Guardar / actualizar dirección
     form.addEventListener("submit", async e => {
       e.preventDefault();
-      const formData = new FormData(form);
     
-      // Asegurarse de enviar "is_default" aunque no esté marcado
-    // Enviar siempre 1 o 0 según si está marcado
-    formData.set("is_default", form.querySelector("#is_default").checked ? 1 : 0);
+      const formData = new FormData(form);
+      formData.set(
+        "is_default",
+        form.querySelector("#is_default").checked ? 1 : 0
+      );
     
       try {
-        const res = await fetch("http://localhost/sweetharmony/sweetharmony/dashboard/php/add_user_address.php", {
-          method: "POST",
-          body: formData,
-          credentials: "include"
-        });
+        const res = await fetch(
+          "http://localhost/sweetharmony/sweetharmony/dashboard/php/add_user_address.php",
+          {
+            method: "POST",
+            body: formData,
+            credentials: "include"
+          }
+        );
+    
         const data = await res.json();
-        alert(data.message);
-        if(data.message.includes("guardada")) {
-          modal.style.display = "none";
-          loadAddresses(); // recargar lista
-        }
-      } catch(err) {
+    
+        alert(data.message || "Dirección guardada");
+    
+        modal.style.display = "none";
+        form.reset();
+        await loadAddresses();
+    
+      } catch (err) {
         console.error(err);
         alert("Error al guardar dirección");
       }
     });
+    
     // Inicializar lista
     loadAddresses();
   });

@@ -1,113 +1,102 @@
-:root{
-  --hoockers-green: hsl(148,20%,38%);
-  --white: hsl(255,255%,255%);
-  --black: hsl(0,0%,0%);
-  --gray: hsl(0,0%,70%);
-  --radius: 12px;
+:root {
+  --hoockers-green: hsl(148, 20%, 38%);
+  --hoockers-green-light: hsl(148, 20%, 45%);
+  --hoockers-green-dark: hsl(148, 20%, 28%);
+  --white: hsl(0, 0%, 100%);
+  --black: hsl(0, 0%, 15%);
+  --gray-light: hsl(0, 0%, 92%);
+  --gray: hsl(0, 0%, 70%);
+  --bg-color: hsl(0, 0%, 98%);
+  --radius: 16px;
   --max-width: 600px;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: var(--cultured-1);
+  font-family: 'Urbanist', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-color);
   margin: 0;
-  padding: 20px;
+  padding: 30px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
 }
 
-/* Contenedor principal con blanco leve transparente */
 .profile-container {
   max-width: var(--max-width);
-  margin: 0 auto;
-  background-color: rgba(255,255,255,0.9); /* leve transparencia */
-  padding: 30px;
+  width: 100%;
+  background: var(--white);
+  padding: 40px;
   border-radius: var(--radius);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
-/* Título centrado y verde */
 h1 {
   text-align: center;
   color: var(--hoockers-green);
-  margin-bottom: 30px;
+  font-size: 2rem;
+  margin-bottom: 35px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  position: relative;
+  padding-bottom: 15px;
 }
 
-/* Contenedor general del perfil */
-.profile-container {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--hoockers-green), transparent);
+  border-radius: 2px;
 }
 
-/* Formulario */
 .profile-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  background-color: var(--white);
-  padding: 1.5rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  gap: 25px;
+  background: transparent;
 }
 
-/* Grupos de input */
 .form-group {
   display: flex;
   flex-direction: column;
 }
 
-/* Labels en verde */
 .form-group label {
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-weight: 600;
+  margin-bottom: 8px;
   color: var(--hoockers-green);
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
 }
 
-/* Inputs */
 .form-group input {
-  padding: 10px 12px;
-  border: 1px solid var(--light-gray);
-  border-radius: var(--radius);
+  padding: 14px 16px;
+  border: 1px solid var(--gray-light);
+  border-radius: 12px;
   font-size: 1rem;
   outline: none;
-  transition: border-color 0.2s;
-  background-color: rgba(255,255,255,0.95);
-  color: var(--hoockers-green);
+  transition: all 0.3s ease;
+  background: var(--white);
+  color: var(--black);
+  font-family: 'Urbanist', sans-serif;
 }
 
 .form-group input:focus {
   border-color: var(--hoockers-green);
+  box-shadow: 0 0 0 3px rgba(148, 190, 169, 0.2);
 }
 
 .form-group.readonly input {
-  background-color: rgba(255,255,255,0.85);
+  background: var(--gray-light);
   cursor: not-allowed;
-  color: var(--hoockers-green);
+  opacity: 0.8;
 }
 
-/* Botones */
-.save-btn,
-.delete-btn {
-  background-color: var(--hoockers-green);
-  color: var(--white);
-  padding: 12px 0;
-  border: none;
-  border-radius: var(--radius);
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  width: 100%;
-}
-
-.save-btn:hover,
-.delete-btn:hover {
-  background-color: hsl(148,20%,28%);
-}
-
-/* Toggle contraseña */
 .password-wrapper {
   position: relative;
   display: flex;
@@ -116,26 +105,110 @@ h1 {
 
 .password-wrapper input {
   flex: 1;
-  padding-right: 35px;
+  padding-right: 45px;
 }
 
 .password-wrapper ion-icon.toggle-password {
   position: absolute;
-  right: 10px;
+  right: 16px;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: var(--hoockers-green);
+  transition: color 0.2s ease;
 }
 
-/* Formulario oculto de eliminar cuenta */
+.password-wrapper ion-icon.toggle-password:hover {
+  color: var(--hoockers-green-dark);
+}
+
+.save-btn,
+.delete-btn {
+  padding: 14px 0;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Urbanist', sans-serif;
+  padding-left: 24px; /* Añade esto */
+  padding-right: 24px;
+  letter-spacing: 0.5px;
+  margin-top: 10px;
+}
+
+.save-btn {
+  background: var(--hoockers-green);
+  color: var(--white);
+  box-shadow: 0 4px 15px rgba(148, 190, 169, 0.3);
+}
+
+.save-btn:hover {
+  background: var(--hoockers-green-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(148, 190, 169, 0.4);
+}
+
+.delete-btn {
+  background: var(--gray-light);
+  color: var(--black);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.delete-btn:hover {
+  background: #e0e0e0;
+  transform: translateY(-2px);
+}
+
 #formEliminarCuenta {
   display: none;
-  margin-top: 1rem;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--gray-light);
 }
 
-/* Responsive */
-@media (max-width: 500px) {
+@media (max-width: 768px) {
+  body {
+    padding: 20px 15px;
+  }
+  
   .profile-container {
-    padding: 20px;
+    padding: 30px 20px;
+    border-radius: 14px;
+  }
+  
+  h1 {
+    font-size: 1.7rem;
+    margin-bottom: 25px;
+  }
+  
+  h1::after {
+    width: 60px;
+  }
+  
+  .form-group input {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 25px 16px;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+  }
+  
+  .form-group input {
+    padding: 11px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .save-btn,
+  .delete-btn {
+    padding: 13px 0;
+    font-size: 0.95rem;
   }
 }

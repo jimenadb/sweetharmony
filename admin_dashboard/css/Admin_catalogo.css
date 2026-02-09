@@ -68,13 +68,13 @@ tr.seleccionada {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   color: var(--white);
-  background-color: hsl(148, 20%, 38%); /* color único */
+  background-color: hsl(148, 20%, 38%); 
   box-shadow: 0 3px 8px rgba(0,0,0,0.15);
 }
 
 /* Hover general para todos */
 .btn-wrapper .add-entry-btn:hover {
-  background-color: hsl(148, 20%, 28%); /* hover uniforme */
+  background-color: hsl(148, 20%, 28%); 
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
@@ -98,8 +98,8 @@ tr.seleccionada {
 /* =============================================================================== Pedido inactivo =================== */
 
 tr.inactive {
-  opacity: 0.5;           /* Hace la fila semi-transparente */
-  background-color: #f9f9f9; /* Opcional: un fondo más claro para diferenciar */
+  opacity: 0.5;           
+  background-color: #f9f9f9; 
 }
 /* =============================================================================== MODAL AGREGAR PRODUCTO =================== */
 #modalAgregar {
@@ -120,10 +120,10 @@ tr.inactive {
 #modalAgregar .modal-wrapper {
   width: 100%;
   max-width: 600px;
-  max-height: 90vh;          /* limita altura al 90% del viewport */
-  overflow-y: auto;          /* scroll interno si contenido excede altura */
+  max-height: 90vh;        
+  overflow-y: auto;        
   box-sizing: border-box;
-  background-color: #ffffff; /* fondo del modal */
+  background-color: #ffffff; 
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
@@ -153,7 +153,6 @@ tr.inactive {
   color: #333333;
 }
 
-/* Scroll del wrapper si hay contenido largo */
 #modalAgregar .modal-wrapper::-webkit-scrollbar {
   width: 8px;
 }
@@ -167,7 +166,6 @@ tr.inactive {
   background: #f0f0f0;
 }
 
-/* Título centrado con línea divisoria */
 #modalAgregar h3 {
   text-align: center;
   color: hsl(148, 20%, 38%);
@@ -183,8 +181,8 @@ tr.inactive {
 
 /* =================== FORMULARIOS =================== */
 #modalAgregar .modal-wrapper {
-  position: relative; /* Corrige el icono X */
-  margin: auto;        /* Garantiza centrado */
+  position: relative; 
+  margin: auto;       
 }
 
 #modalAgregar form {
@@ -193,21 +191,18 @@ tr.inactive {
   gap: 1rem;
 }
 
-/* Grupos de formulario */
 #modalAgregar .form-group {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
 }
 
-/* Labels */
 #modalAgregar label {
   font-weight: 600;
   color: #000000;
   font-size: 1rem;
 }
 
-/* Inputs y textareas */
 #modalAgregar input[type="text"],
 #modalAgregar input[type="number"],
 #modalAgregar input[type="file"],
@@ -229,7 +224,6 @@ tr.inactive {
   border-color: hsl(148, 30%, 78%);
 }
 
-/* Inputs inline para medidas */
 #modalAgregar .form-inline {
   display: flex;
   gap: 0.5rem;
@@ -237,7 +231,6 @@ tr.inactive {
   align-items: center;
 }
 
-/* Fieldset */
 #modalAgregar fieldset {
   border: 2px solid hsl(148, 20%, 38%);
   border-radius: 8px;
@@ -250,7 +243,6 @@ tr.inactive {
   padding: 0 0.5rem;
 }
 
-/* Preview imagen */
 #modalAgregar #previewImagen {
   border: 2px solid hsl(148, 20%, 38%);
   border-radius: 8px;
@@ -264,7 +256,6 @@ tr.inactive {
   background-color: #f7f7f7; /* light */
 }
 
-/* Botones */
 #modalAgregar button {
   background-color: hsl(148, 20%, 38%);
   color: #ffffff;
@@ -280,7 +271,6 @@ tr.inactive {
   background-color: hsl(148, 20%, 28%);
 }
 
-/* Botón generar descripción IA */
 #modalAgregar #generate_description {
   background-color: hsl(148, 30%, 38%);
   margin-top: 0.2rem;
@@ -295,7 +285,6 @@ tr.inactive {
   to { transform: translateY(0); opacity: 1; }
 }
 
-/* Scroll interno si el contenido es largo */
 #modalAgregar .modal-wrapper::-webkit-scrollbar {
   width: 8px;
 }

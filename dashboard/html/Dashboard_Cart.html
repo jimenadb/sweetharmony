@@ -29,24 +29,17 @@
     <button class="btn btn-secondary" id="delete-selected">Eliminar seleccionados</button>
   </div>
   <div class="cart-summary">
-    <p>Total: <span id="grand-total">$85.00</span></p>
+    <p>Total: <span id="grand-total">s/.85.00</span></p>
     <button class="btn btn-primary" id="checkout-btn">Realizar Compra</button>
   </div>
 
-  <!-- <a href="Dashboard_Order.html">
-    <button class="btn btn-primary">Ver mis pedidos</button>
-  </a>
-  <a href="Dashboard.html">
-    <button class="btn btn-primary">Volver al incio</button>
-  </a> -->
+
 
   <section class="checkout-section">
     <h2 class="checkout-title">Resumen de Compra</h2>
     <div class="invoice-preview">
       <h3>Factura Previa</h3>
-      <!-- <p><strong>Total:</strong> <span id="subtotal">$0.00</span></p>
-      <p><strong>Costo de Envío:</strong> <span id="shipping">$5.00</span></p> -->
-      <!-- Tabla de productos -->
+
       <table id="factura" border="1" cellspacing="0" cellpadding="5">
         <thead>
           <tr>
@@ -62,7 +55,7 @@
         </tbody>
       </table>
       <!-- Costos -->
-      <p><strong>Total a Pagar:</strong> <span id="total-payable">$0.00</span></p>
+      <p><strong>Total a Pagar:</strong> <span id="total-payable">s/.0.00</span></p>
     </div>
 
     <div class="shipping-selection">
@@ -106,6 +99,9 @@
         <img id="yape-preview" class="yape-preview" style="display:none; max-width:120px; margin-top:10px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
       </form>
     </div>
+
+    
+    
     <div class="payment-notice" style="border: 1px solid #f5c6cb; background-color: #f8d7da; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
       <p style="display: flex; align-items: flex-start; gap: 0.5rem; color: #721c24; font-weight: bold; font-size: 1.1rem;">
         <span>⚠️</span>
@@ -130,6 +126,18 @@
       <button class="btn btn-primary" id="place-order">Realizar Pedido</button>
     </div>
 
+    <div class="mp-payment">
+      <h3 style="color:#009ee3;">Pagar con tarjeta (Mercado Pago)</h3>
+    
+      <p style="color:#555; font-size:0.9rem;">
+        Aceptamos tarjetas de débito y crédito de forma segura.
+      </p>
+    
+      <button class="btn btn-primary" id="mp-btn" style="background:#009ee3;">
+        💳 Pagar con Mercado Pago
+      </button> 
+    </div> <br>
+
 
 
   </section>
@@ -139,6 +147,7 @@
 <script defer src="../js/Dashboard_Cart.js"></script>
 <script defer src="../js/Place_Order.js"></script>
 <script defer src="../js/Dashboard_Cart_Shipping.js"></script>
+<script src="../js/Mercado_pago.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 

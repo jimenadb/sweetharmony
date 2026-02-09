@@ -1,40 +1,129 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mi Perfil</title>
-<link rel="stylesheet" href="../css/Edit_User.css">
-<style>
-body{background:url("../assets/fondo1.jpg") no-repeat center center fixed;background-size:cover;}
-</style>
-</head>
-<body>
-<div class="profile-container">
-<h1>Mi Perfil</h1>
-<form class="profile-form" id="profileForm">
-<div class="form-group"><label for="first_name">Nombre</label><input type="text" id="first_name" name="first_name" placeholder="Tu nombre"></div>
-<div class="form-group"><label for="last_name">Apellido</label><input type="text" id="last_name" name="last_name" placeholder="Tu apellido"></div>
-<div class="form-group"><label for="email">Correo electrónico</label><input type="email" id="email" name="email" placeholder="tu@email.com"></div>
-<div class="form-group"><label for="current_password">Contraseña actual</label><div class="password-wrapper"><input type="password" id="current_password" name="current_password" placeholder="Tu contraseña actual"><ion-icon class="toggle-password" name="eye-outline"></ion-icon></div></div>
-<div class="form-group"><label for="new_password">Nueva contraseña</label><div class="password-wrapper"><input type="password" id="new_password" name="new_password" placeholder="Dejar en blanco si no cambias"><ion-icon class="toggle-password" name="eye-outline"></ion-icon></div></div>
-<button type="submit" class="save-btn">Guardar Cambios</button>
-</form> <br>
-<!-- Botón que abre el formulario -->
-<button id="btnEliminarCuenta" class="delete-btn">Eliminar cuenta</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Perfil</title>
 
-<!-- Formulario oculto -->
-<form id="formEliminarCuenta" class="profile-form" method="POST" action="../php/DeleteUser.php" style="display:none; margin-top:1rem;">
-    <div class="form-group">
-        <label for="delete_password">Contraseña para eliminar cuenta</label>
-        <input type="password" id="delete_password" name="password" placeholder="Tu contraseña" required>
+    <link rel="stylesheet" href="../css/Edit_User.css" />
+  </head>
+
+  <body>
+    <div class="profile-container">
+      <h1>Mi Perfil</h1>
+
+      <form class="profile-form" id="profileForm">
+        <div class="form-group">
+          <label for="first_name">Nombre</label>
+          <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            placeholder="Tu nombre"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="last_name">Apellido</label>
+          <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            placeholder="Tu apellido"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="tu@email.com"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="current_password">Contraseña actual</label>
+          <div class="password-wrapper">
+            <input
+              type="password"
+              id="current_password"
+              name="current_password"
+              placeholder="Tu contraseña actual"
+            />
+            <ion-icon
+              class="toggle-password"
+              name="eye-outline"
+            ></ion-icon>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="new_password">Nueva contraseña</label>
+          <div class="password-wrapper">
+            <input
+              type="password"
+              id="new_password"
+              name="new_password"
+              placeholder="Nueva contraseña"
+            />
+            <ion-icon
+              class="toggle-password"
+              name="eye-outline"
+            ></ion-icon>
+          </div>
+        </div>
+
+        <button type="submit" class="save-btn">
+          Guardar Cambios
+        </button>
+      </form>
+
+      <br />
+
+      <!-- Botón que abre el formulario -->
+      <button id="btnEliminarCuenta" class="delete-btn">
+        Eliminar cuenta
+      </button>
+
+      <!-- Formulario oculto -->
+      <form
+        id="formEliminarCuenta"
+        class="profile-form"
+        method="POST"
+        action="../php/DeleteUser.php"
+        style="display:none; margin-top:1rem;"
+      >
+        <div class="form-group">
+          <label for="delete_password">
+            Contraseña para eliminar cuenta
+          </label>
+          <input
+            type="password"
+            id="delete_password"
+            name="password"
+            placeholder="Tu contraseña"
+            required
+          />
+        </div>
+
+        <button type="submit" class="save-btn">
+          Confirmar eliminación
+        </button>
+      </form>
     </div>
-    <button type="submit" class="save-btn">Confirmar eliminación</button>
-</form>
-</div>
-<script src="../../components/back_button.js"></script>
-<script src="../js/Edit_User.js"></script>
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-</body>
+
+    <script src="../../components/back_button.js"></script>
+    <script src="../js/Edit_User.js"></script>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
 </html>

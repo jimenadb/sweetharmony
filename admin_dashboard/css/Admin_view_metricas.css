@@ -6,85 +6,132 @@
   --radius: 12px;
   --shadow: 0 4px 14px rgba(0,0,0,0.10);
   --font: 'Urbanist', sans-serif;
+  
+  /* Nuevas variables para consistencia */
+  --card-bg: #ffffff;
+  --text-primary: #222;
+  --text-secondary: #555;
+  --text-light: #444;
+  --border-light: #eee;
+  --scrollbar-thumb: var(--primary);
+  --scrollbar-track: #ddd;
+  --alert-bg: #fff5f5;
+  --alert-border: #ff6b6b;
+  --alert-title: #e74c3c;
 }
 
 /* ================= TARJETAS DE MÉTRICAS ================= */
-/* Contenedor de las cards */
 .metrics-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
   margin: 2rem 0;
-  padding: 0 1rem; /* más pegado a los bordes */
+  padding: 0 0.5rem; /* Aún más pegado a los bordes */
 }
 
-/* Estilo general de cada card */
 .metric-card {
-  background: #ffffff;
+  background: var(--card-bg);
   border-radius: 18px;
   padding: 2rem 1.5rem;
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Animación suave al pasar el mouse */
+/* Efecto sutil de borde superior */
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
 .metric-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
 }
 
-/* Título pequeño */
+.metric-card:hover::before {
+  opacity: 1;
+}
+
 .metric-title {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: #555;
+  color: var(--text-secondary);
   margin-bottom: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
+  text-align: center;
+  width: 100%;
 }
 
-/* 📌 Número grande */
 .metric-number {
   font-size: 3.5rem;
-  font-weight: 700;
-  color: #222;
+  font-weight: 800;
+  color: var(--text-primary);
   line-height: 1;
+  font-family: var(--font);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background: linear-gradient(135deg, var(--text-primary), var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
-
-/* Icono decorativo opcional */
-.metric-icon {
-  font-size: 2rem;
-  margin-bottom: 0.6rem;
-  color: #387EF5;
-}
-
 
 /* ================= PANEL DETALLADO ================= */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  gap: 22px;
-  margin-top: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 28px;
+  padding: 0 0.5rem;
 }
 
 .card {
-  background: #fff;
-  padding: 18px 20px;
+  background: var(--card-bg);
+  padding: 20px 22px;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   height: 300px;
   display: flex;
   flex-direction: column;
+  transition: transform 0.2s ease;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
 .card h2 {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   color: var(--primary);
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   font-weight: 700;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--primary-light);
+  position: relative;
+}
+
+.card h2::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: var(--primary);
 }
 
 /* ===== Scroll interno ===== */
@@ -94,34 +141,122 @@
   margin: 0;
   overflow-y: auto;
   flex-grow: 1;
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary) #ddd;
+  padding-right: 8px;
+}
+
+/* Personalización del scrollbar */
+.card ul::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card ul::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 3px;
+}
+
+.card ul::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 3px;
+  opacity: 0.7;
+}
+
+.card ul::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+  opacity: 1;
 }
 
 /* ===== Estilo de ítems ===== */
 .card ul li {
   display: flex;
-  align-items: center;       /* 🔥 texto al costado de la imagen */
+  align-items: center;
   font-size: 1.1rem;
-  color: #444;
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
-  gap: 10px;
+  color: var(--text-light);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-light);
+  gap: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.card ul li:last-child {
+  border-bottom: none;
+}
+
+.card ul li:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+  padding-left: 5px;
+  border-radius: 6px;
 }
 
 .card ul li img {
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.card ul li:hover img {
+  transform: scale(1.05);
 }
 
 /* ===== ALERTAS ===== */
-.alert {
-  background: #fff5f5;
-  border-left: 4px solid #ff6b6b;
+.card.alert {
+  background: var(--alert-bg);
+  border-left: 4px solid var(--alert-border);
+  border-color: transparent;
+  animation: pulse 2s infinite;
 }
 
-.alert h2 {
-  color: #e74c3c;
+.card.alert h2 {
+  color: var(--alert-title);
+  border-bottom-color: rgba(231, 76, 60, 0.2);
+}
+
+.card.alert h2::after {
+  background: var(--alert-border);
+}
+
+.card.alert ul li {
+  color: #666;
+}
+
+/* Animación sutil para alertas */
+@keyframes pulse {
+  0%, 100% { box-shadow: var(--shadow); }
+  50% { box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .metrics-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0;
+  }
+  
+  .card {
+    height: 280px;
+    padding: 16px 18px;
+  }
+  
+  .metric-number {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .metrics-cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }

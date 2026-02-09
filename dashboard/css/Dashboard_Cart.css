@@ -12,16 +12,14 @@
    ESTILOS BASE
 ========================================= */
 body {
-  font-family: 'Urbanist', sans-serif;
-  background: url("../assets/fondo3.jpg") no-repeat center center fixed;
-  background-size: cover;
-  margin:0;
-  padding:20px;
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  min-height:100vh;
-  color: var(--black);
+  font-family: 'Urbanist', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-color);
+  margin: 0;
+  padding: 30px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
 }
 
 .cart-container{
