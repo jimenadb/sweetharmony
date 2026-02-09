@@ -1,7 +1,6 @@
 <?php
 header('Content-Type: application/json'); // muy importante
 
-$apiKey = "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"; 
 // Recibir datos desde JS
 $input = json_decode(file_get_contents('php://input'), true);
 $nombre = $input['nombre'] ?? '';
